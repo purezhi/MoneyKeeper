@@ -1,0 +1,88 @@
+apply plugin: 'com.android.application'
+
+// 加载 keystore.properties 文件
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+android {
+    compileSdkVersion build_versions.compile_sdk
+    defaultConfig {
+        applicationId "me.bakumon.moneykeeper"
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        //指定room.schemaLocation生成的文件路径
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    signingConfigs {
+        debug {
+            storeFile file(keystoreProperties['DEBUG_STORE_FILE'])
+            storePassword keystoreProperties['DEBUG_KEYSTORE_PASSWORD']
+            keyAlias keystoreProperties['DEBUG_KEY_ALIAS']
+            keyPassword keystoreProperties['DEBUG_KEY_PASSWORD']
+        }
+        release {
+            storeFile file(keystoreProperties['RELEASE_STORE_FILE'])
+            storePassword keystoreProperties['RELEASE_KEYSTORE_PASSWORD']
+            keyAlias keystoreProperties['RELEASE_KEY_ALIAS']
+            keyPassword keystoreProperties['RELEASE_KEY_PASSWORD']
+        }
+    }
+    buildTypes {
+        debug {
+            // 签名
+            signingConfig signingConfigs.debug
+        }
+        release {
+            // 签名
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        android.applicationVariants.all { variant ->
+            variant.outputs.all {
+                outputFileName = "MoneyKeeper-${variant.baseName}-${variant.versionCode}-V${variant.versionName}.apk"
+            }
+        }
+    }
+}
+
+dependencies {
+    uniformSupportVersion(configurations)
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    // test
+    testImplementation deps.junit
+    androidTestImplementation deps.test_runner
+    androidTestImplementation deps.spresso_core
+    // 支持库
+    implementation deps.support.app_compat
+    implementation deps.support.design
+    implementation deps.support.cardview
+    // ViewModel and LiveData
+    implementation deps.lifecycle.extensions
+    annotationProcessor deps.lifecycle.compiler
+    // Room
+    implementation deps.room.runtime
+    implementation deps.room.rxjava2
+    annotationProcessor deps.room.compiler
+    // 第三方库
+    implementation deps.rxjava
+    implementation deps.rxandroid
+    implementation deps.BRVAH
+    implementation 'com.hhl:gridpagersnaphelper:1.0.0'
+    implementation 'com.hhl:recyclerviewindicator:1.0.0'
+}

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <merge>
+
+        <EditText
+            android:id="@+id/edit_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:gravity="end"
+            android:hint="@string/hint_enter_money"
+            android:inputType="numberDecimal"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textColor="@color/colorTextWhite"
+            android:textColorHint="@color/colorTextGray"
+            android:textSize="36sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/keyboard_num_1"
+                        style="@style/text_view_input_num"
+                        android:text="@string/text_num_1" />
+
+                    <TextView
+                        android:id="@+id/keyboard_num_2"
+                        style="@style/text_view_input_num"
+                        android:text="@string/text_num_2" />
+
+                    <TextView
+                        android:id="@+id/keyboard_num_3"
+                        style="@style/text_view_input_num"
+                        android:text="@string/text_num_3" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/keyboard_num_4"
+                        style="@style/text_view_input_num"
+                        android:text="@string/text_num_4" />
+
+                    <TextView
+                        android:id="@+id/keyboard_num_5"
+                        style="@style/text_view_input_num"
+                        android:text="@string/text_num_5" />
+
+                    <TextView
+                        android:id="@+id/keyboard_num_6"
+                        style="@style/text_view_input_num"
+                        android:text="@string/text_num_6" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/keyboard_num_7"
+                        style="@style/text_view_input_num"
+                        android:text="@string/text_num_7" />
+
+                    <TextView
+                        android:id="@+id/keyboard_num_8"
+                        style="@style/text_view_input_num"
+                        android:text="@string/text_num_8" />
+
+                    <TextView
+                        android:id="@+id/keyboard_num_9"
+                        style="@style/text_view_input_num"
+                        android:text="@string/text_num_9" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/keyboard_num_point"
+                        style="@style/text_view_input_num"
+                        android:text="@string/text_num_point" />
+
+                    <TextView
+                        android:id="@+id/keyboard_num_0"
+                        style="@style/text_view_input_num"
+                        android:text="@string/text_num_0" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/keyboard_delete"
+                    style="@style/bg_press"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_input_delete" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/keyboard_affirm"
+                    style="@style/text_view_input_affirm"
+                    android:text="@string/text_affirm" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </merge>
+</layout>

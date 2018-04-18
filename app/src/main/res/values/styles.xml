@@ -1,0 +1,39 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- 键盘 -->
+    <style name="bg_press">
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+    </style>
+
+    <!-- 键盘 -->
+    <style name="text_view_input" parent="bg_press">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorTextWhite</item>
+    </style>
+
+    <!-- 键盘数字 -->
+    <style name="text_view_input_num" parent="text_view_input">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">28sp</item>
+    </style>
+
+    <!-- 键盘确定 -->
+    <style name="text_view_input_affirm" parent="text_view_input">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:background">@drawable/bg_gradient_315</item>
+    </style>
+
+</resources>

@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">MoneyKeeper</string>
+    <string name="content_des_setting">设置</string>
+    <string name="content_des_statistics">统计</string>
+    <string name="content_des_close">关闭</string>
+    <string name="text_affirm">确定</string>
+    <string name="text_num_1">1</string>
+    <string name="text_num_2">2</string>
+    <string name="text_num_3">3</string>
+    <string name="text_num_4">4</string>
+    <string name="text_num_5">5</string>
+    <string name="text_num_6">6</string>
+    <string name="text_num_7">7</string>
+    <string name="text_num_8">8</string>
+    <string name="text_num_9">9</string>
+    <string name="text_num_point">.</string>
+    <string name="text_num_0">0</string>
+    <string name="text_add_record">记一笔</string>
+    <string name="text_outlay">支出</string>
+    <string name="text_income">收入</string>
+    <string name="text_month_outlay">本月支出(¥)</string>
+    <string name="text_month_income">本月收入(¥)</string>
+    <string name="text_today">今日</string>
+    <string name="hint_enter_money">输入金额</string>
+    <string name="hint_enter_remark">输入备注</string>
+    <string name="text_type_eat">餐饮</string>
+    <string name="text_type_clothes">衣服</string>
+    <string name="text_type_humanity">人情</string>
+    <string name="text_type_candy">零食</string>
+    <string name="text_type_3c">电子产品</string>
+    <string name="text_type_pet">宠物</string>
+    <string name="text_type_pill">医疗</string>
+    <string name="text_type_cigarette">烟酒</string>
+    <string name="text_type_sim">话费</string>
+    <string name="text_type_calendar">日用</string>
+    <string name="text_type_fitness">运动健身</string>
+    <string name="text_type_study">学习</string>
+    <string name="text_type_pluralism">兼职</string>
+    <string name="text_type_salary">薪资</string>
+
+</resources>
