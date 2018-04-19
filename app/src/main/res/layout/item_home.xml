@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="isDataShow"
+            type="Boolean" />
+
+        <variable
+            name="uiRecord"
+            type="me.bakumon.moneykeeper.bean.UIRecord" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,12 +23,13 @@
         android:paddingTop="10dp">
 
         <TextView
-            android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="4月11日"
-            android:textColor="@color/colorTextGray" />
+            android:text="@{uiRecord.mRecord.date}"
+            android:textColor="@color/colorTextGray"
+            android:visibility="@{isDataShow}"
+            tools:text="4月11日" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,41 +42,52 @@
             android:padding="15dp">
 
             <ImageView
-                android:id="@+id/iv_type"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:src="@mipmap/type_eat" />
+                android:src="@{uiRecord.mRecordType.imgResId}"
+                tools:src="@mipmap/type_eat" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="餐饮"
+                    android:text="@{uiRecord.mRecordType.name}"
                     android:textColor="@color/colorTextWhite"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:text="餐饮" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="请客吃早点"
+                    bind:text="@{uiRecord.mRecord.remark}"
                     android:textColor="@color/colorTextGray"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    tools:text="请客吃早点" />
 
             </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="-43"
+                android:text="@{uiRecord.mRecordType.type == 0 ? @string/text_symbol_outlay : @string/text_symbol_income}"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:text="-" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{uiRecord.mRecord.money}"
+                android:textColor="@color/colorTextWhite"
+                android:textSize="16sp"
+                tools:text="43" />
         </LinearLayout>
     </LinearLayout>
 </layout>

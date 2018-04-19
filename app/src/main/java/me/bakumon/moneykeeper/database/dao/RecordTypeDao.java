@@ -15,6 +15,10 @@ import me.bakumon.moneykeeper.database.entity.RecordType;
  */
 @Dao
 public interface RecordTypeDao {
+
+    @Query("SELECT * FROM recordtype WHERE id = :id")
+    RecordType getReCordTypeById(int id);
+
     @Query("SELECT * FROM recordtype")
     Flowable<List<RecordType>> getAll();
 

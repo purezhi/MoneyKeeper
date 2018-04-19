@@ -2,27 +2,18 @@ package me.bakumon.moneykeeper.binding;
 
 import android.databinding.BindingAdapter;
 import android.support.annotation.DrawableRes;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
-import me.bakumon.moneykeeper.database.entity.RecordType;
-
+import android.widget.TextView;
 
 /**
- * RecordType for DataBinding
+ * binding 属性适配器（自动被 DataBinding 引用）
  *
  * @author Bakumon https://bakumon.me
  */
-public class DBRecordType {
-
-    public DBRecordType(RecordType recordType, int width) {
-        mRecordType = recordType;
-        mWidth = width;
-    }
-
-    public RecordType mRecordType;
-    public int mWidth;
+public class BindAdapter {
 
     @BindingAdapter("android:visibility")
     public static void showHide(View view, boolean show) {
@@ -38,5 +29,11 @@ public class DBRecordType {
     @BindingAdapter("android:src")
     public static void setSrc(ImageView view, @DrawableRes int resId) {
         view.setImageResource(resId);
+    }
+
+    @BindingAdapter("bind:text")
+    public static void setText(TextView textView, String text) {
+        textView.setText(text);
+        textView.setVisibility(TextUtils.isEmpty(text) ? View.GONE : View.VISIBLE);
     }
 }

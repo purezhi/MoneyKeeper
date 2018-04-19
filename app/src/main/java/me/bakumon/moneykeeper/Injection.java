@@ -10,7 +10,7 @@ import me.bakumon.moneykeeper.viewModel.ViewModelFactory;
 public class Injection {
     public static AppDataSource provideUserDataSource(Context context) {
         AppDatabase database = AppDatabase.getInstance(context);
-        return new LocalAppDataSource(database.recordTypeDao());
+        return new LocalAppDataSource(database);
     }
 
     public static ViewModelFactory provideViewModelFactory(Context context) {

@@ -7,18 +7,22 @@
         <import type="android.view.View" />
 
         <variable
-            name="bdRecordType"
-            type="me.bakumon.moneykeeper.binding.DBRecordType" />
+            name="width"
+            type="int" />
+
+        <variable
+            name="recordType"
+            type="me.bakumon.moneykeeper.database.entity.RecordType" />
     </data>
 
     <LinearLayout
         android:id="@+id/ll_type_item_root"
-        android:layout_width="@{bdRecordType.mWidth, default = wrap_content}"
+        android:layout_width="@{width, default = wrap_content}"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:paddingTop="10dp"
-        android:visibility="@{bdRecordType.mRecordType != null}"
+        android:visibility="@{recordType != null}"
         tools:layout_height="wrap_content">
 
         <RelativeLayout
@@ -31,7 +35,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_alignParentBottom="true"
-                android:src="@{bdRecordType.mRecordType.imgResId}"
+                android:src="@{recordType.imgResId}"
                 tools:src="@mipmap/type_eat" />
 
             <ImageView
@@ -40,7 +44,7 @@
                 android:layout_height="20dp"
                 android:layout_alignParentRight="true"
                 android:src="@drawable/ic_check"
-                android:visibility="@{bdRecordType.mRecordType.isChecked}" />
+                android:visibility="@{recordType.isChecked}" />
         </RelativeLayout>
 
         <TextView
@@ -48,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@{bdRecordType.mRecordType.name}"
+            android:text="@{recordType.name}"
             android:textColor="@color/colorTextWhite"
             tools:text="餐饮" />
     </LinearLayout>

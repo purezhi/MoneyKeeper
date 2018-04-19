@@ -4,6 +4,8 @@
     <string name="content_des_statistics">统计</string>
     <string name="content_des_close">关闭</string>
     <string name="text_affirm">确定</string>
+    <string name="text_symbol_outlay">-</string>
+    <string name="text_symbol_income">+</string>
     <string name="text_num_1">1</string>
     <string name="text_num_2">2</string>
     <string name="text_num_3">3</string>

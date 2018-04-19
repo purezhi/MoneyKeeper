@@ -13,7 +13,6 @@ import me.bakumon.moneykeeper.App;
 import me.bakumon.moneykeeper.BR;
 import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.base.BaseDataBindingAdapter;
-import me.bakumon.moneykeeper.binding.DBRecordType;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.utill.ScreenUtils;
 
@@ -40,7 +39,8 @@ public class TypeAdapter extends BaseDataBindingAdapter<RecordType> {
     @Override
     protected void convert(DataBindingViewHolder helper, RecordType item) {
         ViewDataBinding binding = helper.getBinding();
-        binding.setVariable(BR.bdRecordType, new DBRecordType(item, mItemWidth));
+        binding.setVariable(BR.recordType, item);
+        binding.setVariable(BR.width, mItemWidth);
         binding.executePendingBindings();
     }
 

@@ -1,16 +1,15 @@
 package me.bakumon.moneykeeper.ui.home;
 
+import android.databinding.ViewDataBinding;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.view.View;
-
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
 
+import me.bakumon.moneykeeper.BR;
 import me.bakumon.moneykeeper.R;
-import me.bakumon.moneykeeper.bean.HomeBean;
+import me.bakumon.moneykeeper.base.BaseDataBindingAdapter;
+import me.bakumon.moneykeeper.bean.UIRecord;
 
 /**
  * HomeAdapter
@@ -19,23 +18,19 @@ import me.bakumon.moneykeeper.bean.HomeBean;
  * @date 2018/4/9
  */
 
-public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
+public class HomeAdapter extends BaseDataBindingAdapter<UIRecord> {
 
-    public HomeAdapter(@Nullable List<HomeBean> data) {
+    public HomeAdapter(@Nullable List<UIRecord> data) {
         super(R.layout.item_home, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, HomeBean item) {
-        View view = helper.getView(R.id.tv_date);
-        if (helper.getAdapterPosition() == 0) {
-            view.setVisibility(View.VISIBLE);
-        } else {
-            if (TextUtils.equals(item.createDate, getData().get(helper.getAdapterPosition() - 1).createDate)) {
-                view.setVisibility(View.GONE);
-            } else {
-                view.setVisibility(View.VISIBLE);
-            }
-        }
+    protected void convert(DataBindingViewHolder helper, UIRecord item) {
+        ViewDataBinding binding = helper.getBinding();
+        binding.setVariable(BR.uiRecord, item);
+        boolean isDataShow = helper.getAdapterPosition() == 0 ||
+                !TextUtils.equals(item.mRecord.date, getData().get(helper.getAdapterPosition() - 1).mRecord.date);
+        binding.setVariable(BR.isDataShow, isDataShow);
+        binding.executePendingBindings();
     }
 }

@@ -15,11 +15,11 @@ import java.util.Calendar;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import me.bakumon.moneykeeper.Injection;
 import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.base.BaseActivity;
+import me.bakumon.moneykeeper.database.entity.Record;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.databinding.ActivityAddBinding;
 import me.bakumon.moneykeeper.viewModel.ViewModelFactory;
@@ -69,6 +69,7 @@ public class AddActivity extends BaseActivity {
         mBinding.qmTvDate.setOnClickListener(v -> {
             DatePickerDialog dialog = new DatePickerDialog(AddActivity.this, (view, year, month, dayOfMonth) -> {
                 Toast.makeText(AddActivity.this, "date:" + year + "," + month + "," + dayOfMonth, Toast.LENGTH_SHORT).show();
+
             }, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
             dialog.show();
         });
@@ -110,7 +111,23 @@ public class AddActivity extends BaseActivity {
         mBinding.customKeyboard.setAffirmClickListener(text -> {
             String showText = "确定：" + text + "," + mAdapter.getCurrentItem().name;
             Toast.makeText(AddActivity.this, showText, Toast.LENGTH_SHORT).show();
+
+            Record record = new Record();
+            record.date = "2018.4.19";
+            record.money = "20";
+//            record.remark = "备注一下";
+            record.recordTypeId = mAdapter.getCurrentItem().id;
+
+            insertRecord(record);
         });
+    }
+
+    private void insertRecord(Record record) {
+        mDisposable.add(mViewModel.insertRecord(record).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::finish,
+                        throwable ->
+                                Log.e(TAG, "新增记录失败", throwable)));
     }
 
     private void initRecordTypes() {
@@ -119,7 +136,6 @@ public class AddActivity extends BaseActivity {
                 .subscribe(this::getAllRecordTypes,
                         throwable ->
                                 Log.e(TAG, "初始化类型数据失败", throwable)));
-
     }
 
     private void getAllRecordTypes() {
