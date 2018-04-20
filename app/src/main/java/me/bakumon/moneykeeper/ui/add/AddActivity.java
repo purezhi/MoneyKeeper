@@ -113,9 +113,9 @@ public class AddActivity extends BaseActivity {
             Toast.makeText(AddActivity.this, showText, Toast.LENGTH_SHORT).show();
 
             Record record = new Record();
-            record.date = "2018.4.19";
+            record.date = "2018.4.21";
             record.money = "20";
-//            record.remark = "备注一下";
+            record.remark = "备注一下";
             record.recordTypeId = mAdapter.getCurrentItem().id;
 
             insertRecord(record);

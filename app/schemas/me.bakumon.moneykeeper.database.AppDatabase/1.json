@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "44e1f0f7e252d701cb044a7ad1166a77",
+    "identityHash": "1afaf82a9e1464f7a47dd86789260241",
     "entities": [
       {
         "tableName": "Record",
@@ -45,7 +45,16 @@
           ],
           "autoGenerate": true
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_Record_record_type_id",
+            "unique": false,
+            "columnNames": [
+              "record_type_id"
+            ],
+            "createSql": "CREATE  INDEX `index_Record_record_type_id` ON `${TABLE_NAME}` (`record_type_id`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "RecordType",
@@ -107,7 +116,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"44e1f0f7e252d701cb044a7ad1166a77\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"1afaf82a9e1464f7a47dd86789260241\")"
     ]
   }
 }

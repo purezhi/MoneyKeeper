@@ -3,8 +3,10 @@ package me.bakumon.moneykeeper.database;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
+import me.bakumon.moneykeeper.database.converters.Converters;
 import me.bakumon.moneykeeper.database.dao.RecordDao;
 import me.bakumon.moneykeeper.database.dao.RecordTypeDao;
 import me.bakumon.moneykeeper.database.entity.Record;
@@ -17,6 +19,7 @@ import me.bakumon.moneykeeper.database.entity.RecordType;
  * @author Bakumon https:bakumon.me
  */
 @Database(entities = {Record.class, RecordType.class}, version = 1)
+@TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase INSTANCE;

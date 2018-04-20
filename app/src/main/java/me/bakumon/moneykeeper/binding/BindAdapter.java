@@ -31,7 +31,7 @@ public class BindAdapter {
         view.setImageResource(resId);
     }
 
-    @BindingAdapter("bind:text")
+    @BindingAdapter("text_check_null")
     public static void setText(TextView textView, String text) {
         textView.setText(text);
         textView.setVisibility(TextUtils.isEmpty(text) ? View.GONE : View.VISIBLE);

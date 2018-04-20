@@ -9,13 +9,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import java.util.Date;
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.bakumon.moneykeeper.Injection;
 import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.base.BaseActivity;
+import me.bakumon.moneykeeper.bean.UIRecord;
 import me.bakumon.moneykeeper.databinding.ActivityHomeBinding;
 import me.bakumon.moneykeeper.ui.add.AddActivity;
 import me.bakumon.moneykeeper.viewModel.ViewModelFactory;
@@ -63,9 +64,17 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         mDisposable.add(mViewModel.getAllUIRecord()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((uiRecords) -> mAdapter.setNewData(uiRecords),
+                .subscribe(this::setListData,
                         throwable ->
                                 Log.e(TAG, "获取记录列表失败", throwable)));
+    }
+
+    private void setListData(List<UIRecord> uiRecords) {
+        mAdapter.setNewData(uiRecords);
+        if (uiRecords != null && uiRecords.size() > 9 && mAdapter.getFooterLayoutCount() == 0) {
+            View view = getLayoutInflater().inflate(R.layout.layout_footer_tip, null, false);
+            mAdapter.setFooterView(view);
+        }
     }
 
     @Override

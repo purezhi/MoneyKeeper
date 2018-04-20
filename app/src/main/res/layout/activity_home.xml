@@ -9,7 +9,6 @@
         android:layout_height="match_parent">
 
         <android.support.design.widget.AppBarLayout
-            android:id="@+id/ll_home_head"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_gradient"
@@ -134,7 +133,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="bottom|center"
-            android:layout_margin="16dp"
+            android:layout_margin="25dp"
             android:clickable="true"
             android:focusable="true"
             app:srcCompat="@drawable/ic_add" />
