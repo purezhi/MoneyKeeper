@@ -5,8 +5,7 @@ import android.arch.lifecycle.ViewModel;
 import java.util.List;
 
 import io.reactivex.Flowable;
-import me.bakumon.moneykeeper.bean.UIRecord;
-import me.bakumon.moneykeeper.database.entity.Record;
+import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.datasource.AppDataSource;
 
 /**
@@ -22,7 +21,7 @@ public class HomeViewModel extends ViewModel {
         mDataSource = dataSource;
     }
 
-    public Flowable<List<UIRecord>> getAllUIRecord() {
-        return mDataSource.getAllUIRecord();
+    public Flowable<List<RecordWithType>> getCurrentMonthRecordWithTypes() {
+        return mDataSource.getCurrentMonthRecordWithTypes();
     }
 }

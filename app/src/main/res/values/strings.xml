@@ -3,6 +3,7 @@
     <string name="content_des_setting">设置</string>
     <string name="content_des_statistics">统计</string>
     <string name="content_des_close">关闭</string>
+
     <string name="text_affirm">确定</string>
     <string name="text_symbol_outlay">-</string>
     <string name="text_symbol_income">+</string>
@@ -41,4 +42,5 @@
     <string name="text_type_pluralism">兼职</string>
     <string name="text_type_salary">薪资</string>
 
+    <string name="toast_add_record_fail">记账失败，请重试</string>
 </resources>

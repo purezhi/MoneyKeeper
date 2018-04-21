@@ -1,13 +1,14 @@
 package me.bakumon.moneykeeper.datasource;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Flowable;
-import me.bakumon.moneykeeper.bean.UIRecord;
 import me.bakumon.moneykeeper.database.AppDatabase;
 import me.bakumon.moneykeeper.database.entity.Record;
 import me.bakumon.moneykeeper.database.entity.RecordType;
+import me.bakumon.moneykeeper.database.entity.RecordWithType;
+import me.bakumon.moneykeeper.utill.DateUtils;
 
 /**
  * 数据源本地实现类
@@ -42,20 +43,10 @@ public class LocalAppDataSource implements AppDataSource {
     }
 
     @Override
-    public Flowable<List<UIRecord>> getAllUIRecord() {
-        return mAppDatabase.recordDao().getAll().map(records -> {
-            List<UIRecord> uiRecords = new ArrayList<>();
-            if (records != null && records.size() > 0) {
-                for (int i = 0; i < records.size(); i++) {
-                    UIRecord uiRecord = new UIRecord();
-                    RecordType recordType = mAppDatabase.recordTypeDao().getReCordTypeById(records.get(i).recordTypeId);
-                    uiRecord.mRecord = records.get(i);
-                    uiRecord.mRecordType = recordType;
-                    uiRecords.add(uiRecord);
-                }
-            }
-            return uiRecords;
-        });
+    public Flowable<List<RecordWithType>> getCurrentMonthRecordWithTypes() {
+        Date dateFrom = DateUtils.getCurrentMonthStart();
+        Date dateTo = DateUtils.getCurrentMonthEnd();
+        return mAppDatabase.recordDao().getRangeRecordWithTypes(dateFrom, dateTo);
     }
 
     @Override

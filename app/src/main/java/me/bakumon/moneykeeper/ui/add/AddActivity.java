@@ -23,6 +23,7 @@ import me.bakumon.moneykeeper.database.entity.Record;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.databinding.ActivityAddBinding;
 import me.bakumon.moneykeeper.utill.DateUtils;
+import me.bakumon.moneykeeper.utill.ToastUtils;
 import me.bakumon.moneykeeper.viewModel.ViewModelFactory;
 
 /**
@@ -72,9 +73,7 @@ public class AddActivity extends BaseActivity {
             Calendar now = Calendar.getInstance();
             DatePickerDialog dpd = DatePickerDialog.newInstance(
                     (view, year, monthOfYear, dayOfMonth) -> {
-
                         mCurrentChooseDate = DateUtils.getAccurateDate(year, monthOfYear + 1, dayOfMonth);
-
 
                     }, now);
             dpd.setMaxDate(now);
@@ -116,7 +115,8 @@ public class AddActivity extends BaseActivity {
      */
     private void configCustomKeyboard() {
         mBinding.customKeyboard.setAffirmClickListener(text -> {
-
+            // 防止重复提交
+            mBinding.customKeyboard.setAffirmEnable(false);
             Record record = new Record();
             record.money = text;
             record.remark = mBinding.edtRemark.getText().toString().trim();
@@ -132,8 +132,12 @@ public class AddActivity extends BaseActivity {
         mDisposable.add(mViewModel.insertRecord(record).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::finish,
-                        throwable ->
-                                Log.e(TAG, "新增记录失败", throwable)));
+                        throwable -> {
+                            Log.e(TAG, "新增记录失败", throwable);
+                            mBinding.customKeyboard.setAffirmEnable(true);
+                            ToastUtils.show(R.string.toast_add_record_fail);
+                        }
+                ));
     }
 
     private void initRecordTypes() {

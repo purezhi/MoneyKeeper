@@ -12,8 +12,8 @@
             type="Boolean" />
 
         <variable
-            name="uiRecord"
-            type="me.bakumon.moneykeeper.bean.UIRecord" />
+            name="recordWithType"
+            type="me.bakumon.moneykeeper.database.entity.RecordWithType" />
     </data>
 
     <LinearLayout
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="@{DateUtils.date2MonthDay(uiRecord.mRecord.time)}"
+            android:text="@{DateUtils.date2MonthDay(recordWithType.time)}"
             android:textColor="@color/colorTextGray"
             android:visibility="@{isDataShow}"
             tools:text="4月11日" />
@@ -46,7 +46,7 @@
             <ImageView
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:src="@{uiRecord.mRecordType.imgResId}"
+                android:src="@{recordWithType.mRecordTypes.get(0).imgResId}"
                 tools:src="@mipmap/type_eat" />
 
             <LinearLayout
@@ -59,7 +59,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{uiRecord.mRecordType.name}"
+                    android:text="@{recordWithType.mRecordTypes.get(0).name}"
                     android:textColor="@color/colorTextWhite"
                     android:textSize="16sp"
                     tools:text="餐饮" />
@@ -70,7 +70,7 @@
                     android:layout_marginTop="5dp"
                     android:textColor="@color/colorTextGray"
                     android:textSize="14sp"
-                    app:text_check_null="@{uiRecord.mRecord.remark}"
+                    app:text_check_null="@{recordWithType.remark}"
                     tools:text="请客吃早点" />
 
             </LinearLayout>
@@ -78,7 +78,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{uiRecord.mRecordType.type == 0 ? @string/text_symbol_outlay : @string/text_symbol_income}"
+                android:text="@{recordWithType.mRecordTypes.get(0).type == 0 ? @string/text_symbol_outlay : @string/text_symbol_income}"
                 android:textColor="@color/colorTextWhite"
                 android:textSize="16sp"
                 tools:text="-" />
@@ -86,7 +86,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{uiRecord.mRecord.money}"
+                android:text="@{recordWithType.money}"
                 android:textColor="@color/colorTextWhite"
                 android:textSize="16sp"
                 tools:text="43" />

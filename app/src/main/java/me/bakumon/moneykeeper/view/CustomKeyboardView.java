@@ -18,6 +18,7 @@ import me.bakumon.moneykeeper.utill.CustomKeyboardHelper;
  */
 public class CustomKeyboardView extends LinearLayout {
 
+    private LayoutKeyboardBinding mBinding;
     private OnAffirmClickListener mOnAffirmClickListener;
 
     public CustomKeyboardView(Context context) {
@@ -42,6 +43,12 @@ public class CustomKeyboardView extends LinearLayout {
         void onAffirmClick(String text);
     }
 
+    public void setAffirmEnable(boolean enable) {
+        if (mBinding != null) {
+            mBinding.keyboardAffirm.setEnabled(enable);
+        }
+    }
+
     public void setAffirmClickListener(OnAffirmClickListener listener) {
         mOnAffirmClickListener = listener;
     }
@@ -49,7 +56,7 @@ public class CustomKeyboardView extends LinearLayout {
     @SuppressLint("ClickableViewAccessibility")
     private void init(Context context) {
         setOrientation(VERTICAL);
-        LayoutKeyboardBinding mBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.layout_keyboard, this, true);
+        mBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.layout_keyboard, this, true);
         mBinding.editInput.setFocusable(true);
         mBinding.editInput.setFocusableInTouchMode(true);
         mBinding.editInput.requestFocus();

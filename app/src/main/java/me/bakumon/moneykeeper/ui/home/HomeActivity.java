@@ -16,7 +16,7 @@ import io.reactivex.schedulers.Schedulers;
 import me.bakumon.moneykeeper.Injection;
 import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.base.BaseActivity;
-import me.bakumon.moneykeeper.bean.UIRecord;
+import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.databinding.ActivityHomeBinding;
 import me.bakumon.moneykeeper.ui.add.AddActivity;
 import me.bakumon.moneykeeper.viewModel.ViewModelFactory;
@@ -62,17 +62,21 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void initData() {
-        mDisposable.add(mViewModel.getAllUIRecord()
+
+        mDisposable.add(mViewModel.getCurrentMonthRecordWithTypes()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::setListData,
+                .subscribe(recordWithTypes -> {
+                            setListData(recordWithTypes);
+                            Log.e(TAG, "获取记录列表成功");
+                        },
                         throwable ->
                                 Log.e(TAG, "获取记录列表失败", throwable)));
     }
 
-    private void setListData(List<UIRecord> uiRecords) {
-        mAdapter.setNewData(uiRecords);
-        if (uiRecords != null && uiRecords.size() > MAX_ITEM_TIP && mAdapter.getFooterLayoutCount() == 0) {
+    private void setListData(List<RecordWithType> recordWithTypes) {
+        mAdapter.setNewData(recordWithTypes);
+        if (recordWithTypes != null && recordWithTypes.size() > MAX_ITEM_TIP && mAdapter.getFooterLayoutCount() == 0) {
             View view = getLayoutInflater().inflate(R.layout.layout_footer_tip, null, false);
             mAdapter.setFooterView(view);
         }
