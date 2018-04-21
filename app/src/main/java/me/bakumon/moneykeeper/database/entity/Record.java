@@ -6,13 +6,15 @@ import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.util.Date;
+
 /**
  * 记账记录
  *
  * @author bakumon https://bakumon.me
  */
 @Entity(foreignKeys = @ForeignKey(entity = RecordType.class, parentColumns = "id", childColumns = "record_type_id"),
-        indices = {@Index(value = {"record_type_id"})})
+        indices = {@Index(value = {"record_type_id", "time"})})
 public class Record {
     @PrimaryKey(autoGenerate = true)
     public int id;
@@ -21,7 +23,7 @@ public class Record {
 
     public String remark;
 
-    public String date;
+    public Date time;
 
     @ColumnInfo(name = "record_type_id")
     public int recordTypeId;

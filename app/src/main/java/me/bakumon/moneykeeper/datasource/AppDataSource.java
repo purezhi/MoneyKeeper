@@ -17,8 +17,6 @@ public interface AppDataSource {
     void deleteRecordType(RecordType recordType);
 
 
-    Flowable<List<Record>> getAllRecord();
-
     Flowable<List<UIRecord>> getAllUIRecord();
 
     void insertRecord(Record record);

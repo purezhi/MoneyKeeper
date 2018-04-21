@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "1afaf82a9e1464f7a47dd86789260241",
+    "identityHash": "05c971fbf975f2ad83b7e9b809044ced",
     "entities": [
       {
         "tableName": "Record",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `money` TEXT, `remark` TEXT, `date` TEXT, `record_type_id` INTEGER NOT NULL, FOREIGN KEY(`record_type_id`) REFERENCES `RecordType`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `money` TEXT, `remark` TEXT, `time` INTEGER, `record_type_id` INTEGER NOT NULL, FOREIGN KEY(`record_type_id`) REFERENCES `RecordType`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -27,9 +27,9 @@
             "notNull": false
           },
           {
-            "fieldPath": "date",
-            "columnName": "date",
-            "affinity": "TEXT",
+            "fieldPath": "time",
+            "columnName": "time",
+            "affinity": "INTEGER",
             "notNull": false
           },
           {
@@ -47,12 +47,13 @@
         },
         "indices": [
           {
-            "name": "index_Record_record_type_id",
+            "name": "index_Record_record_type_id_time",
             "unique": false,
             "columnNames": [
-              "record_type_id"
+              "record_type_id",
+              "time"
             ],
-            "createSql": "CREATE  INDEX `index_Record_record_type_id` ON `${TABLE_NAME}` (`record_type_id`)"
+            "createSql": "CREATE  INDEX `index_Record_record_type_id_time` ON `${TABLE_NAME}` (`record_type_id`, `time`)"
           }
         ],
         "foreignKeys": [
@@ -116,7 +117,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"1afaf82a9e1464f7a47dd86789260241\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"05c971fbf975f2ad83b7e9b809044ced\")"
     ]
   }
 }

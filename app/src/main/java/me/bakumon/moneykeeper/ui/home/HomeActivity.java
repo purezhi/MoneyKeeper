@@ -30,6 +30,7 @@ import me.bakumon.moneykeeper.viewModel.ViewModelFactory;
 public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
+    private static final int MAX_ITEM_TIP = 7;
     private ActivityHomeBinding binding;
 
     private HomeViewModel mViewModel;
@@ -71,7 +72,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     private void setListData(List<UIRecord> uiRecords) {
         mAdapter.setNewData(uiRecords);
-        if (uiRecords != null && uiRecords.size() > 9 && mAdapter.getFooterLayoutCount() == 0) {
+        if (uiRecords != null && uiRecords.size() > MAX_ITEM_TIP && mAdapter.getFooterLayoutCount() == 0) {
             View view = getLayoutInflater().inflate(R.layout.layout_footer_tip, null, false);
             mAdapter.setFooterView(view);
         }

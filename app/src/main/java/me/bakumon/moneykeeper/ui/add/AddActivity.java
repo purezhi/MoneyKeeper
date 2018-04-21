@@ -1,17 +1,17 @@
 package me.bakumon.moneykeeper.ui.add;
 
-import android.app.DatePickerDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.hhl.gridpagersnaphelper.GridPagerSnapHelper;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -22,6 +22,7 @@ import me.bakumon.moneykeeper.base.BaseActivity;
 import me.bakumon.moneykeeper.database.entity.Record;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.databinding.ActivityAddBinding;
+import me.bakumon.moneykeeper.utill.DateUtils;
 import me.bakumon.moneykeeper.viewModel.ViewModelFactory;
 
 /**
@@ -42,6 +43,7 @@ public class AddActivity extends BaseActivity {
 
     private TypeAdapter mAdapter;
     private List<RecordType> mRecordTypes;
+    private Date mCurrentChooseDate = new Date();
 
     @Override
     protected int getLayoutId() {
@@ -67,11 +69,16 @@ public class AddActivity extends BaseActivity {
         configCustomKeyboard();
         mBinding.ibtClose.setOnClickListener(v -> finish());
         mBinding.qmTvDate.setOnClickListener(v -> {
-            DatePickerDialog dialog = new DatePickerDialog(AddActivity.this, (view, year, month, dayOfMonth) -> {
-                Toast.makeText(AddActivity.this, "date:" + year + "," + month + "," + dayOfMonth, Toast.LENGTH_SHORT).show();
+            Calendar now = Calendar.getInstance();
+            DatePickerDialog dpd = DatePickerDialog.newInstance(
+                    (view, year, monthOfYear, dayOfMonth) -> {
 
-            }, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
-            dialog.show();
+                        mCurrentChooseDate = DateUtils.getAccurateDate(year, monthOfYear + 1, dayOfMonth);
+
+
+                    }, now);
+            dpd.setMaxDate(now);
+            dpd.show(getFragmentManager(), "Datepickerdialog");
         });
         mBinding.rgType.setOnCheckedChangeListener((group, checkedId) -> {
             mAdapter.setNewData(mRecordTypes, checkedId == R.id.rb_outlay ? RecordType.TYPE_OUTLAY : RecordType.TYPE_INCOME);
@@ -109,13 +116,12 @@ public class AddActivity extends BaseActivity {
      */
     private void configCustomKeyboard() {
         mBinding.customKeyboard.setAffirmClickListener(text -> {
-            String showText = "确定：" + text + "," + mAdapter.getCurrentItem().name;
-            Toast.makeText(AddActivity.this, showText, Toast.LENGTH_SHORT).show();
 
             Record record = new Record();
-            record.date = "2018.4.21";
-            record.money = "20";
-            record.remark = "备注一下";
+            record.money = text;
+            record.remark = mBinding.edtRemark.getText().toString().trim();
+
+            record.time = mCurrentChooseDate;
             record.recordTypeId = mAdapter.getCurrentItem().id;
 
             insertRecord(record);

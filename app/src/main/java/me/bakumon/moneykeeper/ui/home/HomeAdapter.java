@@ -10,6 +10,7 @@ import me.bakumon.moneykeeper.BR;
 import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.base.BaseDataBindingAdapter;
 import me.bakumon.moneykeeper.bean.UIRecord;
+import me.bakumon.moneykeeper.utill.DateUtils;
 
 /**
  * HomeAdapter
@@ -29,7 +30,7 @@ public class HomeAdapter extends BaseDataBindingAdapter<UIRecord> {
         ViewDataBinding binding = helper.getBinding();
         binding.setVariable(BR.uiRecord, item);
         boolean isDataShow = helper.getAdapterPosition() == 0 ||
-                !TextUtils.equals(item.mRecord.date, getData().get(helper.getAdapterPosition() - 1).mRecord.date);
+                !DateUtils.isSameDay(item.mRecord.time, getData().get(helper.getAdapterPosition() - 1).mRecord.time);
         binding.setVariable(BR.isDataShow, isDataShow);
         binding.executePendingBindings();
     }

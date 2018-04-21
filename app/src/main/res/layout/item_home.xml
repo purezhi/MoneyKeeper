@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="me.bakumon.moneykeeper.utill.DateUtils" />
+
         <variable
             name="isDataShow"
             type="Boolean" />
@@ -26,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="@{uiRecord.mRecord.date}"
+            android:text="@{DateUtils.date2MonthDay(uiRecord.mRecord.time)}"
             android:textColor="@color/colorTextGray"
             android:visibility="@{isDataShow}"
             tools:text="4月11日" />

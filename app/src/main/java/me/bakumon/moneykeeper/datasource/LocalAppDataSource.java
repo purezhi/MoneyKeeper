@@ -1,13 +1,9 @@
 package me.bakumon.moneykeeper.datasource;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
-import io.reactivex.functions.Function;
 import me.bakumon.moneykeeper.bean.UIRecord;
 import me.bakumon.moneykeeper.database.AppDatabase;
 import me.bakumon.moneykeeper.database.entity.Record;
@@ -19,7 +15,6 @@ import me.bakumon.moneykeeper.database.entity.RecordType;
  * @author Bakumon https://bakumon.me
  */
 public class LocalAppDataSource implements AppDataSource {
-    private static final String TAG = LocalAppDataSource.class.getSimpleName();
     private final AppDatabase mAppDatabase;
 
     public LocalAppDataSource(AppDatabase appDatabase) {
@@ -47,11 +42,6 @@ public class LocalAppDataSource implements AppDataSource {
     }
 
     @Override
-    public Flowable<List<Record>> getAllRecord() {
-        return mAppDatabase.recordDao().getAll();
-    }
-
-    @Override
     public Flowable<List<UIRecord>> getAllUIRecord() {
         return mAppDatabase.recordDao().getAll().map(records -> {
             List<UIRecord> uiRecords = new ArrayList<>();
@@ -64,7 +54,6 @@ public class LocalAppDataSource implements AppDataSource {
                     uiRecords.add(uiRecord);
                 }
             }
-            Log.e(TAG, "getAllUIRecord: " + uiRecords.size());
             return uiRecords;
         });
     }

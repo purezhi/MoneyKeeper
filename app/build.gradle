@@ -14,7 +14,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        //指定room.schemaLocation生成的文件路径
+        // 指定room.schemaLocation生成的文件路径
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
@@ -85,4 +85,5 @@ dependencies {
     implementation deps.BRVAH
     implementation 'com.hhl:gridpagersnaphelper:1.0.0'
     implementation 'com.hhl:recyclerviewindicator:1.0.0'
+    implementation 'com.wdullaer:materialdatetimepicker:3.5.1'
 }

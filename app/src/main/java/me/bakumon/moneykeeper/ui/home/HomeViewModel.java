@@ -22,10 +22,6 @@ public class HomeViewModel extends ViewModel {
         mDataSource = dataSource;
     }
 
-    public Flowable<List<Record>> getAllRecord() {
-        return mDataSource.getAllRecord();
-    }
-
     public Flowable<List<UIRecord>> getAllUIRecord() {
         return mDataSource.getAllUIRecord();
     }

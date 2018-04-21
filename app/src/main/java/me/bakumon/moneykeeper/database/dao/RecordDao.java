@@ -14,11 +14,8 @@ import me.bakumon.moneykeeper.database.entity.Record;
  */
 @Dao
 public interface RecordDao {
-    @Query("SELECT * FROM record")
+    @Query("SELECT * FROM record ORDER BY time DESC")
     Flowable<List<Record>> getAll();
-
-    @Query("SELECT * FROM record")
-    List<Record> getAllRecord();
 
     @Insert
     void insert(Record record);
