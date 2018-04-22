@@ -7,14 +7,30 @@ import me.bakumon.moneykeeper.database.entity.Record;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
 
+/**
+ * 数据源
+ *
+ * @author Bakumon https://bakumon.me
+ */
 public interface AppDataSource {
+    /**
+     * 获取所有记账类型数据
+     *
+     * @return 所有记账类型数据
+     */
     Flowable<List<RecordType>> getAllRecordType();
 
-    long getRecordTypeCount();
-
+    /**
+     * 批量新增记账类型
+     *
+     * @param recordTypes 记账类型数组
+     */
     void insertAllRecordType(RecordType... recordTypes);
 
-    void deleteRecordType(RecordType recordType);
+    /**
+     * 初始化默认的记账类型
+     */
+    void initRecordTypes();
 
     /**
      * 获取当前月份的记账记录数据

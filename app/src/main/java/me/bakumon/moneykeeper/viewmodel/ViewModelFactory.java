@@ -1,4 +1,4 @@
-package me.bakumon.moneykeeper.viewModel;
+package me.bakumon.moneykeeper.viewmodel;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
@@ -8,6 +8,11 @@ import me.bakumon.moneykeeper.datasource.AppDataSource;
 import me.bakumon.moneykeeper.ui.add.AddViewModel;
 import me.bakumon.moneykeeper.ui.home.HomeViewModel;
 
+/**
+ * ViewModel 工厂
+ *
+ * @author Bakumon https://bakumon.me
+ */
 public class ViewModelFactory implements ViewModelProvider.Factory {
     private final AppDataSource mDataSource;
 

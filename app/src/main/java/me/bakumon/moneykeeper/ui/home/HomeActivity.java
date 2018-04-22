@@ -19,7 +19,7 @@ import me.bakumon.moneykeeper.base.BaseActivity;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.databinding.ActivityHomeBinding;
 import me.bakumon.moneykeeper.ui.add.AddActivity;
-import me.bakumon.moneykeeper.viewModel.ViewModelFactory;
+import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
 
 /**
  * HomeActivity

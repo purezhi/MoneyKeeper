@@ -24,22 +24,20 @@ public class LocalAppDataSource implements AppDataSource {
 
     @Override
     public Flowable<List<RecordType>> getAllRecordType() {
-        return mAppDatabase.recordTypeDao().getAll();
-    }
-
-    @Override
-    public long getRecordTypeCount() {
-        return mAppDatabase.recordTypeDao().getRecordTypeCount();
+        return mAppDatabase.recordTypeDao().getAllRecordTypes();
     }
 
     @Override
     public void insertAllRecordType(RecordType... recordTypes) {
-        mAppDatabase.recordTypeDao().insertAll(recordTypes);
+        mAppDatabase.recordTypeDao().insertRecordTypes(recordTypes);
     }
 
     @Override
-    public void deleteRecordType(RecordType recordType) {
-        mAppDatabase.recordTypeDao().delete(recordType);
+    public void initRecordTypes() {
+        if (mAppDatabase.recordTypeDao().getRecordTypeCount() < 1) {
+            // 没有记账类型数据记录，插入默认的数据类型
+            insertAllRecordType(CreateRecordTypeDataHelper.createRecordTypeData());
+        }
     }
 
     @Override
@@ -51,6 +49,6 @@ public class LocalAppDataSource implements AppDataSource {
 
     @Override
     public void insertRecord(Record record) {
-        mAppDatabase.recordDao().insert(record);
+        mAppDatabase.recordDao().insertRecord(record);
     }
 }

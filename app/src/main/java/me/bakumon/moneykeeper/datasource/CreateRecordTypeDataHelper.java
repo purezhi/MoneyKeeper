@@ -1,10 +1,12 @@
-package me.bakumon.moneykeeper;
+package me.bakumon.moneykeeper.datasource;
 
 import android.content.res.Resources;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import me.bakumon.moneykeeper.App;
+import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 
 

@@ -24,7 +24,7 @@ import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.databinding.ActivityAddBinding;
 import me.bakumon.moneykeeper.utill.DateUtils;
 import me.bakumon.moneykeeper.utill.ToastUtils;
-import me.bakumon.moneykeeper.viewModel.ViewModelFactory;
+import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
 
 /**
  * HomeActivity

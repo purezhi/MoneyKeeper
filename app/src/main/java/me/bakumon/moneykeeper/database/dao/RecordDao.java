@@ -13,19 +13,17 @@ import me.bakumon.moneykeeper.database.entity.Record;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
 
 /**
+ * 记账记录表操作类
+ *
  * @author Bakumon https://bakumon.me
  */
 @Dao
 public interface RecordDao {
 
-    @Query("SELECT * FROM record WHERE time BETWEEN :from AND :to ORDER BY time DESC")
-    Flowable<List<Record>> getRangeRecords(Date from, Date to);
-
-    @Insert
-    void insert(Record record);
-
     @Transaction
     @Query("SELECT * from record WHERE time BETWEEN :from AND :to ORDER BY time DESC")
     Flowable<List<RecordWithType>> getRangeRecordWithTypes(Date from, Date to);
 
+    @Insert
+    void insertRecord(Record record);
 }
