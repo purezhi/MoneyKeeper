@@ -24,7 +24,8 @@
     <string name="text_income">收入</string>
     <string name="text_month_outlay">本月支出(¥)</string>
     <string name="text_month_income">本月收入(¥)</string>
-    <string name="text_today">今日</string>
+    <string name="text_today">今天</string>
+    <string name="text_yesterday">昨天</string>
     <string name="hint_enter_money">输入金额</string>
     <string name="hint_enter_remark">输入备注</string>
     <string name="text_type_eat">餐饮</string>

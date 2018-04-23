@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "05c971fbf975f2ad83b7e9b809044ced",
+    "identityHash": "247814c558f0ecc4d3afd5ceb5f47a18",
     "entities": [
       {
         "tableName": "Record",
@@ -111,13 +111,23 @@
           ],
           "autoGenerate": true
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_RecordType_type_ranking",
+            "unique": false,
+            "columnNames": [
+              "type",
+              "ranking"
+            ],
+            "createSql": "CREATE  INDEX `index_RecordType_type_ranking` ON `${TABLE_NAME}` (`type`, `ranking`)"
+          }
+        ],
         "foreignKeys": []
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"05c971fbf975f2ad83b7e9b809044ced\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"247814c558f0ecc4d3afd5ceb5f47a18\")"
     ]
   }
 }

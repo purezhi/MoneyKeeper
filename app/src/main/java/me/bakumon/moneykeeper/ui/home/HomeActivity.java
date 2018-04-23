@@ -69,9 +69,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(recordWithTypes -> {
                             if (recordWithTypes == null || recordWithTypes.size() < 1) {
-                                setListData(recordWithTypes);
-                            } else {
                                 setEmptyView();
+                            } else {
+                                setListData(recordWithTypes);
                             }
                         },
                         throwable ->

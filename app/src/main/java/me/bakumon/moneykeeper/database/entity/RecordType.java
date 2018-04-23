@@ -3,6 +3,7 @@ package me.bakumon.moneykeeper.database.entity;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 /**
@@ -10,7 +11,7 @@ import android.arch.persistence.room.PrimaryKey;
  *
  * @author bakumon https://bakumon.me
  */
-@Entity
+@Entity(indices = {@Index(value = {"type", "ranking"})})
 public class RecordType {
     @PrimaryKey(autoGenerate = true)
     public int id;

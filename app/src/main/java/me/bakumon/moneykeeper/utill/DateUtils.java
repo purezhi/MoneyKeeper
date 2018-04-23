@@ -112,4 +112,19 @@ public class DateUtils {
 
         return calendar.getTime();
     }
+
+    /**
+     * 获取字面时间
+     * 如：
+     * 1.今天
+     * 2.昨天
+     * 3.当月内，4月20日
+     * 4.超过当月，2018年3月30日
+     *
+     * @return 字面时间
+     */
+    public String getTimeWord(Date date) {
+        // TODO: 2018/4/23 获取字面时间
+        return "";
+    }
 }
