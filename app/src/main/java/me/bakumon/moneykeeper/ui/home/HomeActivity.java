@@ -19,6 +19,7 @@ import me.bakumon.moneykeeper.base.BaseActivity;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.databinding.ActivityHomeBinding;
 import me.bakumon.moneykeeper.ui.add.AddActivity;
+import me.bakumon.moneykeeper.utill.ToastUtils;
 import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
 
 /**
@@ -67,8 +68,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(recordWithTypes -> {
-                            setListData(recordWithTypes);
-                            Log.e(TAG, "获取记录列表成功");
+                            if (recordWithTypes == null || recordWithTypes.size() < 1) {
+                                setListData(recordWithTypes);
+                            } else {
+                                setEmptyView();
+                            }
                         },
                         throwable ->
                                 Log.e(TAG, "获取记录列表失败", throwable)));
@@ -80,6 +84,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
             View view = getLayoutInflater().inflate(R.layout.layout_footer_tip, null, false);
             mAdapter.setFooterView(view);
         }
+    }
+
+    private void setEmptyView() {
+        ToastUtils.show("当月还没有记账");
     }
 
     @Override

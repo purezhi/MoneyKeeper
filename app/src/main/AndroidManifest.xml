@@ -23,6 +23,7 @@
         </activity>
         <activity
             android:name=".ui.add.AddActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
     </application>
 
