@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.hhl.gridpagersnaphelper.GridPagerSnapHelper;
@@ -44,7 +45,7 @@ public class AddActivity extends BaseActivity {
 
     private TypeAdapter mAdapter;
     private List<RecordType> mRecordTypes;
-    private Date mCurrentChooseDate = new Date();
+    private Date mCurrentChooseDate = DateUtils.getTodayDate();
     private Calendar mCurrentChooseCalendar = Calendar.getInstance();
 
     @Override
@@ -70,10 +71,12 @@ public class AddActivity extends BaseActivity {
         configRecyclerView();
         configCustomKeyboard();
         mBinding.ibtClose.setOnClickListener(v -> finish());
+
+
         mBinding.qmTvDate.setOnClickListener(v -> {
             DatePickerDialog dpd = DatePickerDialog.newInstance(
                     (view, year, monthOfYear, dayOfMonth) -> {
-                        mCurrentChooseDate = DateUtils.getAccurateDate(year, monthOfYear + 1, dayOfMonth);
+                        mCurrentChooseDate = DateUtils.getDate(year, monthOfYear + 1, dayOfMonth);
                         mCurrentChooseCalendar.setTime(mCurrentChooseDate);
                         mBinding.qmTvDate.setText(DateUtils.getWordTime(mCurrentChooseDate));
                     }, mCurrentChooseCalendar);
@@ -123,6 +126,7 @@ public class AddActivity extends BaseActivity {
             record.remark = mBinding.edtRemark.getText().toString().trim();
 
             record.time = mCurrentChooseDate;
+            record.createTime = new Date();
             record.recordTypeId = mAdapter.getCurrentItem().id;
 
             insertRecord(record);

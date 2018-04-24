@@ -18,28 +18,36 @@ import me.bakumon.moneykeeper.R;
  */
 public class DateUtils {
     @SuppressLint("SimpleDateFormat")
-    public static final DateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
+    public static final DateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     @SuppressLint("SimpleDateFormat")
     public static final DateFormat MONTH_DAY_FORMAT = new SimpleDateFormat("MM月dd日");
     @SuppressLint("SimpleDateFormat")
     public static final DateFormat YEAR_MONTH_DAY_FORMAT = new SimpleDateFormat("yyyy年MM月dd日");
 
     /**
-     * 精确到时分秒毫秒的 Date 对象
+     * 获取今天 Date 对象，精确到日
+     *
+     * @return Date 对象
+     */
+    public static Date getTodayDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
+    }
+
+    /**
+     * 根据年月日创建 Date 对象
      *
      * @param year        年
      * @param monthOfYear 月
      * @param dayOfMonth  日
-     * @return 精确到时分秒毫秒的 Date 对象
+     * @return Date 对象
      */
-    public static Date getAccurateDate(int year, int monthOfYear, int dayOfMonth) {
-        Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-        int second = calendar.get(Calendar.SECOND);
-        int milliSecond = calendar.get(Calendar.MILLISECOND);
-        String time = year + "-" + monthOfYear + "-" + dayOfMonth + " "
-                + hour + ":" + minute + ":" + second + ":" + milliSecond;
+    public static Date getDate(int year, int monthOfYear, int dayOfMonth) {
+        String time = year + "-" + monthOfYear + "-" + dayOfMonth;
         return string2Date(time, FORMAT);
     }
 

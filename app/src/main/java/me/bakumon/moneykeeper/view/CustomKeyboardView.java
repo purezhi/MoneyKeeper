@@ -5,10 +5,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 
+import me.bakumon.moneykeeper.App;
 import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.databinding.LayoutKeyboardBinding;
 import me.bakumon.moneykeeper.utill.CustomKeyboardHelper;
@@ -70,7 +74,12 @@ public class CustomKeyboardView extends LinearLayout {
                 .setDeleteView(mBinding.keyboardDelete)
                 .setAffirmListener(mBinding.keyboardAffirm, v -> {
                     if (mOnAffirmClickListener != null) {
-                        mOnAffirmClickListener.onAffirmClick(mBinding.editInput.getText().toString());
+                        if (TextUtils.isEmpty(mBinding.editInput.getText().toString())) {
+                            Animation animation = AnimationUtils.loadAnimation(App.getINSTANCE(), R.anim.shake);
+                            mBinding.editInput.startAnimation(animation);
+                        } else {
+                            mOnAffirmClickListener.onAffirmClick(mBinding.editInput.getText().toString());
+                        }
                     }
                 });
         // 点击 editText，不弹出软键盘，点击时如果已经有软键盘，则隐藏

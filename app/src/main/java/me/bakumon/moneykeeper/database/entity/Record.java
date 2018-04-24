@@ -25,6 +25,9 @@ public class Record {
 
     public Date time;
 
+    @ColumnInfo(name = "create_time")
+    public Date createTime;
+
     @ColumnInfo(name = "record_type_id")
     public int recordTypeId;
 }

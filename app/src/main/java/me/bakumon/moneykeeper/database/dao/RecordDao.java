@@ -21,7 +21,7 @@ import me.bakumon.moneykeeper.database.entity.RecordWithType;
 public interface RecordDao {
 
     @Transaction
-    @Query("SELECT * from record WHERE time BETWEEN :from AND :to ORDER BY time DESC")
+    @Query("SELECT * from record WHERE time BETWEEN :from AND :to ORDER BY time DESC, create_time DESC")
     Flowable<List<RecordWithType>> getRangeRecordWithTypes(Date from, Date to);
 
     @Insert
