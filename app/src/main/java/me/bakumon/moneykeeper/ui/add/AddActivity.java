@@ -45,6 +45,7 @@ public class AddActivity extends BaseActivity {
     private TypeAdapter mAdapter;
     private List<RecordType> mRecordTypes;
     private Date mCurrentChooseDate = new Date();
+    private Calendar mCurrentChooseCalendar = Calendar.getInstance();
 
     @Override
     protected int getLayoutId() {
@@ -70,13 +71,13 @@ public class AddActivity extends BaseActivity {
         configCustomKeyboard();
         mBinding.ibtClose.setOnClickListener(v -> finish());
         mBinding.qmTvDate.setOnClickListener(v -> {
-            Calendar now = Calendar.getInstance();
             DatePickerDialog dpd = DatePickerDialog.newInstance(
                     (view, year, monthOfYear, dayOfMonth) -> {
                         mCurrentChooseDate = DateUtils.getAccurateDate(year, monthOfYear + 1, dayOfMonth);
-
-                    }, now);
-            dpd.setMaxDate(now);
+                        mCurrentChooseCalendar.setTime(mCurrentChooseDate);
+                        mBinding.qmTvDate.setText(DateUtils.getWordTime(mCurrentChooseDate));
+                    }, mCurrentChooseCalendar);
+            dpd.setMaxDate(Calendar.getInstance());
             dpd.show(getFragmentManager(), "Datepickerdialog");
         });
         mBinding.rgType.setOnCheckedChangeListener((group, checkedId) -> {
