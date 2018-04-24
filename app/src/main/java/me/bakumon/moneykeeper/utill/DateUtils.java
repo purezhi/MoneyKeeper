@@ -25,12 +25,12 @@ public class DateUtils {
     public static final DateFormat YEAR_MONTH_DAY_FORMAT = new SimpleDateFormat("yyyy年MM月dd日");
 
     /**
-     * 精确到时分秒的 Date 对象
+     * 精确到时分秒毫秒的 Date 对象
      *
      * @param year        年
      * @param monthOfYear 月
      * @param dayOfMonth  日
-     * @return 精确到时分秒的 Date 对象
+     * @return 精确到时分秒毫秒的 Date 对象
      */
     public static Date getAccurateDate(int year, int monthOfYear, int dayOfMonth) {
         Calendar calendar = Calendar.getInstance();
@@ -164,11 +164,11 @@ public class DateUtils {
     }
 
     /**
-     * 获取当前月份结束时刻的 Date
-     * 比如当前是 2018年4月
-     * 返回的 Date 是 format 后： 2018-04-30T23:59:59.999+0800
+     * 获取当前月份结束时间戳
+     * 比如当前是 2018年4月24日
+     * 返回的时间是 2018年4月24日 23:59:59:999
      *
-     * @return 当前月份结束的 Date
+     * @return 当前月份结束时间戳
      */
     public static long getTodayEndMillis() {
         Calendar calendar = Calendar.getInstance();
