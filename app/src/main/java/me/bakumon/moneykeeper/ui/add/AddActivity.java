@@ -10,6 +10,7 @@ import android.util.Log;
 import com.hhl.gridpagersnaphelper.GridPagerSnapHelper;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -121,7 +122,9 @@ public class AddActivity extends BaseActivity {
             // 防止重复提交
             mBinding.customKeyboard.setAffirmEnable(false);
             Record record = new Record();
-            record.money = text;
+
+            record.money = new BigDecimal(text);
+
             record.remark = mBinding.edtRemark.getText().toString().trim();
 
             record.time = mCurrentChooseDate;
