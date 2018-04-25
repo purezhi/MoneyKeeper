@@ -212,7 +212,7 @@ public class DateUtils {
         long todayEndMillis = getTodayEndMillis();
 
 
-        long oneDayMillis = todayEndMillis - todayStartMillis;
+        long oneDayMillis = todayEndMillis - todayStartMillis + 1;
 
         String result;
         if (dateMillis >= todayStartMillis && dateMillis <= todayEndMillis) {
