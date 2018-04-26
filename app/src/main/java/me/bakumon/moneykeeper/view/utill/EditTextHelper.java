@@ -1,4 +1,4 @@
-package me.bakumon.moneykeeper.utill;
+package me.bakumon.moneykeeper.view.utill;
 
 import android.support.annotation.NonNull;
 import android.text.Editable;

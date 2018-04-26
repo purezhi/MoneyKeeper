@@ -15,7 +15,8 @@ import android.widget.LinearLayout;
 import me.bakumon.moneykeeper.App;
 import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.databinding.LayoutKeyboardBinding;
-import me.bakumon.moneykeeper.utill.CustomKeyboardHelper;
+import me.bakumon.moneykeeper.view.utill.CustomKeyboardHelper;
+import me.bakumon.moneykeeper.view.utill.EditTextHelper;
 
 /**
  * @author Bakumon
@@ -87,6 +88,7 @@ public class CustomKeyboardView extends LinearLayout {
             CustomKeyboardHelper.hideSoftInput(mBinding.editInput);
             return false;
         });
+//        EditTextHelper.getINSTANCE().limitTwoDecimalPlaces(mBinding.editInput);
     }
 
 }
