@@ -1,5 +1,6 @@
 package me.bakumon.moneykeeper.binding;
 
+import android.content.Context;
 import android.databinding.BindingAdapter;
 import android.support.annotation.DrawableRes;
 import android.text.TextUtils;
@@ -35,5 +36,14 @@ public class BindAdapter {
     public static void setText(TextView textView, String text) {
         textView.setText(text);
         textView.setVisibility(TextUtils.isEmpty(text) ? View.GONE : View.VISIBLE);
+    }
+
+    @BindingAdapter("src_img_name")
+    public static void setImg(ImageView imageView, String imgName) {
+        Context context = imageView.getContext();
+        if (!TextUtils.isEmpty(imgName)) {
+            int resId = context.getResources().getIdentifier(imgName, "mipmap", context.getPackageName());
+            imageView.setImageResource(resId);
+        }
     }
 }

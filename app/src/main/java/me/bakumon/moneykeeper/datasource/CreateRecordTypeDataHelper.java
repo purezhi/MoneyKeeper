@@ -26,50 +26,50 @@ public class CreateRecordTypeDataHelper {
         RecordType type;
 
         // 支出
-        type = new RecordType(res.getString(R.string.text_type_eat), R.mipmap.type_eat, 0, 1);
+        type = new RecordType(res.getString(R.string.text_type_eat), "type_eat", 0, 1);
         list.add(type);
 
-        type = new RecordType(res.getString(R.string.text_type_calendar), R.mipmap.type_calendar, 0, 2);
+        type = new RecordType(res.getString(R.string.text_type_calendar), "type_calendar", 0, 2);
         list.add(type);
 
-        type = new RecordType(res.getString(R.string.text_type_3c), R.mipmap.type_3c, 0, 3);
+        type = new RecordType(res.getString(R.string.text_type_3c), "type_3c", 0, 3);
         list.add(type);
 
-        type = new RecordType(res.getString(R.string.text_type_clothes), R.mipmap.type_clothes, 0, 4);
+        type = new RecordType(res.getString(R.string.text_type_clothes), "type_clothes", 0, 4);
         list.add(type);
 
-        type = new RecordType(res.getString(R.string.text_type_candy), R.mipmap.type_candy, 0, 5);
+        type = new RecordType(res.getString(R.string.text_type_candy), "type_candy", 0, 5);
         list.add(type);
 
-        type = new RecordType(res.getString(R.string.text_type_cigarette), R.mipmap.type_cigarette, 0, 6);
-        list.add(type);
-
-
-        type = new RecordType(res.getString(R.string.text_type_humanity), R.mipmap.type_humanity, 0, 7);
+        type = new RecordType(res.getString(R.string.text_type_cigarette), "type_cigarette", 0, 6);
         list.add(type);
 
 
-        type = new RecordType(res.getString(R.string.text_type_pill), R.mipmap.type_pill, 0, 8);
+        type = new RecordType(res.getString(R.string.text_type_humanity), "type_humanity", 0, 7);
         list.add(type);
 
-        type = new RecordType(res.getString(R.string.text_type_fitness), R.mipmap.type_fitness, 0, 9);
+
+        type = new RecordType(res.getString(R.string.text_type_pill), "type_pill", 0, 8);
         list.add(type);
 
-        type = new RecordType(res.getString(R.string.text_type_sim), R.mipmap.type_sim, 0, 10);
+        type = new RecordType(res.getString(R.string.text_type_fitness), "type_fitness", 0, 9);
         list.add(type);
 
-        type = new RecordType(res.getString(R.string.text_type_study), R.mipmap.type_study, 0, 11);
+        type = new RecordType(res.getString(R.string.text_type_sim), "type_sim", 0, 10);
         list.add(type);
 
-        type = new RecordType(res.getString(R.string.text_type_pet), R.mipmap.type_pet, 0, 12);
+        type = new RecordType(res.getString(R.string.text_type_study), "type_study", 0, 11);
+        list.add(type);
+
+        type = new RecordType(res.getString(R.string.text_type_pet), "type_pet", 0, 12);
         list.add(type);
 
 
         // 收入
-        type = new RecordType(res.getString(R.string.text_type_salary), R.mipmap.type_salary, 1, 1);
+        type = new RecordType(res.getString(R.string.text_type_salary), "type_salary", 1, 1);
         list.add(type);
 
-        type = new RecordType(res.getString(R.string.text_type_pluralism), R.mipmap.type_pluralism, 1, 2);
+        type = new RecordType(res.getString(R.string.text_type_pluralism), "type_pluralism", 1, 2);
         list.add(type);
 
         return list.toArray(new RecordType[list.size()]);

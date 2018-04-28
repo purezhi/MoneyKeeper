@@ -19,10 +19,11 @@ public class RecordType {
     public String name;
 
     /**
-     * 图片 id（本地mipmap）
+     * 图片 name（本地mipmap）
      */
-    @ColumnInfo(name = "img_res_id")
-    public int imgResId;
+    @ColumnInfo(name = "img_name")
+    public String imgName;
+
     @Ignore
     public static int TYPE_OUTLAY = 0;
     @Ignore
@@ -48,17 +49,19 @@ public class RecordType {
     public boolean isChecked;
 
     @Ignore
-    public RecordType(String name, int imgResId, int type, int ranking) {
+    public RecordType(String name, String imgName, int type, int ranking) {
         this.name = name;
-        this.imgResId = imgResId;
+//        this.imgResId = imgResId;
+        this.imgName = imgName;
         this.type = type;
         this.ranking = ranking;
     }
 
-    public RecordType(int id, String name, int imgResId, int type, int ranking) {
+    public RecordType(int id, String name, String imgName, int type, int ranking) {
         this.id = id;
         this.name = name;
-        this.imgResId = imgResId;
+//        this.imgResId = imgResId;
+        this.imgName = imgName;
         this.type = type;
         this.ranking = ranking;
     }

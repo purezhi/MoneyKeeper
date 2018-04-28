@@ -46,7 +46,7 @@
             <ImageView
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:src="@{recordWithType.mRecordTypes.get(0).imgResId}"
+                app:src_img_name="@{recordWithType.mRecordTypes.get(0).imgName}"
                 tools:src="@mipmap/type_eat" />
 
             <LinearLayout
