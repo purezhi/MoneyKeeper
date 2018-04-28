@@ -22,6 +22,7 @@
     <string name="text_add_record">记一笔</string>
     <string name="text_outlay">支出</string>
     <string name="text_income">收入</string>
+    <string name="text_setting">设置</string>
     <string name="text_month_outlay">本月支出(¥)</string>
     <string name="text_month_income">本月收入(¥)</string>
     <string name="text_today">今天</string>
@@ -44,4 +45,5 @@
     <string name="text_type_salary">薪资</string>
 
     <string name="toast_add_record_fail">记账失败，请重试</string>
+
 </resources>

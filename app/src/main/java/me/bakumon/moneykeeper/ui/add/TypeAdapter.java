@@ -15,6 +15,7 @@ import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.base.BaseDataBindingAdapter;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.utill.ScreenUtils;
+import me.bakumon.moneykeeper.utill.ToastUtils;
 
 /**
  * TypeAdapter
@@ -53,30 +54,40 @@ public class TypeAdapter extends BaseDataBindingAdapter<RecordType> {
      * @see RecordType#TYPE_INCOME 收入
      */
     public void setNewData(@Nullable List<RecordType> data, int type) {
-        if (data != null) {
+        if (data != null && data.size() > 0) {
             List<RecordType> result = new ArrayList<>();
             for (int i = 0; i < data.size(); i++) {
                 if (data.get(i).type == type) {
                     result.add(data.get(i));
                 }
             }
+            // 增加设置 item， type == -1 表示是设置 item
+            RecordType settingItem = new RecordType(App.getINSTANCE().getString(R.string.text_setting), "type_item_setting", -1);
+            result.add(settingItem);
             // 适配网格分页布局
             result = GridPagerUtils.transformAndFillEmptyData(
                     new TwoRowDataTransform<>(mColumn), result);
             // 选中第一个
             super.setNewData(result);
-            checkItem(0);
+            clickItem(0);
         } else {
             super.setNewData(null);
         }
     }
 
     /**
-     * 选中某一个 item
+     * 选中某一个 item，或点击设置 item
      *
      * @param position 选中 item 的索引
      */
-    public void checkItem(int position) {
+    public void clickItem(int position) {
+        // 点击设置 item
+        RecordType item = getItem(position);
+        if (item != null && item.type == -1) {
+            ToastUtils.show("设置");
+            return;
+        }
+        // 选中某一个 item
         for (int i = 0; i < getData().size(); i++) {
             if (getData().get(i) != null) {
                 getData().get(i).isChecked = i == position;

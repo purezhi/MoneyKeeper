@@ -105,7 +105,7 @@ public class AddActivity extends BaseActivity {
         gridPagerSnapHelper.attachToRecyclerView(mBinding.rvType);
 
         mAdapter = new TypeAdapter(null, COLUMN);
-        mAdapter.setOnItemClickListener((adapter, view, position) -> mAdapter.checkItem(position));
+        mAdapter.setOnItemClickListener((adapter, view, position) -> mAdapter.clickItem(position));
         mBinding.rvType.setAdapter(mAdapter);
 
         // Note: pageColumn must be config

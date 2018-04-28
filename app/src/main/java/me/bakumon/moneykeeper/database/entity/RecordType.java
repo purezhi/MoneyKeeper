@@ -49,6 +49,13 @@ public class RecordType {
     public boolean isChecked;
 
     @Ignore
+    public RecordType(String name, String imgName, int type) {
+        this.name = name;
+        this.imgName = imgName;
+        this.type = type;
+    }
+
+    @Ignore
     public RecordType(String name, String imgName, int type, int ranking) {
         this.name = name;
         this.imgName = imgName;
