@@ -27,11 +27,6 @@ public class BindAdapter {
         layoutParams.width = width;
     }
 
-    @BindingAdapter("android:src")
-    public static void setSrc(ImageView view, @DrawableRes int resId) {
-        view.setImageResource(resId);
-    }
-
     @BindingAdapter("text_check_null")
     public static void setText(TextView textView, String text) {
         textView.setText(text);
