@@ -51,7 +51,6 @@ public class RecordType {
     @Ignore
     public RecordType(String name, String imgName, int type, int ranking) {
         this.name = name;
-//        this.imgResId = imgResId;
         this.imgName = imgName;
         this.type = type;
         this.ranking = ranking;
@@ -60,7 +59,6 @@ public class RecordType {
     public RecordType(int id, String name, String imgName, int type, int ranking) {
         this.id = id;
         this.name = name;
-//        this.imgResId = imgResId;
         this.imgName = imgName;
         this.type = type;
         this.ranking = ranking;
