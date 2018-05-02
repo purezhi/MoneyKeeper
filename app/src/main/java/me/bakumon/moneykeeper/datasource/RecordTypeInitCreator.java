@@ -15,7 +15,7 @@ import me.bakumon.moneykeeper.database.entity.RecordType;
  *
  * @author Bakumon https://bakumon.me
  */
-public class CreateRecordTypeDataHelper {
+public class RecordTypeInitCreator {
 
     public static RecordType[] createRecordTypeData() {
 

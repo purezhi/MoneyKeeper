@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl">
         <activity
-            android:name=".ui.home.HomeActivity"
+            android:name=".ui.LauncherActivity"
             android:theme="@style/AppTheme.Translucent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.home.HomeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.add.AddActivity"
             android:launchMode="singleTop"

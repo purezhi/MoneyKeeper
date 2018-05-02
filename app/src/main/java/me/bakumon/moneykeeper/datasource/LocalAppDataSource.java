@@ -36,7 +36,7 @@ public class LocalAppDataSource implements AppDataSource {
     public void initRecordTypes() {
         if (mAppDatabase.recordTypeDao().getRecordTypeCount() < 1) {
             // 没有记账类型数据记录，插入默认的数据类型
-            insertAllRecordType(CreateRecordTypeDataHelper.createRecordTypeData());
+            insertAllRecordType(RecordTypeInitCreator.createRecordTypeData());
         }
     }
 
