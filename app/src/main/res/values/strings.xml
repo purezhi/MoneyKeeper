@@ -1,8 +1,14 @@
 <resources>
     <string name="app_name">MoneyKeeper</string>
+
     <string name="content_des_setting">设置</string>
     <string name="content_des_statistics">统计</string>
     <string name="content_des_close">关闭</string>
+
+    <string name="toast_add_record_fail">记账失败，请重试</string>
+
+    <string name="hint_enter_money">输入金额</string>
+    <string name="hint_enter_remark">输入备注</string>
 
     <string name="text_affirm">确定</string>
     <string name="text_symbol_outlay">-</string>
@@ -27,8 +33,6 @@
     <string name="text_month_income">本月收入(¥)</string>
     <string name="text_today">今天</string>
     <string name="text_yesterday">昨天</string>
-    <string name="hint_enter_money">输入金额</string>
-    <string name="hint_enter_remark">输入备注</string>
     <string name="text_type_eat">餐饮</string>
     <string name="text_type_clothes">衣服</string>
     <string name="text_type_humanity">人情</string>
@@ -43,7 +47,6 @@
     <string name="text_type_study">学习</string>
     <string name="text_type_pluralism">兼职</string>
     <string name="text_type_salary">薪资</string>
-
-    <string name="toast_add_record_fail">记账失败，请重试</string>
+    <string name="text_current_month_empty_tip">本月未开始记账\n\n点击加号，开始记账</string>
 
 </resources>

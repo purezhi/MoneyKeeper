@@ -19,7 +19,6 @@ import me.bakumon.moneykeeper.base.BaseActivity;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.databinding.ActivityHomeBinding;
 import me.bakumon.moneykeeper.ui.add.AddActivity;
-import me.bakumon.moneykeeper.utill.ToastUtils;
 import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
 
 /**
@@ -31,7 +30,7 @@ import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
 public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
-    private static final int MAX_ITEM_TIP = 7;
+    private static final int MAX_ITEM_TIP = 6;
     private ActivityHomeBinding binding;
 
     private HomeViewModel mViewModel;
@@ -80,14 +79,15 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     private void setListData(List<RecordWithType> recordWithTypes) {
         mAdapter.setNewData(recordWithTypes);
-        if (recordWithTypes != null && recordWithTypes.size() > MAX_ITEM_TIP && mAdapter.getFooterLayoutCount() == 0) {
-            View view = getLayoutInflater().inflate(R.layout.layout_footer_tip, null, false);
-            mAdapter.setFooterView(view);
+        if (recordWithTypes != null
+                && recordWithTypes.size() > MAX_ITEM_TIP
+                && mAdapter.getFooterLayoutCount() == 0) {
+            mAdapter.setFooterView(inflate(R.layout.layout_footer_tip));
         }
     }
 
     private void setEmptyView() {
-        ToastUtils.show("当月还没有记账");
+        mAdapter.setEmptyView(inflate(R.layout.layout_home_empty));
     }
 
     @Override

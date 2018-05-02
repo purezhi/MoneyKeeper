@@ -79,7 +79,7 @@
                         android:ellipsize="end"
                         android:maxLines="2"
                         android:paddingRight="15dp"
-                        android:text="4,108.5"
+                        android:text="0"
                         android:textColor="@color/colorTextWhite"
                         android:textSize="34sp" />
 
@@ -113,7 +113,7 @@
                         android:ellipsize="end"
                         android:maxLines="2"
                         android:paddingLeft="15dp"
-                        android:text="9500"
+                        android:text="0"
                         android:textColor="@color/colorTextWhite"
                         android:textSize="34sp" />
                 </LinearLayout>

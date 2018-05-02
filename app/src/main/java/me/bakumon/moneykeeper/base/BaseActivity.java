@@ -98,6 +98,15 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected abstract void onInit(@Nullable Bundle savedInstanceState);
 
+    /**
+     * inflate view root：null，attachToRoot：false
+     *
+     * @param resource 布局 id
+     * @return view
+     */
+    protected View inflate(@LayoutRes int resource) {
+        return getLayoutInflater().inflate(resource, null, false);
+    }
 
     @Override
     public Resources getResources() {
