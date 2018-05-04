@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import me.bakumon.moneykeeper.datasource.AppDataSource;
 import me.bakumon.moneykeeper.ui.add.AddViewModel;
 import me.bakumon.moneykeeper.ui.home.HomeViewModel;
+import me.bakumon.moneykeeper.ui.typemanage.TypeManageViewModel;
 
 /**
  * ViewModel 工厂
@@ -27,6 +28,8 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return (T) new AddViewModel(mDataSource);
         } else if (modelClass.isAssignableFrom(HomeViewModel.class)) {
             return (T) new HomeViewModel(mDataSource);
+        } else if (modelClass.isAssignableFrom(TypeManageViewModel.class)) {
+            return (T) new TypeManageViewModel(mDataSource);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }
