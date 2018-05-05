@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -19,6 +18,7 @@ import me.bakumon.moneykeeper.base.BaseActivity;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.databinding.ActivityHomeBinding;
 import me.bakumon.moneykeeper.ui.add.AddActivity;
+import me.bakumon.moneykeeper.utill.ToastUtils;
 import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
 
 /**
@@ -27,7 +27,7 @@ import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
  * @author bakumon https://bakumon.me
  * @date 2018/4/9
  */
-public class HomeActivity extends BaseActivity implements View.OnClickListener {
+public class HomeActivity extends BaseActivity {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
     private static final int MAX_ITEM_TIP = 6;
@@ -55,10 +55,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         binding.rvHome.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new HomeAdapter(null);
         binding.rvHome.setAdapter(mAdapter);
-
-        binding.fabHomeRandom.setOnClickListener(this);
-        binding.itSetting.setOnClickListener(this);
-        binding.itStatistics.setOnClickListener(this);
     }
 
     private void initData() {
@@ -90,22 +86,18 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         mAdapter.setEmptyView(inflate(R.layout.layout_home_empty));
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.it_setting:
-                Toast.makeText(this, "设置", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.it_statistics:
-                Toast.makeText(this, "统计", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.fab_home_random:
-                Intent intent = new Intent();
-                intent.setClass(this, AddActivity.class);
-                startActivity(intent);
-                break;
-            default:
-                break;
-        }
+    public void settingClick(View view) {
+        ToastUtils.show("设置");
     }
+
+    public void statisticsClick(View view) {
+        ToastUtils.show("统计");
+    }
+
+    public void addClick(View view) {
+        Intent intent = new Intent();
+        intent.setClass(this, AddActivity.class);
+        startActivity(intent);
+    }
+
 }

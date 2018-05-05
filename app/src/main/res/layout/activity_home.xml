@@ -21,11 +21,11 @@
                 android:orientation="horizontal">
 
                 <me.bakumon.moneykeeper.view.QMUIAlphaImageButton
-                    android:id="@+id/it_setting"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/ic_setting"
-                    android:contentDescription="@string/content_des_setting" />
+                    android:contentDescription="@string/content_des_setting"
+                    android:onClick="settingClick" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -43,11 +43,11 @@
                 </LinearLayout>
 
                 <me.bakumon.moneykeeper.view.QMUIAlphaImageButton
-                    android:id="@+id/it_statistics"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/ic_statistics"
-                    android:contentDescription="@string/content_des_statistics" />
+                    android:contentDescription="@string/content_des_statistics"
+                    android:onClick="statisticsClick" />
 
             </LinearLayout>
 
@@ -129,13 +129,13 @@
             tools:listitem="@layout/item_home" />
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_home_random"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="bottom|center"
             android:layout_margin="25dp"
             android:clickable="true"
             android:focusable="true"
+            android:onClick="addClick"
             app:srcCompat="@drawable/ic_add" />
     </android.support.design.widget.CoordinatorLayout>
 </layout>
