@@ -22,7 +22,7 @@ import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.base.BaseActivity;
 import me.bakumon.moneykeeper.database.entity.Record;
 import me.bakumon.moneykeeper.database.entity.RecordType;
-import me.bakumon.moneykeeper.databinding.ActivityAddBinding;
+import me.bakumon.moneykeeper.databinding.ActivityAddRecordBinding;
 import me.bakumon.moneykeeper.utill.DateUtils;
 import me.bakumon.moneykeeper.utill.ToastUtils;
 import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
@@ -33,15 +33,15 @@ import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
  * @author bakumon https://bakumon.me
  * @date 2018/4/9
  */
-public class AddActivity extends BaseActivity {
+public class AddRecordActivity extends BaseActivity {
 
-    private static final String TAG = AddActivity.class.getSimpleName();
+    private static final String TAG = AddRecordActivity.class.getSimpleName();
     private static final int ROW = 2;
     private static final int COLUMN = 4;
 
-    private ActivityAddBinding mBinding;
+    private ActivityAddRecordBinding mBinding;
 
-    private AddViewModel mViewModel;
+    private AddRecordViewModel mViewModel;
 
     private TypeAdapter mAdapter;
     private List<RecordType> mRecordTypes;
@@ -50,14 +50,14 @@ public class AddActivity extends BaseActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_add;
+        return R.layout.activity_add_record;
     }
 
     @Override
     protected void onInit(@Nullable Bundle savedInstanceState) {
         mBinding = getDataBinding();
         ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(this);
-        mViewModel = ViewModelProviders.of(this, viewModelFactory).get(AddViewModel.class);
+        mViewModel = ViewModelProviders.of(this, viewModelFactory).get(AddRecordViewModel.class);
 
         initView();
         initData();
@@ -68,10 +68,10 @@ public class AddActivity extends BaseActivity {
     }
 
     private void initView() {
+        mBinding.title.ibtClose.setOnClickListener(v -> finish());
+        mBinding.title.tvTitle.setText(getString(R.string.text_add_record));
         configRecyclerView();
         configCustomKeyboard();
-        mBinding.ibtClose.setOnClickListener(v -> finish());
-
 
         mBinding.qmTvDate.setOnClickListener(v -> {
             DatePickerDialog dpd = DatePickerDialog.newInstance(
@@ -83,7 +83,7 @@ public class AddActivity extends BaseActivity {
             dpd.setMaxDate(Calendar.getInstance());
             dpd.show(getFragmentManager(), "Datepickerdialog");
         });
-        mBinding.rgType.setOnCheckedChangeListener((group, checkedId) -> {
+        mBinding.title.rgType.setOnCheckedChangeListener((group, checkedId) -> {
             mAdapter.setNewData(mRecordTypes, checkedId == R.id.rb_outlay ? RecordType.TYPE_OUTLAY : RecordType.TYPE_INCOME);
             // 数据改变后需要重绘，否则指示器不能立刻变化
             mBinding.indicator.invalidate();
@@ -160,7 +160,7 @@ public class AddActivity extends BaseActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((recordTypes) -> {
                             mRecordTypes = recordTypes;
-                            mBinding.rgType.check(R.id.rb_outlay);
+                            mBinding.title.rgType.check(R.id.rb_outlay);
                         }, throwable ->
                                 Log.e(TAG, "获取类型数据失败", throwable)
                 )

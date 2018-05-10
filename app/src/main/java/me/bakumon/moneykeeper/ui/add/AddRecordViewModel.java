@@ -15,10 +15,10 @@ import me.bakumon.moneykeeper.datasource.AppDataSource;
  *
  * @author Bakumon https://bakumon.me
  */
-public class AddViewModel extends ViewModel {
+public class AddRecordViewModel extends ViewModel {
     private final AppDataSource mDataSource;
 
-    public AddViewModel(AppDataSource dataSource) {
+    public AddRecordViewModel(AppDataSource dataSource) {
         mDataSource = dataSource;
     }
 

@@ -5,9 +5,10 @@ import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
 import me.bakumon.moneykeeper.datasource.AppDataSource;
-import me.bakumon.moneykeeper.ui.add.AddViewModel;
+import me.bakumon.moneykeeper.ui.add.AddRecordViewModel;
 import me.bakumon.moneykeeper.ui.home.HomeViewModel;
 import me.bakumon.moneykeeper.ui.typemanage.TypeManageViewModel;
+import me.bakumon.moneykeeper.ui.typesort.TypeSortViewModel;
 
 /**
  * ViewModel 工厂
@@ -24,12 +25,14 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if (modelClass.isAssignableFrom(AddViewModel.class)) {
-            return (T) new AddViewModel(mDataSource);
+        if (modelClass.isAssignableFrom(AddRecordViewModel.class)) {
+            return (T) new AddRecordViewModel(mDataSource);
         } else if (modelClass.isAssignableFrom(HomeViewModel.class)) {
             return (T) new HomeViewModel(mDataSource);
         } else if (modelClass.isAssignableFrom(TypeManageViewModel.class)) {
             return (T) new TypeManageViewModel(mDataSource);
+        }else if (modelClass.isAssignableFrom(TypeSortViewModel.class)) {
+            return (T) new TypeSortViewModel(mDataSource);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }

@@ -17,7 +17,7 @@ import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.base.BaseActivity;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.databinding.ActivityHomeBinding;
-import me.bakumon.moneykeeper.ui.add.AddActivity;
+import me.bakumon.moneykeeper.ui.add.AddRecordActivity;
 import me.bakumon.moneykeeper.utill.ToastUtils;
 import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
 
@@ -96,7 +96,7 @@ public class HomeActivity extends BaseActivity {
 
     public void addClick(View view) {
         Intent intent = new Intent();
-        intent.setClass(this, AddActivity.class);
+        intent.setClass(this, AddRecordActivity.class);
         startActivity(intent);
     }
 

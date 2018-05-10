@@ -17,7 +17,6 @@ import me.bakumon.moneykeeper.base.BaseDataBindingAdapter;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.ui.typemanage.TypeManageActivity;
 import me.bakumon.moneykeeper.utill.ScreenUtils;
-import me.bakumon.moneykeeper.utill.ToastUtils;
 
 /**
  * TypeAdapter

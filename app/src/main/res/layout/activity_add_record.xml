@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="me.bakumon.moneykeeper.ui.add.AddActivity">
+    tools:context="me.bakumon.moneykeeper.ui.add.AddRecordActivity">
 
     <data>
 
@@ -23,65 +23,9 @@
             android:background="@color/colorPrimary"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <me.bakumon.moneykeeper.view.QMUIAlphaImageButton
-                    android:id="@+id/ibt_close"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/ic_close"
-                    android:contentDescription="@string/content_des_close" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="30dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/text_add_record"
-                    android:textColor="@color/colorTextWhite"
-                    android:textSize="22sp" />
-
-            </LinearLayout>
-
-            <RadioGroup
-                android:id="@+id/rg_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/rb_outlay"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/selector_tab_left"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text="@string/text_outlay"
-                    android:textColor="@color/selector_tab_text_color" />
-
-                <RadioButton
-                    android:id="@+id/rb_income"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/selector_tab_right"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text="@string/text_income"
-                    android:textColor="@color/selector_tab_text_color" />
-            </RadioGroup>
+            <include
+                android:id="@+id/title"
+                layout="@layout/layout_title_radio" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_type"

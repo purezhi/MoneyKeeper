@@ -25,11 +25,15 @@
             android:name=".ui.home.HomeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.add.AddActivity"
+            android:name=".ui.add.AddRecordActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.typemanage.TypeManageActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.typesort.TypeSortActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
     </application>
