@@ -39,8 +39,8 @@
             tools:text="餐饮" />
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@mipmap/drag_icon" />
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_arrow_right" />
     </LinearLayout>
 </layout>
