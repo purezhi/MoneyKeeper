@@ -68,6 +68,7 @@ public class AddRecordActivity extends BaseActivity {
     }
 
     private void initView() {
+        mBinding.title.ibtClose.setBackgroundResource(R.drawable.ic_close);
         mBinding.title.ibtClose.setOnClickListener(v -> finish());
         mBinding.title.tvTitle.setText(getString(R.string.text_add_record));
         configRecyclerView();

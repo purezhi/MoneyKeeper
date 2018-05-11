@@ -19,7 +19,7 @@
                 android:id="@+id/ibt_close"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_close"
+                android:background="@drawable/ic_back"
                 android:contentDescription="@string/content_des_close" />
 
             <TextView
@@ -28,17 +28,17 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                tools:text="记一笔"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="21sp" />
+                android:textSize="20sp"
+                tools:text="记一笔" />
 
             <me.bakumon.moneykeeper.view.QMUIAlphaTextView
                 android:id="@+id/tv_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                tools:text="完成"
-                android:textColor="@color/colorTextWhite" />
+                android:textColor="@color/colorTextWhite"
+                tools:text="完成" />
 
         </LinearLayout>
 

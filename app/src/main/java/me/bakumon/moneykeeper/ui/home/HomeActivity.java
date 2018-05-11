@@ -30,7 +30,7 @@ import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
 public class HomeActivity extends BaseActivity {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
-    private static final int MAX_ITEM_TIP = 6;
+    private static final int MAX_ITEM_TIP = 5;
     private ActivityHomeBinding binding;
 
     private HomeViewModel mViewModel;

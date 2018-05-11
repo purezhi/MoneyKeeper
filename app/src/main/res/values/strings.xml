@@ -28,7 +28,7 @@
     <string name="text_add_record">记一笔</string>
     <string name="text_done">完成</string>
     <string name="text_title_drag_sort">长按拖动排序</string>
-    <string name="text_title_type_edit">编辑</string>
+    <string name="text_title_type_manage">分类管理</string>
     <string name="text_button_sort">排序</string>
     <string name="text_outlay">支出</string>
     <string name="text_income">收入</string>

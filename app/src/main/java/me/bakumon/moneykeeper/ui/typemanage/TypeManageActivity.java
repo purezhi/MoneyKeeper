@@ -47,7 +47,7 @@ public class TypeManageActivity extends BaseActivity {
 
     private void initView() {
         mBinding.title.ibtClose.setOnClickListener(v -> finish());
-        mBinding.title.tvTitle.setText(R.string.text_title_type_edit);
+        mBinding.title.tvTitle.setText(R.string.text_title_type_manage);
         mBinding.title.tvRight.setText(R.string.text_button_sort);
         mBinding.title.tvRight.setOnClickListener(v -> startActivity(new Intent(this, TypeSortActivity.class)));
 
