@@ -2,7 +2,6 @@ package me.bakumon.moneykeeper.ui.typemanage;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -15,12 +14,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.bakumon.moneykeeper.Injection;
 import me.bakumon.moneykeeper.R;
+import me.bakumon.moneykeeper.Router;
 import me.bakumon.moneykeeper.base.BaseActivity;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.databinding.ActivityTypeManageBinding;
-import me.bakumon.moneykeeper.ui.typesort.TypeSortActivity;
 import me.bakumon.moneykeeper.utill.ToastUtils;
 import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
+import me.drakeet.floo.Floo;
 
 /**
  * 类型管理
@@ -56,7 +56,8 @@ public class TypeManageActivity extends BaseActivity {
         mBinding.titleBar.ibtClose.setOnClickListener(v -> finish());
         mBinding.titleBar.setTitle(getString(R.string.text_title_type_manage));
         mBinding.titleBar.setRightText(getString(R.string.text_button_sort));
-        mBinding.titleBar.tvRight.setOnClickListener(v -> startActivity(new Intent(this, TypeSortActivity.class)));
+        mBinding.titleBar.tvRight.setOnClickListener(v ->
+                Floo.navigation(this, Router.TYPE_SORT).start());
 
         mBinding.rvType.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new TypeManageAdapter(null);
@@ -77,7 +78,7 @@ public class TypeManageActivity extends BaseActivity {
 
     }
 
-    private void showDeleteDialog(String typeName){
+    private void showDeleteDialog(String typeName) {
         String msg = "删除 " + typeName + " 分类后，将无法在记账页选择该分类，该分类下原有账单仍保持不变";
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("删除分类");

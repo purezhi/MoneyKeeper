@@ -1,6 +1,5 @@
 package me.bakumon.moneykeeper.ui.add;
 
-import android.content.Intent;
 import android.databinding.ViewDataBinding;
 import android.support.annotation.Nullable;
 
@@ -13,10 +12,11 @@ import java.util.List;
 import me.bakumon.moneykeeper.App;
 import me.bakumon.moneykeeper.BR;
 import me.bakumon.moneykeeper.R;
+import me.bakumon.moneykeeper.Router;
 import me.bakumon.moneykeeper.base.BaseDataBindingAdapter;
 import me.bakumon.moneykeeper.database.entity.RecordType;
-import me.bakumon.moneykeeper.ui.typemanage.TypeManageActivity;
 import me.bakumon.moneykeeper.utill.ScreenUtils;
+import me.drakeet.floo.Floo;
 
 /**
  * TypeAdapter
@@ -85,7 +85,7 @@ public class TypeAdapter extends BaseDataBindingAdapter<RecordType> {
         // 点击设置 item
         RecordType item = getItem(position);
         if (item != null && item.type == -1) {
-            mContext.startActivity(new Intent(mContext, TypeManageActivity.class));
+            Floo.navigation(mContext, Router.TYPE_MANAGE).start();
             return;
         }
         // 选中某一个 item

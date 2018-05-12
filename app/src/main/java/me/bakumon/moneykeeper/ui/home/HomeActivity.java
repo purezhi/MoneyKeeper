@@ -1,7 +1,6 @@
 package me.bakumon.moneykeeper.ui.home;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,12 +13,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.bakumon.moneykeeper.Injection;
 import me.bakumon.moneykeeper.R;
+import me.bakumon.moneykeeper.Router;
 import me.bakumon.moneykeeper.base.BaseActivity;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.databinding.ActivityHomeBinding;
-import me.bakumon.moneykeeper.ui.add.AddRecordActivity;
 import me.bakumon.moneykeeper.utill.ToastUtils;
 import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
+import me.drakeet.floo.Floo;
 
 /**
  * HomeActivity
@@ -95,9 +95,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     public void addClick(View view) {
-        Intent intent = new Intent();
-        intent.setClass(this, AddRecordActivity.class);
-        startActivity(intent);
+        Floo.navigation(this, Router.ADD_RECORD).start();
     }
 
 }

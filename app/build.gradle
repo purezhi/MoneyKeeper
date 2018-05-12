@@ -82,8 +82,12 @@ dependencies {
     // 第三方库
     implementation deps.rxjava
     implementation deps.rxandroid
+    // base adapter
     implementation deps.BRVAH
+    // 路由
+    implementation deps.floo
+    // 日期时间选择器
+    implementation deps.datetimepicker
     implementation 'com.hhl:gridpagersnaphelper:1.0.0'
     implementation 'com.hhl:recyclerviewindicator:1.0.0'
-    implementation 'com.wdullaer:materialdatetimepicker:3.5.1'
 }

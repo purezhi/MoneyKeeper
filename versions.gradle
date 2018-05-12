@@ -18,6 +18,8 @@ versions.rxjava2 = "2.1.3"
 versions.rxandroid = "2.0.1"
 // BaseRecyclerViewAdapterHelper
 versions.BRVAH = "2.9.34"
+versions.floo = "1.1.0"
+versions.datetimepicker = "3.5.1"
 
 def deps = [:]
 
@@ -48,6 +50,8 @@ deps.rxjava = "io.reactivex.rxjava2:rxjava:$versions.rxjava2"
 deps.rxandroid = "io.reactivex.rxjava2:rxandroid:$versions.rxandroid"
 
 deps.BRVAH = "com.github.CymChad:BaseRecyclerViewAdapterHelper:$versions.BRVAH"
+deps.floo = "me.drakeet.floo:floo:$versions.floo"
+deps.datetimepicker = "com.wdullaer:materialdatetimepicker:$versions.datetimepicker"
 
 ext.deps = deps
 
