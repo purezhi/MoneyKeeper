@@ -16,8 +16,13 @@
             app:elevation="0dp">
 
             <include
-                android:id="@+id/title"
-                layout="@layout/layout_title_radio" />
+                android:id="@+id/title_bar"
+                layout="@layout/layout_title_bar" />
+
+            <include
+                android:id="@+id/type_choice"
+                layout="@layout/layout_type_choice" />
+
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v7.widget.RecyclerView

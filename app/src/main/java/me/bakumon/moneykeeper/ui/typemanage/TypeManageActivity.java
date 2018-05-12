@@ -53,10 +53,10 @@ public class TypeManageActivity extends BaseActivity {
     }
 
     private void initView() {
-        mBinding.title.ibtClose.setOnClickListener(v -> finish());
-        mBinding.title.tvTitle.setText(R.string.text_title_type_manage);
-        mBinding.title.tvRight.setText(R.string.text_button_sort);
-        mBinding.title.tvRight.setOnClickListener(v -> startActivity(new Intent(this, TypeSortActivity.class)));
+        mBinding.titleBar.ibtClose.setOnClickListener(v -> finish());
+        mBinding.titleBar.setTitle(getString(R.string.text_title_type_manage));
+        mBinding.titleBar.setRightText(getString(R.string.text_button_sort));
+        mBinding.titleBar.tvRight.setOnClickListener(v -> startActivity(new Intent(this, TypeSortActivity.class)));
 
         mBinding.rvType.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new TypeManageAdapter(null);
@@ -71,7 +71,7 @@ public class TypeManageActivity extends BaseActivity {
             ToastUtils.show("点击了" + position);
         });
 
-        mBinding.title.rgType.setOnCheckedChangeListener((group, checkedId) -> {
+        mBinding.typeChoice.rgType.setOnCheckedChangeListener((group, checkedId) -> {
             mAdapter.setNewData(mRecordTypes, checkedId == R.id.rb_outlay ? RecordType.TYPE_OUTLAY : RecordType.TYPE_INCOME);
         });
 

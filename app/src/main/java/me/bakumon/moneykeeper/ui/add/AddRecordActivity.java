@@ -17,6 +17,7 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import me.bakumon.moneykeeper.BR;
 import me.bakumon.moneykeeper.Injection;
 import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.base.BaseActivity;
@@ -68,9 +69,10 @@ public class AddRecordActivity extends BaseActivity {
     }
 
     private void initView() {
-        mBinding.title.ibtClose.setBackgroundResource(R.drawable.ic_close);
-        mBinding.title.ibtClose.setOnClickListener(v -> finish());
-        mBinding.title.tvTitle.setText(getString(R.string.text_add_record));
+        mBinding.titleBar.ibtClose.setBackgroundResource(R.drawable.ic_close);
+        mBinding.titleBar.ibtClose.setOnClickListener(v -> finish());
+        mBinding.titleBar.setTitle(getString(R.string.text_add_record));
+
         configRecyclerView();
         configCustomKeyboard();
 
@@ -84,7 +86,7 @@ public class AddRecordActivity extends BaseActivity {
             dpd.setMaxDate(Calendar.getInstance());
             dpd.show(getFragmentManager(), "Datepickerdialog");
         });
-        mBinding.title.rgType.setOnCheckedChangeListener((group, checkedId) -> {
+        mBinding.typeChoice.rgType.setOnCheckedChangeListener((group, checkedId) -> {
             mAdapter.setNewData(mRecordTypes, checkedId == R.id.rb_outlay ? RecordType.TYPE_OUTLAY : RecordType.TYPE_INCOME);
             // 数据改变后需要重绘，否则指示器不能立刻变化
             mBinding.indicator.invalidate();
@@ -161,7 +163,7 @@ public class AddRecordActivity extends BaseActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((recordTypes) -> {
                             mRecordTypes = recordTypes;
-                            mBinding.title.rgType.check(R.id.rb_outlay);
+                            mBinding.typeChoice.rgType.check(R.id.rb_outlay);
                         }, throwable ->
                                 Log.e(TAG, "获取类型数据失败", throwable)
                 )

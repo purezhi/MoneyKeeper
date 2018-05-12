@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RadioGroup
+        android:id="@+id/rg_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="15dp"
+        android:paddingEnd="15dp"
+        android:paddingStart="15dp"
+        android:paddingTop="5dp"
+        tools:background="@color/colorPrimary"
+        tools:checkedButton="@id/rb_outlay">
+
+        <RadioButton
+            android:id="@+id/rb_outlay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_tab_left"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/text_outlay"
+            android:textColor="@color/selector_tab_text_color" />
+
+        <RadioButton
+            android:id="@+id/rb_income"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_tab_right"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/text_income"
+            android:textColor="@color/selector_tab_text_color" />
+    </RadioGroup>
+</layout>

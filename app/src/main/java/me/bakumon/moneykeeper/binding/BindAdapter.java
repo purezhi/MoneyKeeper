@@ -2,7 +2,6 @@ package me.bakumon.moneykeeper.binding;
 
 import android.content.Context;
 import android.databinding.BindingAdapter;
-import android.support.annotation.DrawableRes;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,8 +28,11 @@ public class BindAdapter {
 
     @BindingAdapter("text_check_null")
     public static void setText(TextView textView, String text) {
-        textView.setText(text);
-        textView.setVisibility(TextUtils.isEmpty(text) ? View.GONE : View.VISIBLE);
+        if (!TextUtils.isEmpty(text)) {
+            textView.setText(text);
+            return;
+        }
+        textView.setVisibility(View.GONE);
     }
 
     @BindingAdapter("src_img_name")
