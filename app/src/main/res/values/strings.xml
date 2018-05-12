@@ -52,5 +52,7 @@
     <string name="text_type_pluralism">兼职</string>
     <string name="text_type_salary">薪资</string>
     <string name="text_current_month_empty_tip">本月未开始记账\n\n点击加号，开始记账</string>
+    <string name="text_button_cancel">取消</string>
+    <string name="text_button_affirm_delete">确认删除</string>
 
 </resources>

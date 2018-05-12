@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.View;
 
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
 import com.chad.library.adapter.base.listener.OnItemDragListener;
@@ -53,6 +54,7 @@ public class TypeSortActivity extends BaseActivity {
         mBinding.title.tvTitle.setText(R.string.text_title_drag_sort);
         mBinding.title.tvRight.setText(R.string.text_done);
         mBinding.title.tvRight.setOnClickListener(v -> finish());
+        mBinding.title.rgType.setVisibility(View.GONE);
 
         mBinding.rvType.setLayoutManager(new GridLayoutManager(this, 4));
         mAdapter = new TypeSortAdapter(null);
