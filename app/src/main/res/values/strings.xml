@@ -54,5 +54,6 @@
     <string name="text_current_month_empty_tip">本月未开始记账\n\n点击加号，开始记账</string>
     <string name="text_button_cancel">取消</string>
     <string name="text_button_affirm_delete">确认删除</string>
+    <string name="text_dialog_delete_type">删除分类</string>
 
 </resources>

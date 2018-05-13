@@ -3,6 +3,7 @@ package me.bakumon.moneykeeper.database.dao;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import java.util.List;
 
@@ -17,12 +18,18 @@ import me.bakumon.moneykeeper.database.entity.RecordType;
 @Dao
 public interface RecordTypeDao {
 
-    @Query("SELECT * FROM recordtype")
+    @Query("SELECT * FROM recordtype WHERE state = 0 ORDER BY ranking")
     Flowable<List<RecordType>> getAllRecordTypes();
+
+    @Query("SELECT * FROM recordtype WHERE state = 0 and type = :type ORDER BY ranking")
+    Flowable<List<RecordType>> getRecordTypes(int type);
 
     @Query("SELECT count(*) FROM recordtype")
     long getRecordTypeCount();
 
     @Insert
     void insertRecordTypes(RecordType... recordTypes);
+
+    @Update
+    void updateRecordTypes(RecordType... recordTypes);
 }

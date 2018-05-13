@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "31c7f8542b949efc19b917a4a78dbdf3",
+    "identityHash": "8025b61aa319a9419e7deefb68a1f4d3",
     "entities": [
       {
         "tableName": "Record",
@@ -78,7 +78,7 @@
       },
       {
         "tableName": "RecordType",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `img_name` TEXT, `type` INTEGER NOT NULL, `ranking` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `img_name` TEXT, `type` INTEGER NOT NULL, `ranking` INTEGER NOT NULL, `state` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -109,6 +109,12 @@
             "columnName": "ranking",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "state",
+            "columnName": "state",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -133,7 +139,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"31c7f8542b949efc19b917a4a78dbdf3\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"8025b61aa319a9419e7deefb68a1f4d3\")"
     ]
   }
 }

@@ -51,4 +51,14 @@ public class LocalAppDataSource implements AppDataSource {
     public void insertRecord(Record record) {
         mAppDatabase.recordDao().insertRecord(record);
     }
+
+    @Override
+    public void updateRecordTypes(RecordType... recordTypes) {
+        mAppDatabase.recordTypeDao().updateRecordTypes(recordTypes);
+    }
+
+    @Override
+    public Flowable<List<RecordType>> getRecordType(int type) {
+        return mAppDatabase.recordTypeDao().getRecordTypes(type);
+    }
 }

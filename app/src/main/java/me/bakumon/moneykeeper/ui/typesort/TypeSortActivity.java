@@ -16,6 +16,7 @@ import io.reactivex.schedulers.Schedulers;
 import me.bakumon.moneykeeper.Injection;
 import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.base.BaseActivity;
+import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.databinding.ActivityTypeSortBinding;
 import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
 
@@ -28,10 +29,12 @@ import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
 public class TypeSortActivity extends BaseActivity {
 
     private static final String TAG = TypeSortActivity.class.getSimpleName();
+    public static final String KEY_TYPE = "TypeSortActivity.key_type";
 
     private ActivityTypeSortBinding mBinding;
     private TypeSortViewModel mViewModel;
     private TypeSortAdapter mAdapter;
+    private int mType;
 
     @Override
     protected int getLayoutId() {
@@ -49,6 +52,8 @@ public class TypeSortActivity extends BaseActivity {
     }
 
     private void initView() {
+        mType = getIntent().getIntExtra(KEY_TYPE, RecordType.TYPE_OUTLAY);
+
         mBinding.titleBar.ibtClose.setOnClickListener(v -> finish());
         mBinding.titleBar.setTitle(getString(R.string.text_title_drag_sort));
         mBinding.titleBar.setRightText(getString(R.string.text_done));
@@ -84,7 +89,7 @@ public class TypeSortActivity extends BaseActivity {
     }
 
     private void initData() {
-        mDisposable.add(mViewModel.getAllRecordTypes().subscribeOn(Schedulers.io())
+        mDisposable.add(mViewModel.getRecordTypes(mType).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((recordTypes) -> {
                             mAdapter.setNewData(recordTypes);

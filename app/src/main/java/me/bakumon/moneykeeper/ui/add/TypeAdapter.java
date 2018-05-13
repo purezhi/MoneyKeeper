@@ -15,6 +15,7 @@ import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.Router;
 import me.bakumon.moneykeeper.base.BaseDataBindingAdapter;
 import me.bakumon.moneykeeper.database.entity.RecordType;
+import me.bakumon.moneykeeper.ui.typemanage.TypeManageActivity;
 import me.bakumon.moneykeeper.utill.ScreenUtils;
 import me.drakeet.floo.Floo;
 
@@ -84,14 +85,18 @@ public class TypeAdapter extends BaseDataBindingAdapter<RecordType> {
     public void clickItem(int position) {
         // 点击设置 item
         RecordType item = getItem(position);
-        if (item != null && item.type == -1) {
-            Floo.navigation(mContext, Router.TYPE_MANAGE).start();
+        if (position > 0 && item != null && item.type == -1) {
+            Floo.navigation(mContext, Router.TYPE_MANAGE)
+                    .putExtra(TypeManageActivity.KEY_TYPE, 1)
+                    .start();
             return;
         }
         // 选中某一个 item
+        RecordType temp;
         for (int i = 0; i < getData().size(); i++) {
-            if (getData().get(i) != null) {
-                getData().get(i).isChecked = i == position;
+            temp = getData().get(i);
+            if (temp != null && temp.type != -1) {
+                temp.isChecked = i == position;
             }
         }
         mCurrentCheckPosition = position;

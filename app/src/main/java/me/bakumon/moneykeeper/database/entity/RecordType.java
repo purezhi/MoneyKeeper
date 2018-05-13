@@ -41,7 +41,19 @@ public class RecordType {
      * 排序
      */
     public int ranking;
-
+    @Ignore
+    public static int STATE_NORMAL = 0;
+    @Ignore
+    public static int STATE_DELETED = 1;
+    /**
+     * 状态
+     * 0：正常
+     * 1：已删除
+     *
+     * @see RecordType#STATE_NORMAL
+     * @see RecordType#STATE_DELETED
+     */
+    public int state;
     /**
      * 是否选中，用于 UI
      */

@@ -6,7 +6,6 @@ import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
-import me.bakumon.moneykeeper.database.entity.Record;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.datasource.AppDataSource;
 
@@ -26,4 +25,10 @@ public class TypeManageViewModel extends ViewModel {
         return mDataSource.getAllRecordType();
     }
 
+    public Completable deleteRecordType(RecordType recordType) {
+        return Completable.fromAction(() -> {
+            recordType.state = RecordType.STATE_DELETED;
+            mDataSource.updateRecordTypes(recordType);
+        });
+    }
 }

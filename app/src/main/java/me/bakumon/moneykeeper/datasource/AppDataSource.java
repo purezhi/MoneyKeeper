@@ -45,4 +45,18 @@ public interface AppDataSource {
      * @param record 记账记录实体
      */
     void insertRecord(Record record);
+
+    /**
+     * 修改记账类型
+     *
+     * @param recordTypes 记账类型对象
+     */
+    void updateRecordTypes(RecordType... recordTypes);
+
+    /**
+     * 获取所有记账类型数据
+     *
+     * @return 所有记账类型数据
+     */
+    Flowable<List<RecordType>> getRecordType(int type);
 }

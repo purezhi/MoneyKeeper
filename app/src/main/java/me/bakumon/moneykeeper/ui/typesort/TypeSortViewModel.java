@@ -20,8 +20,8 @@ public class TypeSortViewModel extends ViewModel {
         mDataSource = dataSource;
     }
 
-    public Flowable<List<RecordType>> getAllRecordTypes() {
-        return mDataSource.getAllRecordType();
+    public Flowable<List<RecordType>> getRecordTypes(int type) {
+        return mDataSource.getRecordType(type);
     }
 
 }
