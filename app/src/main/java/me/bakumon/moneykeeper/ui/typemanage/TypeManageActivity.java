@@ -87,18 +87,13 @@ public class TypeManageActivity extends BaseActivity {
     }
 
     private void showDeleteDialog(String typeName, RecordType recordType) {
-        String msg = "删除 " + typeName + " 分类后，将无法在记账页选择该分类，该分类下原有账单仍保持不变";
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.text_dialog_delete_type);
-        builder.setMessage(msg);
-        builder.setNegativeButton(R.string.text_button_cancel, null);
-
-        builder.setPositiveButton(R.string.text_button_affirm_delete, (dialog, which) -> {
-            deleteType(recordType);
-        });
-
-        builder.create();
-        builder.show();
+        builder.setTitle(getString(R.string.text_dialog_delete) + typeName)
+                .setMessage(R.string.text_delete_type_note)
+                .setNegativeButton(R.string.text_button_cancel, null)
+                .setPositiveButton(R.string.text_button_affirm_delete, (dialog, which) -> deleteType(recordType))
+                .create()
+                .show();
     }
 
     private void deleteType(RecordType recordType) {

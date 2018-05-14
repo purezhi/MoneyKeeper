@@ -46,6 +46,7 @@ public class AddRecordActivity extends BaseActivity {
     private List<RecordType> mRecordTypes;
     private Date mCurrentChooseDate = DateUtils.getTodayDate();
     private Calendar mCurrentChooseCalendar = Calendar.getInstance();
+    private int mCurrentType;
 
     @Override
     protected int getLayoutId() {
@@ -67,6 +68,8 @@ public class AddRecordActivity extends BaseActivity {
     }
 
     private void initView() {
+        mCurrentType = RecordType.TYPE_OUTLAY;
+
         mBinding.titleBar.ibtClose.setBackgroundResource(R.drawable.ic_close);
         mBinding.titleBar.ibtClose.setOnClickListener(v -> finish());
         mBinding.titleBar.setTitle(getString(R.string.text_add_record));
@@ -85,7 +88,8 @@ public class AddRecordActivity extends BaseActivity {
             dpd.show(getFragmentManager(), "Datepickerdialog");
         });
         mBinding.typeChoice.rgType.setOnCheckedChangeListener((group, checkedId) -> {
-            mAdapter.setNewData(mRecordTypes, checkedId == R.id.rb_outlay ? RecordType.TYPE_OUTLAY : RecordType.TYPE_INCOME);
+            mCurrentType = checkedId == R.id.rb_outlay ? RecordType.TYPE_OUTLAY : RecordType.TYPE_INCOME;
+            mAdapter.setNewData(mRecordTypes, mCurrentType);
         });
     }
 
@@ -149,7 +153,9 @@ public class AddRecordActivity extends BaseActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((recordTypes) -> {
                             mRecordTypes = recordTypes;
-                            mBinding.typeChoice.rgType.check(R.id.rb_outlay);
+                            int id = mCurrentType == RecordType.TYPE_OUTLAY ? R.id.rb_outlay : R.id.rb_income;
+                            mBinding.typeChoice.rgType.clearCheck();
+                            mBinding.typeChoice.rgType.check(id);
                         }, throwable ->
                                 Log.e(TAG, "获取类型数据失败", throwable)
                 )
