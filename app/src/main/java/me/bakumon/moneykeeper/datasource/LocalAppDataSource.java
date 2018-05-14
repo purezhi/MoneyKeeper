@@ -3,6 +3,7 @@ package me.bakumon.moneykeeper.datasource;
 import java.util.Date;
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import me.bakumon.moneykeeper.database.AppDatabase;
 import me.bakumon.moneykeeper.database.entity.Record;
@@ -58,7 +59,13 @@ public class LocalAppDataSource implements AppDataSource {
     }
 
     @Override
-    public Flowable<List<RecordType>> getRecordType(int type) {
+    public void deleteRecordType(RecordType recordType) {
+        recordType.state = RecordType.STATE_DELETED;
+        updateRecordTypes(recordType);
+    }
+
+    @Override
+    public Flowable<List<RecordType>> getRecordTypes(int type) {
         return mAppDatabase.recordTypeDao().getRecordTypes(type);
     }
 }

@@ -54,9 +54,19 @@ public interface AppDataSource {
     void updateRecordTypes(RecordType... recordTypes);
 
     /**
-     * 获取所有记账类型数据
+     * 删除记账类型
      *
-     * @return 所有记账类型数据
+     * @param recordType 要删除的记账类型对象
      */
-    Flowable<List<RecordType>> getRecordType(int type);
+    void deleteRecordType(RecordType recordType);
+
+    /**
+     * 获取指出或收入记账类型数据
+     *
+     * @param type 类型
+     * @return 记账类型数据
+     * @see RecordType#TYPE_OUTLAY
+     * @see RecordType#TYPE_INCOME
+     */
+    Flowable<List<RecordType>> getRecordTypes(int type);
 }

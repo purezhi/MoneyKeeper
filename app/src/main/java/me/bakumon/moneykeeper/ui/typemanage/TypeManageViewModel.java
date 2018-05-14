@@ -26,9 +26,6 @@ public class TypeManageViewModel extends ViewModel {
     }
 
     public Completable deleteRecordType(RecordType recordType) {
-        return Completable.fromAction(() -> {
-            recordType.state = RecordType.STATE_DELETED;
-            mDataSource.updateRecordTypes(recordType);
-        });
+        return Completable.fromAction(() -> mDataSource.deleteRecordType(recordType));
     }
 }
