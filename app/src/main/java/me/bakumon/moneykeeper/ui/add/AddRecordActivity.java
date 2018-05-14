@@ -3,11 +3,10 @@ package me.bakumon.moneykeeper.ui.add;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 
-import com.hhl.gridpagersnaphelper.GridPagerSnapHelper;
+import com.gcssloop.widget.PagerGridLayoutManager;
+import com.gcssloop.widget.PagerGridSnapHelper;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.math.BigDecimal;
@@ -17,7 +16,6 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import me.bakumon.moneykeeper.BR;
 import me.bakumon.moneykeeper.Injection;
 import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.base.BaseActivity;
@@ -88,8 +86,6 @@ public class AddRecordActivity extends BaseActivity {
         });
         mBinding.typeChoice.rgType.setOnCheckedChangeListener((group, checkedId) -> {
             mAdapter.setNewData(mRecordTypes, checkedId == R.id.rb_outlay ? RecordType.TYPE_OUTLAY : RecordType.TYPE_INCOME);
-            // 数据改变后需要重绘，否则指示器不能立刻变化
-            mBinding.indicator.invalidate();
         });
     }
 
@@ -97,24 +93,17 @@ public class AddRecordActivity extends BaseActivity {
      * RecyclerView 配置网格分页、指示器
      */
     private void configRecyclerView() {
+        // 1.水平分页布局管理器
+        PagerGridLayoutManager layoutManager = new PagerGridLayoutManager(
+                ROW, COLUMN, PagerGridLayoutManager.HORIZONTAL);
+        mBinding.rvType.setLayoutManager(layoutManager);
 
-        mBinding.rvType.setHasFixedSize(true);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, ROW, LinearLayoutManager.HORIZONTAL, false);
-        mBinding.rvType.setLayoutManager(gridLayoutManager);
+        // 2.设置滚动辅助工具
+        PagerGridSnapHelper pageSnapHelper = new PagerGridSnapHelper();
+        pageSnapHelper.attachToRecyclerView(mBinding.rvType);
 
-        // 网格分页
-        GridPagerSnapHelper gridPagerSnapHelper = new GridPagerSnapHelper();
-        gridPagerSnapHelper.setRow(ROW).setColumn(COLUMN);
-        gridPagerSnapHelper.attachToRecyclerView(mBinding.rvType);
-
-        mAdapter = new TypeAdapter(null, COLUMN);
-        mAdapter.setOnItemClickListener((adapter, view, position) -> mAdapter.clickItem(position));
+        mAdapter = new TypeAdapter(null);
         mBinding.rvType.setAdapter(mAdapter);
-
-        // Note: pageColumn must be config
-        mBinding.indicator.setPageColumn(COLUMN);
-        // setup indicator
-        mBinding.indicator.setRecyclerView(mBinding.rvType);
     }
 
     /**
@@ -125,11 +114,8 @@ public class AddRecordActivity extends BaseActivity {
             // 防止重复提交
             mBinding.customKeyboard.setAffirmEnable(false);
             Record record = new Record();
-
             record.money = new BigDecimal(text);
-
             record.remark = mBinding.edtRemark.getText().toString().trim();
-
             record.time = mCurrentChooseDate;
             record.createTime = new Date();
             record.recordTypeId = mAdapter.getCurrentItem().id;

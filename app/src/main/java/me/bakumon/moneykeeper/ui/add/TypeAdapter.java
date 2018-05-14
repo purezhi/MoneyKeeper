@@ -2,9 +2,9 @@ package me.bakumon.moneykeeper.ui.add;
 
 import android.databinding.ViewDataBinding;
 import android.support.annotation.Nullable;
+import android.view.View;
 
-import com.hhl.gridpagersnaphelper.GridPagerUtils;
-import com.hhl.gridpagersnaphelper.transform.TwoRowDataTransform;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,6 @@ import me.bakumon.moneykeeper.Router;
 import me.bakumon.moneykeeper.base.BaseDataBindingAdapter;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.ui.typemanage.TypeManageActivity;
-import me.bakumon.moneykeeper.utill.ScreenUtils;
 import me.drakeet.floo.Floo;
 
 /**
@@ -26,24 +25,20 @@ import me.drakeet.floo.Floo;
  * @date 2018/4/9
  */
 
-public class TypeAdapter extends BaseDataBindingAdapter<RecordType> {
+public class TypeAdapter extends BaseDataBindingAdapter<RecordType> implements BaseQuickAdapter.OnItemClickListener {
 
-    private int mItemWidth;
-    private int mColumn;
     private int mCurrentCheckPosition;
+    private int mType;
 
-    public TypeAdapter(@Nullable List<RecordType> data, int column) {
+    public TypeAdapter(@Nullable List<RecordType> data) {
         super(R.layout.item_type, data);
-        mColumn = column;
-        int screenWidth = ScreenUtils.getScreenWidth(App.getINSTANCE());
-        mItemWidth = screenWidth / column;
+        setOnItemClickListener(this);
     }
 
     @Override
     protected void convert(DataBindingViewHolder helper, RecordType item) {
         ViewDataBinding binding = helper.getBinding();
         binding.setVariable(BR.recordType, item);
-        binding.setVariable(BR.width, mItemWidth);
         binding.executePendingBindings();
     }
 
@@ -56,6 +51,7 @@ public class TypeAdapter extends BaseDataBindingAdapter<RecordType> {
      * @see RecordType#TYPE_INCOME 收入
      */
     public void setNewData(@Nullable List<RecordType> data, int type) {
+        mType = type;
         if (data != null && data.size() > 0) {
             List<RecordType> result = new ArrayList<>();
             for (int i = 0; i < data.size(); i++) {
@@ -66,15 +62,19 @@ public class TypeAdapter extends BaseDataBindingAdapter<RecordType> {
             // 增加设置 item， type == -1 表示是设置 item
             RecordType settingItem = new RecordType(App.getINSTANCE().getString(R.string.text_setting), "type_item_setting", -1);
             result.add(settingItem);
-            // 适配网格分页布局
-            result = GridPagerUtils.transformAndFillEmptyData(
-                    new TwoRowDataTransform<>(mColumn), result);
-            // 选中第一个
             super.setNewData(result);
-            clickItem(0);
+            // 选中第一个
+            if (result.get(0).type != -1) {
+                clickItem(0);
+            }
         } else {
             super.setNewData(null);
         }
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        clickItem(position);
     }
 
     /**
@@ -85,9 +85,9 @@ public class TypeAdapter extends BaseDataBindingAdapter<RecordType> {
     public void clickItem(int position) {
         // 点击设置 item
         RecordType item = getItem(position);
-        if (position > 0 && item != null && item.type == -1) {
+        if (item != null && item.type == -1) {
             Floo.navigation(mContext, Router.TYPE_MANAGE)
-                    .putExtra(TypeManageActivity.KEY_TYPE, 1)
+                    .putExtra(TypeManageActivity.KEY_TYPE, mType)
                     .start();
             return;
         }

@@ -88,6 +88,5 @@ dependencies {
     implementation deps.floo
     // 日期时间选择器
     implementation deps.datetimepicker
-    implementation 'com.hhl:gridpagersnaphelper:1.0.0'
-    implementation 'com.hhl:recyclerviewindicator:1.0.0'
+    implementation deps.pagerlayout
 }

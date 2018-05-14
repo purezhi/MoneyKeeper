@@ -4,7 +4,6 @@ import android.content.Context;
 import android.databinding.BindingAdapter;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,19 +19,13 @@ public class BindAdapter {
         view.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
-    @BindingAdapter("android:layout_width")
-    public static void setLayoutWidth(View view, int width) {
-        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-        layoutParams.width = width;
-    }
-
     @BindingAdapter("text_check_null")
     public static void setText(TextView textView, String text) {
-        if (!TextUtils.isEmpty(text)) {
+        boolean isEmpty = TextUtils.isEmpty(text);
+        if (!isEmpty) {
             textView.setText(text);
-            return;
         }
-        textView.setVisibility(View.GONE);
+        textView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
     }
 
     @BindingAdapter("src_img_name")
