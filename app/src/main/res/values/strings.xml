@@ -6,6 +6,7 @@
     <string name="content_des_close">关闭</string>
 
     <string name="toast_add_record_fail">记账失败，请重试</string>
+    <string name="toast_sort_fail">排序失败</string>
 
     <string name="hint_enter_money">输入金额</string>
     <string name="hint_enter_remark">输入备注</string>

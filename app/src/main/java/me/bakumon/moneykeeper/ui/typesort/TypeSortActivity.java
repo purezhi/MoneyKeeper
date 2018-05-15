@@ -4,12 +4,10 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
-import com.chad.library.adapter.base.listener.OnItemDragListener;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -18,6 +16,7 @@ import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.base.BaseActivity;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.databinding.ActivityTypeSortBinding;
+import me.bakumon.moneykeeper.utill.ToastUtils;
 import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
 
 /**
@@ -57,7 +56,7 @@ public class TypeSortActivity extends BaseActivity {
         mBinding.titleBar.ibtClose.setOnClickListener(v -> finish());
         mBinding.titleBar.setTitle(getString(R.string.text_title_drag_sort));
         mBinding.titleBar.setRightText(getString(R.string.text_done));
-        mBinding.titleBar.tvRight.setOnClickListener(v -> finish());
+        mBinding.titleBar.tvRight.setOnClickListener(v -> sortRecordTypes());
 
         mBinding.rvType.setLayoutManager(new GridLayoutManager(this, 4));
         mAdapter = new TypeSortAdapter(null);
@@ -69,33 +68,21 @@ public class TypeSortActivity extends BaseActivity {
 
         // open drag
         mAdapter.enableDragItem(itemTouchHelper);
-        mAdapter.setOnItemDragListener(new OnItemDragListener() {
-            @Override
-            public void onItemDragStart(RecyclerView.ViewHolder viewHolder, int pos) {
-                Log.e(TAG, "onItemDragStart---->pos：" + pos);
-            }
+    }
 
-            @Override
-            public void onItemDragMoving(RecyclerView.ViewHolder source, int from, RecyclerView.ViewHolder target, int to) {
-                Log.e(TAG, "onItemDragEnd---->from：" + from + ", to" + to);
-            }
-
-            @Override
-            public void onItemDragEnd(RecyclerView.ViewHolder viewHolder, int pos) {
-                Log.e(TAG, "onItemDragEnd---->pos：" + pos);
-            }
-        });
-
+    private void sortRecordTypes() {
+        mDisposable.add(mViewModel.sortRecordTypes(mAdapter.getData()).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::finish, throwable -> {
+                    ToastUtils.show(R.string.toast_sort_fail);
+                    Log.e(TAG, "类型排序失败", throwable);
+                }));
     }
 
     private void initData() {
         mDisposable.add(mViewModel.getRecordTypes(mType).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((recordTypes) -> {
-                            mAdapter.setNewData(recordTypes);
-                        }, throwable ->
-                                Log.e(TAG, "获取类型数据失败", throwable)
-                )
-        );
+                .subscribe((recordTypes) -> mAdapter.setNewData(recordTypes),
+                        throwable -> Log.e(TAG, "获取类型数据失败", throwable)));
     }
 }
