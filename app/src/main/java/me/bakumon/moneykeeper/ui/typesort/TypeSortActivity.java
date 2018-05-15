@@ -71,9 +71,11 @@ public class TypeSortActivity extends BaseActivity {
     }
 
     private void sortRecordTypes() {
+        mBinding.titleBar.tvRight.setEnabled(false);
         mDisposable.add(mViewModel.sortRecordTypes(mAdapter.getData()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::finish, throwable -> {
+                    mBinding.titleBar.tvRight.setEnabled(true);
                     ToastUtils.show(R.string.toast_sort_fail);
                     Log.e(TAG, "类型排序失败", throwable);
                 }));

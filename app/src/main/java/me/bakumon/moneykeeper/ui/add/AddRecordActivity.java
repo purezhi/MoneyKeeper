@@ -114,21 +114,19 @@ public class AddRecordActivity extends BaseActivity {
      * 配置自定义键盘
      */
     private void configCustomKeyboard() {
-        mBinding.customKeyboard.setAffirmClickListener(text -> {
-            // 防止重复提交
-            mBinding.customKeyboard.setAffirmEnable(false);
-            Record record = new Record();
-            record.money = new BigDecimal(text);
-            record.remark = mBinding.edtRemark.getText().toString().trim();
-            record.time = mCurrentChooseDate;
-            record.createTime = new Date();
-            record.recordTypeId = mAdapter.getCurrentItem().id;
-
-            insertRecord(record);
-        });
+        mBinding.customKeyboard.setAffirmClickListener(this::insertRecord);
     }
 
-    private void insertRecord(Record record) {
+    private void insertRecord(String text) {
+        // 防止重复提交
+        mBinding.customKeyboard.setAffirmEnable(false);
+        Record record = new Record();
+        record.money = new BigDecimal(text);
+        record.remark = mBinding.edtRemark.getText().toString().trim();
+        record.time = mCurrentChooseDate;
+        record.createTime = new Date();
+        record.recordTypeId = mAdapter.getCurrentItem().id;
+
         mDisposable.add(mViewModel.insertRecord(record).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::finish,
