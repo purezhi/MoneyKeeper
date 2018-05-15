@@ -4,7 +4,9 @@ import android.arch.lifecycle.ViewModel;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.datasource.AppDataSource;
 
@@ -23,5 +25,9 @@ public class HomeViewModel extends ViewModel {
 
     public Flowable<List<RecordWithType>> getCurrentMonthRecordWithTypes() {
         return mDataSource.getCurrentMonthRecordWithTypes();
+    }
+
+    public Completable deleteRecord(RecordWithType record) {
+        return Completable.fromAction(() -> mDataSource.deleteRecord(record));
     }
 }

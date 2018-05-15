@@ -42,6 +42,11 @@ public class LocalAppDataSource implements AppDataSource {
     }
 
     @Override
+    public void deleteRecord(Record record) {
+        mAppDatabase.recordDao().deleteRecord(record);
+    }
+
+    @Override
     public Flowable<List<RecordWithType>> getCurrentMonthRecordWithTypes() {
         Date dateFrom = DateUtils.getCurrentMonthStart();
         Date dateTo = DateUtils.getCurrentMonthEnd();

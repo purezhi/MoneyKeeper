@@ -27,6 +27,7 @@ public class HomeAdapter extends BaseDataBindingAdapter<RecordWithType> {
     @Override
     protected void convert(DataBindingViewHolder helper, RecordWithType item) {
         ViewDataBinding binding = helper.getBinding();
+        helper.addOnLongClickListener(R.id.ll_item_click);
         binding.setVariable(BR.recordWithType, item);
         boolean isDataShow = helper.getAdapterPosition() == 0 ||
                 !DateUtils.isSameDay(item.time, getData().get(helper.getAdapterPosition() - 1).time);

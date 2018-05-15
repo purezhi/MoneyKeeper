@@ -47,6 +47,13 @@ public interface AppDataSource {
     void insertRecord(Record record);
 
     /**
+     * 删除一天记账记录
+     *
+     * @param record 要删除的记账记录
+     */
+    void deleteRecord(Record record);
+
+    /**
      * 修改记账类型
      *
      * @param recordTypes 记账类型对象

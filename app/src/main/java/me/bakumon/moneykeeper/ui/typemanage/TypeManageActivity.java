@@ -72,7 +72,7 @@ public class TypeManageActivity extends BaseActivity {
 
         mAdapter.setOnItemLongClickListener((adapter, view, position) -> {
             if (adapter.getData().size() > 1) {
-                showDeleteDialog(mAdapter.getData().get(position).name, mAdapter.getData().get(position));
+                showDeleteDialog(mAdapter.getData().get(position));
             } else {
                 ToastUtils.show(R.string.toast_least_one_type);
             }
@@ -87,15 +87,14 @@ public class TypeManageActivity extends BaseActivity {
             mCurrentType = checkedId == R.id.rb_outlay ? RecordType.TYPE_OUTLAY : RecordType.TYPE_INCOME;
             mAdapter.setNewData(mRecordTypes, mCurrentType);
             int visibility = mAdapter.getData().size() > 1 ? View.VISIBLE : View.INVISIBLE;
-            Log.e(TAG, "visibility: " + visibility);
             mBinding.titleBar.tvRight.setVisibility(visibility);
         });
 
     }
 
-    private void showDeleteDialog(String typeName, RecordType recordType) {
+    private void showDeleteDialog(RecordType recordType) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.text_dialog_delete) + typeName)
+        builder.setTitle(getString(R.string.text_dialog_delete) + recordType.name)
                 .setMessage(R.string.text_delete_type_note)
                 .setNegativeButton(R.string.text_button_cancel, null)
                 .setPositiveButton(R.string.text_button_affirm_delete, (dialog, which) -> deleteType(recordType))
