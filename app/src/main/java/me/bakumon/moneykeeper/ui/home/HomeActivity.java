@@ -57,8 +57,19 @@ public class HomeActivity extends BaseActivity {
         binding.rvHome.setAdapter(mAdapter);
     }
 
-    private void initData() {
+    public void settingClick(View view) {
+        ToastUtils.show("设置");
+    }
 
+    public void statisticsClick(View view) {
+        ToastUtils.show("统计");
+    }
+
+    public void addRecord(View view) {
+        Floo.navigation(this, Router.ADD_RECORD).start();
+    }
+
+    private void initData() {
         mDisposable.add(mViewModel.getCurrentMonthRecordWithTypes()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -84,18 +95,6 @@ public class HomeActivity extends BaseActivity {
 
     private void setEmptyView() {
         mAdapter.setEmptyView(inflate(R.layout.layout_home_empty));
-    }
-
-    public void settingClick(View view) {
-        ToastUtils.show("设置");
-    }
-
-    public void statisticsClick(View view) {
-        ToastUtils.show("统计");
-    }
-
-    public void addClick(View view) {
-        Floo.navigation(this, Router.ADD_RECORD).start();
     }
 
 }

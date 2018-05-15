@@ -55,7 +55,7 @@ public class TypeSortActivity extends BaseActivity {
 
         mBinding.titleBar.ibtClose.setOnClickListener(v -> finish());
         mBinding.titleBar.setTitle(getString(R.string.text_title_drag_sort));
-        mBinding.titleBar.setRightText(getString(R.string.text_done));
+        mBinding.titleBar.tvRight.setText(R.string.text_done);
         mBinding.titleBar.tvRight.setOnClickListener(v -> sortRecordTypes());
 
         mBinding.rvType.setLayoutManager(new GridLayoutManager(this, 4));

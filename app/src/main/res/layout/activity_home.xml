@@ -135,7 +135,7 @@
             android:layout_margin="25dp"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="addClick"
+            android:onClick="addRecord"
             app:srcCompat="@drawable/ic_add" />
     </android.support.design.widget.CoordinatorLayout>
 </layout>

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
+import android.view.View;
 
 import java.util.List;
 
@@ -57,10 +58,9 @@ public class TypeManageActivity extends BaseActivity {
 
     private void initView() {
         mCurrentType = getIntent().getIntExtra(KEY_TYPE, RecordType.TYPE_OUTLAY);
-
+        mBinding.titleBar.tvRight.setText(getString(R.string.text_button_sort));
         mBinding.titleBar.ibtClose.setOnClickListener(v -> finish());
         mBinding.titleBar.setTitle(getString(R.string.text_title_type_manage));
-        mBinding.titleBar.setRightText(getString(R.string.text_button_sort));
         mBinding.titleBar.tvRight.setOnClickListener(v ->
                 Floo.navigation(this, Router.TYPE_SORT)
                         .putExtra(TypeSortActivity.KEY_TYPE, mCurrentType)
@@ -71,8 +71,12 @@ public class TypeManageActivity extends BaseActivity {
         mBinding.rvType.setAdapter(mAdapter);
 
         mAdapter.setOnItemLongClickListener((adapter, view, position) -> {
-            showDeleteDialog(mAdapter.getData().get(position).name, mAdapter.getData().get(position));
-            return false;
+            if (adapter.getData().size() > 1) {
+                showDeleteDialog(mAdapter.getData().get(position).name, mAdapter.getData().get(position));
+            } else {
+                ToastUtils.show(R.string.toast_least_one_type);
+            }
+            return true;
         });
 
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -82,6 +86,9 @@ public class TypeManageActivity extends BaseActivity {
         mBinding.typeChoice.rgType.setOnCheckedChangeListener((group, checkedId) -> {
             mCurrentType = checkedId == R.id.rb_outlay ? RecordType.TYPE_OUTLAY : RecordType.TYPE_INCOME;
             mAdapter.setNewData(mRecordTypes, mCurrentType);
+            int visibility = mAdapter.getData().size() > 1 ? View.VISIBLE : View.INVISIBLE;
+            Log.e(TAG, "visibility: " + visibility);
+            mBinding.titleBar.tvRight.setVisibility(visibility);
         });
 
     }
@@ -96,13 +103,17 @@ public class TypeManageActivity extends BaseActivity {
                 .show();
     }
 
+    public void addType(View view) {
+
+    }
+
     private void deleteType(RecordType recordType) {
         mDisposable.add(mViewModel.deleteRecordType(recordType).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> {
                         },
                         throwable -> {
-                            ToastUtils.show("删除失败");
+                            ToastUtils.show(R.string.toast_delete_fail);
                             Log.e(TAG, "类型删除失败", throwable);
                         }
                 ));
