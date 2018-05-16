@@ -103,9 +103,8 @@ public class AddTypeActivity extends BaseActivity {
                         }
                     }
                 }, throwable -> {
-                    String failTip = TextUtils.isEmpty(throwable.getMessage()) ? getString(R.string.toast_type_img_fail) : throwable.getMessage();
-                    ToastUtils.show(failTip);
-                    Log.e(TAG, "获取类型图片数据失败", throwable);
+                    ToastUtils.show(R.string.toast_type_img_fail);
+                    Log.e(TAG, "类型图片获取失败", throwable);
                 }));
     }
 
@@ -121,8 +120,9 @@ public class AddTypeActivity extends BaseActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::finish, throwable -> {
-                    ToastUtils.show(R.string.toast_type_img_fail);
-                    Log.e(TAG, "获取类型图片数据失败", throwable);
+                    String failTip = TextUtils.isEmpty(throwable.getMessage()) ? getString(R.string.toast_type_save_fail) : throwable.getMessage();
+                    ToastUtils.show(failTip);
+                    Log.e(TAG, "类型保存失败", throwable);
                 }));
     }
 }

@@ -127,7 +127,8 @@ public class AddRecordActivity extends BaseActivity {
         record.createTime = new Date();
         record.recordTypeId = mAdapter.getCurrentItem().id;
 
-        mDisposable.add(mViewModel.insertRecord(record).subscribeOn(Schedulers.io())
+        mDisposable.add(mViewModel.insertRecord(record)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::finish,
                         throwable -> {
@@ -139,7 +140,8 @@ public class AddRecordActivity extends BaseActivity {
     }
 
     private void initRecordTypes() {
-        mDisposable.add(mViewModel.initRecordTypes().subscribeOn(Schedulers.io())
+        mDisposable.add(mViewModel.initRecordTypes()
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::getAllRecordTypes,
                         throwable ->
@@ -147,7 +149,8 @@ public class AddRecordActivity extends BaseActivity {
     }
 
     private void getAllRecordTypes() {
-        mDisposable.add(mViewModel.getAllRecordTypes().subscribeOn(Schedulers.io())
+        mDisposable.add(mViewModel.getAllRecordTypes()
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((recordTypes) -> {
                             mRecordTypes = recordTypes;

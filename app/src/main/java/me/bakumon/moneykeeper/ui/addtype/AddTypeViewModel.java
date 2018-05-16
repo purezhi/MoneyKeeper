@@ -31,16 +31,14 @@ public class AddTypeViewModel extends BaseViewModel {
      * @param name       类型名称
      */
     public Completable saveRecordType(RecordType recordType, int type, String imgName, String name) {
-        return Completable.fromAction(() -> {
-            if (recordType == null) {
-                // 添加
-                mDataSource.addRecordType(type, imgName, name);
-            } else {
-                // 修改
-                recordType.name = name;
-                recordType.imgName = imgName;
-                mDataSource.updateRecordTypes(recordType);
-            }
-        });
+        if (recordType == null) {
+            // 添加
+            return mDataSource.addRecordType(type, imgName, name);
+        } else {
+            // 修改
+            recordType.name = name;
+            recordType.imgName = imgName;
+            return mDataSource.updateRecordTypes(recordType);
+        }
     }
 }

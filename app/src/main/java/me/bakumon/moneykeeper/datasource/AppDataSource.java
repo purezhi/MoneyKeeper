@@ -2,6 +2,7 @@ package me.bakumon.moneykeeper.datasource;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import me.bakumon.moneykeeper.database.entity.Record;
 import me.bakumon.moneykeeper.database.entity.RecordType;
@@ -22,16 +23,9 @@ public interface AppDataSource {
     Flowable<List<RecordType>> getAllRecordType();
 
     /**
-     * 批量新增记账类型
-     *
-     * @param recordTypes 记账类型数组
-     */
-    void insertAllRecordType(RecordType... recordTypes);
-
-    /**
      * 初始化默认的记账类型
      */
-    void initRecordTypes();
+    Completable initRecordTypes();
 
     /**
      * 获取当前月份的记账记录数据
@@ -45,28 +39,35 @@ public interface AppDataSource {
      *
      * @param record 记账记录实体
      */
-    void insertRecord(Record record);
+    Completable insertRecord(Record record);
 
     /**
      * 删除一天记账记录
      *
      * @param record 要删除的记账记录
      */
-    void deleteRecord(Record record);
+    Completable deleteRecord(Record record);
 
     /**
      * 修改记账类型
      *
      * @param recordTypes 记账类型对象
      */
-    void updateRecordTypes(RecordType... recordTypes);
+    Completable updateRecordTypes(RecordType... recordTypes);
+
+    /**
+     * 记账类型排序
+     *
+     * @param recordTypes 记账类型对象
+     */
+    Completable sortRecordTypes(List<RecordType> recordTypes);
 
     /**
      * 删除记账类型
      *
      * @param recordType 要删除的记账类型对象
      */
-    void deleteRecordType(RecordType recordType);
+    Completable deleteRecordType(RecordType recordType);
 
     /**
      * 获取指出或收入记账类型数据
@@ -97,5 +98,5 @@ public interface AppDataSource {
      * @see RecordType#TYPE_OUTLAY
      * @see RecordType#TYPE_INCOME
      */
-    void addRecordType(int type, String imgName, String name);
+    Completable addRecordType(int type, String imgName, String name);
 }

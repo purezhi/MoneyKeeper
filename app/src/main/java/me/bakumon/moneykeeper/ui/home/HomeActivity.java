@@ -99,7 +99,7 @@ public class HomeActivity extends BaseActivity {
                 .subscribe(() -> {
                         },
                         throwable -> {
-                            ToastUtils.show("删除成功");
+                            ToastUtils.show("删除失败");
                             Log.e(TAG, "删除记账记录失败", throwable);
                         }));
     }
@@ -109,10 +109,9 @@ public class HomeActivity extends BaseActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(recordWithTypes -> {
+                            setListData(recordWithTypes);
                             if (recordWithTypes == null || recordWithTypes.size() < 1) {
                                 setEmptyView();
-                            } else {
-                                setListData(recordWithTypes);
                             }
                         },
                         throwable ->

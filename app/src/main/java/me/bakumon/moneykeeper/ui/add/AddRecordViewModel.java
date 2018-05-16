@@ -1,11 +1,10 @@
 package me.bakumon.moneykeeper.ui.add;
 
-import android.arch.lifecycle.ViewModel;
-
 import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import me.bakumon.moneykeeper.base.BaseViewModel;
 import me.bakumon.moneykeeper.database.entity.Record;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.datasource.AppDataSource;
@@ -15,11 +14,9 @@ import me.bakumon.moneykeeper.datasource.AppDataSource;
  *
  * @author Bakumon https://bakumon.me
  */
-public class AddRecordViewModel extends ViewModel {
-    private final AppDataSource mDataSource;
-
+public class AddRecordViewModel extends BaseViewModel {
     public AddRecordViewModel(AppDataSource dataSource) {
-        mDataSource = dataSource;
+        super(dataSource);
     }
 
     public Flowable<List<RecordType>> getAllRecordTypes() {
@@ -27,10 +24,10 @@ public class AddRecordViewModel extends ViewModel {
     }
 
     public Completable initRecordTypes() {
-        return Completable.fromAction(mDataSource::initRecordTypes);
+        return mDataSource.initRecordTypes();
     }
 
     public Completable insertRecord(Record record) {
-        return Completable.fromAction(() -> mDataSource.insertRecord(record));
+        return mDataSource.insertRecord(record);
     }
 }

@@ -1,9 +1,11 @@
 package me.bakumon.moneykeeper.datasource;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import io.reactivex.BackpressureStrategy;
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import me.bakumon.moneykeeper.database.AppDatabase;
 import me.bakumon.moneykeeper.database.entity.Record;
@@ -30,21 +32,18 @@ public class LocalAppDataSource implements AppDataSource {
     }
 
     @Override
-    public void insertAllRecordType(RecordType... recordTypes) {
-        mAppDatabase.recordTypeDao().insertRecordTypes(recordTypes);
+    public Completable initRecordTypes() {
+        return Completable.fromAction(() -> {
+            if (mAppDatabase.recordTypeDao().getRecordTypeCount() < 1) {
+                // 没有记账类型数据记录，插入默认的数据类型
+                mAppDatabase.recordTypeDao().insertRecordTypes(RecordTypeInitCreator.createRecordTypeData());
+            }
+        });
     }
 
     @Override
-    public void initRecordTypes() {
-        if (mAppDatabase.recordTypeDao().getRecordTypeCount() < 1) {
-            // 没有记账类型数据记录，插入默认的数据类型
-            insertAllRecordType(RecordTypeInitCreator.createRecordTypeData());
-        }
-    }
-
-    @Override
-    public void deleteRecord(Record record) {
-        mAppDatabase.recordDao().deleteRecord(record);
+    public Completable deleteRecord(Record record) {
+        return Completable.fromAction(() -> mAppDatabase.recordDao().deleteRecord(record));
     }
 
     @Override
@@ -55,19 +54,39 @@ public class LocalAppDataSource implements AppDataSource {
     }
 
     @Override
-    public void insertRecord(Record record) {
-        mAppDatabase.recordDao().insertRecord(record);
+    public Completable insertRecord(Record record) {
+        return Completable.fromAction(() -> mAppDatabase.recordDao().insertRecord(record));
     }
 
     @Override
-    public void updateRecordTypes(RecordType... recordTypes) {
-        mAppDatabase.recordTypeDao().updateRecordTypes(recordTypes);
+    public Completable updateRecordTypes(RecordType... recordTypes) {
+        return Completable.fromAction(() -> mAppDatabase.recordTypeDao().updateRecordTypes(recordTypes));
     }
 
     @Override
-    public void deleteRecordType(RecordType recordType) {
-        recordType.state = RecordType.STATE_DELETED;
-        updateRecordTypes(recordType);
+    public Completable sortRecordTypes(List<RecordType> recordTypes) {
+        return Completable.fromAction(() -> {
+            if (recordTypes != null && recordTypes.size() > 1) {
+                List<RecordType> sortTypes = new ArrayList<>();
+                for (int i = 0; i < recordTypes.size(); i++) {
+                    RecordType type = recordTypes.get(i);
+                    if (type.ranking != i) {
+                        type.ranking = i;
+                        sortTypes.add(type);
+                    }
+                }
+                RecordType[] typeArray = new RecordType[sortTypes.size()];
+                mAppDatabase.recordTypeDao().updateRecordTypes(typeArray);
+            }
+        });
+    }
+
+    @Override
+    public Completable deleteRecordType(RecordType recordType) {
+        return Completable.fromAction(() -> {
+            recordType.state = RecordType.STATE_DELETED;
+            mAppDatabase.recordTypeDao().updateRecordTypes(recordType);
+        });
     }
 
     @Override
@@ -85,22 +104,24 @@ public class LocalAppDataSource implements AppDataSource {
     }
 
     @Override
-    public void addRecordType(int type, String imgName, String name) {
-        RecordType recordType = mAppDatabase.recordTypeDao().getTypeByName(name);
-        if (recordType != null) {
-            // name 类型存在
-            if (recordType.state == RecordType.STATE_DELETED) {
-                // 已删除状态
-                recordType.state = RecordType.STATE_NORMAL;
-                mAppDatabase.recordTypeDao().updateRecordTypes(recordType);
+    public Completable addRecordType(int type, String imgName, String name) {
+        return Completable.fromAction(() -> {
+            RecordType recordType = mAppDatabase.recordTypeDao().getTypeByName(name);
+            if (recordType != null) {
+                // name 类型存在
+                if (recordType.state == RecordType.STATE_DELETED) {
+                    // 已删除状态
+                    recordType.state = RecordType.STATE_NORMAL;
+                    mAppDatabase.recordTypeDao().updateRecordTypes(recordType);
+                } else {
+                    // 提示用户该类型已经存在
+                    throw new IllegalStateException("该名称已经存在");
+                }
             } else {
-                // 提示用户该类型已经存在
-
+                // 不存在，直接新增
+                RecordType insertType = new RecordType(name, imgName, type, System.currentTimeMillis());
+                mAppDatabase.recordTypeDao().insertRecordTypes(insertType);
             }
-        } else {
-            // 不存在，直接新增
-            RecordType insertType = new RecordType(name, imgName, type, System.currentTimeMillis());
-            mAppDatabase.recordTypeDao().insertRecordTypes(insertType);
-        }
+        });
     }
 }

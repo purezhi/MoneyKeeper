@@ -10,6 +10,7 @@
     <string name="toast_least_one_type">请至少保留一个类型</string>
     <string name="toast_delete_fail">删除失败</string>
     <string name="toast_type_img_fail">类型图片获取失败</string>
+    <string name="toast_type_save_fail">类型保存失败</string>
 
     <string name="hint_enter_money">输入金额</string>
     <string name="hint_enter_remark">输入备注</string>

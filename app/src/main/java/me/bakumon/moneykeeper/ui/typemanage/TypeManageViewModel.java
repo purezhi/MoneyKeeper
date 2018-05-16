@@ -1,11 +1,10 @@
 package me.bakumon.moneykeeper.ui.typemanage;
 
-import android.arch.lifecycle.ViewModel;
-
 import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import me.bakumon.moneykeeper.base.BaseViewModel;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.datasource.AppDataSource;
 
@@ -14,11 +13,9 @@ import me.bakumon.moneykeeper.datasource.AppDataSource;
  *
  * @author Bakumon https://bakumon.me
  */
-public class TypeManageViewModel extends ViewModel {
-    private final AppDataSource mDataSource;
-
+public class TypeManageViewModel extends BaseViewModel {
     public TypeManageViewModel(AppDataSource dataSource) {
-        mDataSource = dataSource;
+        super(dataSource);
     }
 
     public Flowable<List<RecordType>> getAllRecordTypes() {
@@ -26,6 +23,6 @@ public class TypeManageViewModel extends ViewModel {
     }
 
     public Completable deleteRecordType(RecordType recordType) {
-        return Completable.fromAction(() -> mDataSource.deleteRecordType(recordType));
+        return mDataSource.deleteRecordType(recordType);
     }
 }

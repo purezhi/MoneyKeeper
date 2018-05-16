@@ -1,12 +1,10 @@
 package me.bakumon.moneykeeper.ui.home;
 
-import android.arch.lifecycle.ViewModel;
-
 import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
-import me.bakumon.moneykeeper.database.entity.RecordType;
+import me.bakumon.moneykeeper.base.BaseViewModel;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.datasource.AppDataSource;
 
@@ -15,12 +13,9 @@ import me.bakumon.moneykeeper.datasource.AppDataSource;
  *
  * @author Bakumon https://bakumon.me
  */
-public class HomeViewModel extends ViewModel {
-    private static final String TAG = HomeViewModel.class.getSimpleName();
-    private final AppDataSource mDataSource;
-
+public class HomeViewModel extends BaseViewModel {
     public HomeViewModel(AppDataSource dataSource) {
-        mDataSource = dataSource;
+        super(dataSource);
     }
 
     public Flowable<List<RecordWithType>> getCurrentMonthRecordWithTypes() {
@@ -28,6 +23,6 @@ public class HomeViewModel extends ViewModel {
     }
 
     public Completable deleteRecord(RecordWithType record) {
-        return Completable.fromAction(() -> mDataSource.deleteRecord(record));
+        return mDataSource.deleteRecord(record);
     }
 }

@@ -27,12 +27,6 @@ public interface RecordTypeDao {
     @Query("SELECT count(recordtype.id) FROM recordtype")
     long getRecordTypeCount();
 
-    @Query("SELECT count(recordtype.id) FROM recordtype WHERE name = :name")
-    long isExist(String name);
-
-    @Query("SELECT count(recordtype.id) FROM recordtype WHERE state = 1 AND name = :name")
-    long isDeleted(String name);
-
     @Query("SELECT * FROM recordtype WHERE name = :name")
     RecordType getTypeByName(String name);
 

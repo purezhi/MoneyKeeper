@@ -1,12 +1,11 @@
 package me.bakumon.moneykeeper.ui.typesort;
 
-import android.arch.lifecycle.ViewModel;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import me.bakumon.moneykeeper.base.BaseViewModel;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.datasource.AppDataSource;
 
@@ -15,11 +14,9 @@ import me.bakumon.moneykeeper.datasource.AppDataSource;
  *
  * @author Bakumon https://bakumon.me
  */
-public class TypeSortViewModel extends ViewModel {
-    private final AppDataSource mDataSource;
-
+public class TypeSortViewModel extends BaseViewModel {
     public TypeSortViewModel(AppDataSource dataSource) {
-        mDataSource = dataSource;
+        super(dataSource);
     }
 
     public Flowable<List<RecordType>> getRecordTypes(int type) {
@@ -27,19 +24,21 @@ public class TypeSortViewModel extends ViewModel {
     }
 
     public Completable sortRecordTypes(List<RecordType> recordTypes) {
-        return Completable.fromAction(() -> {
-            if (recordTypes != null && recordTypes.size() > 1) {
-                List<RecordType> sortTypes = new ArrayList<>();
-                for (int i = 0; i < recordTypes.size(); i++) {
-                    RecordType type = recordTypes.get(i);
-                    if (type.ranking != i) {
-                        type.ranking = i;
-                        sortTypes.add(type);
-                    }
+//        return mDataSource.sortRecordTypes(recordTypes);
+        if (recordTypes != null && recordTypes.size() > 1) {
+            List<RecordType> sortTypes = new ArrayList<>();
+            for (int i = 0; i < recordTypes.size(); i++) {
+                RecordType type = recordTypes.get(i);
+                if (type.ranking != i) {
+                    type.ranking = i;
+                    sortTypes.add(type);
                 }
-                RecordType[] typeArray = new RecordType[sortTypes.size()];
-                mDataSource.updateRecordTypes(sortTypes.toArray(typeArray));
             }
-        });
+            RecordType[] typeArray = new RecordType[sortTypes.size()];
+            return mDataSource.updateRecordTypes(sortTypes.toArray(typeArray));
+        } else {
+            return Completable.fromAction(() -> {
+            });
+        }
     }
 }
