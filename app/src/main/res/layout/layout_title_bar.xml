@@ -39,7 +39,7 @@
             android:text="@{title}"
             android:textColor="@color/colorTextWhite"
             android:textSize="20sp"
-            tools:text="记一笔" />
+            tools:text="TITLE" />
 
         <me.bakumon.moneykeeper.view.QMUIAlphaTextView
             android:id="@+id/tv_right"
@@ -49,7 +49,7 @@
             android:padding="5dp"
             android:textColor="@color/colorTextWhite"
             tools:ignore="RelativeOverlap"
-            tools:text="完成" />
+            tools:text="action" />
 
     </RelativeLayout>
 </layout>

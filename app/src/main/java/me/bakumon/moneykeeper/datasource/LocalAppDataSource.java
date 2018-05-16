@@ -3,12 +3,13 @@ package me.bakumon.moneykeeper.datasource;
 import java.util.Date;
 import java.util.List;
 
-import io.reactivex.Completable;
+import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import me.bakumon.moneykeeper.database.AppDatabase;
 import me.bakumon.moneykeeper.database.entity.Record;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
+import me.bakumon.moneykeeper.ui.addtype.TypeImgBean;
 import me.bakumon.moneykeeper.utill.DateUtils;
 
 /**
@@ -72,5 +73,34 @@ public class LocalAppDataSource implements AppDataSource {
     @Override
     public Flowable<List<RecordType>> getRecordTypes(int type) {
         return mAppDatabase.recordTypeDao().getRecordTypes(type);
+    }
+
+    @Override
+    public Flowable<List<TypeImgBean>> getAllTypeImgBeans(int type) {
+        return Flowable.create(e -> {
+            List<TypeImgBean> beans = TypeImgListCreator.createTypeImgBeanData(type);
+            e.onNext(beans);
+            e.onComplete();
+        }, BackpressureStrategy.BUFFER);
+    }
+
+    @Override
+    public void addRecordType(int type, String imgName, String name) {
+        RecordType recordType = mAppDatabase.recordTypeDao().getTypeByName(name);
+        if (recordType != null) {
+            // name 类型存在
+            if (recordType.state == RecordType.STATE_DELETED) {
+                // 已删除状态
+                recordType.state = RecordType.STATE_NORMAL;
+                mAppDatabase.recordTypeDao().updateRecordTypes(recordType);
+            } else {
+                // 提示用户该类型已经存在
+
+            }
+        } else {
+            // 不存在，直接新增
+            RecordType insertType = new RecordType(name, imgName, type, System.currentTimeMillis());
+            mAppDatabase.recordTypeDao().insertRecordTypes(insertType);
+        }
     }
 }

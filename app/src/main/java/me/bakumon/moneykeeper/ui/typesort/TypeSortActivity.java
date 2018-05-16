@@ -30,6 +30,8 @@ public class TypeSortActivity extends BaseActivity {
     private static final String TAG = TypeSortActivity.class.getSimpleName();
     public static final String KEY_TYPE = "TypeSortActivity.key_type";
 
+    private static final int COLUMN = 4;
+
     private ActivityTypeSortBinding mBinding;
     private TypeSortViewModel mViewModel;
     private TypeSortAdapter mAdapter;
@@ -58,7 +60,7 @@ public class TypeSortActivity extends BaseActivity {
         mBinding.titleBar.tvRight.setText(R.string.text_done);
         mBinding.titleBar.tvRight.setOnClickListener(v -> sortRecordTypes());
 
-        mBinding.rvType.setLayoutManager(new GridLayoutManager(this, 4));
+        mBinding.rvType.setLayoutManager(new GridLayoutManager(this, COLUMN));
         mAdapter = new TypeSortAdapter(null);
         mBinding.rvType.setAdapter(mAdapter);
 

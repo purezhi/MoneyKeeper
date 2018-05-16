@@ -6,6 +6,7 @@ import io.reactivex.Flowable;
 import me.bakumon.moneykeeper.database.entity.Record;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
+import me.bakumon.moneykeeper.ui.addtype.TypeImgBean;
 
 /**
  * 数据源
@@ -76,4 +77,25 @@ public interface AppDataSource {
      * @see RecordType#TYPE_INCOME
      */
     Flowable<List<RecordType>> getRecordTypes(int type);
+
+    /**
+     * 获取类型图片数据
+     *
+     * @param type 收入或支出类型
+     * @return 所有获取类型图片数据
+     * @see RecordType#TYPE_OUTLAY
+     * @see RecordType#TYPE_INCOME
+     */
+    Flowable<List<TypeImgBean>> getAllTypeImgBeans(int type);
+
+    /**
+     * 添加一个记账类型
+     *
+     * @param type    类型
+     * @param imgName 图片
+     * @param name    类型名称
+     * @see RecordType#TYPE_OUTLAY
+     * @see RecordType#TYPE_INCOME
+     */
+    void addRecordType(int type, String imgName, String name);
 }

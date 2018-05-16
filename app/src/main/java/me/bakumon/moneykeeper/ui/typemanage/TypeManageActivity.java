@@ -18,6 +18,7 @@ import me.bakumon.moneykeeper.Router;
 import me.bakumon.moneykeeper.base.BaseActivity;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.databinding.ActivityTypeManageBinding;
+import me.bakumon.moneykeeper.ui.addtype.AddTypeActivity;
 import me.bakumon.moneykeeper.ui.typesort.TypeSortActivity;
 import me.bakumon.moneykeeper.utill.ToastUtils;
 import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
@@ -79,9 +80,11 @@ public class TypeManageActivity extends BaseActivity {
             return true;
         });
 
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            ToastUtils.show("点击了" + position);
-        });
+        mAdapter.setOnItemClickListener((adapter, view, position) ->
+                Floo.navigation(this, Router.ADD_TYPE)
+                        .putExtra(AddTypeActivity.KEY_TYPE_BEAN, mAdapter.getItem(position))
+                        .putExtra(AddTypeActivity.KEY_TYPE, mCurrentType)
+                        .start());
 
         mBinding.typeChoice.rgType.setOnCheckedChangeListener((group, checkedId) -> {
             mCurrentType = checkedId == R.id.rb_outlay ? RecordType.TYPE_OUTLAY : RecordType.TYPE_INCOME;
@@ -103,7 +106,9 @@ public class TypeManageActivity extends BaseActivity {
     }
 
     public void addType(View view) {
-
+        Floo.navigation(this, Router.ADD_TYPE)
+                .putExtra(AddTypeActivity.KEY_TYPE, mCurrentType)
+                .start();
     }
 
     private void deleteType(RecordType recordType) {

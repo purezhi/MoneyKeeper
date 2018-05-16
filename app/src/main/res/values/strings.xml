@@ -9,6 +9,7 @@
     <string name="toast_sort_fail">排序失败</string>
     <string name="toast_least_one_type">请至少保留一个类型</string>
     <string name="toast_delete_fail">删除失败</string>
+    <string name="toast_type_img_fail">类型图片获取失败</string>
 
     <string name="hint_enter_money">输入金额</string>
     <string name="hint_enter_remark">输入备注</string>
@@ -59,5 +60,9 @@
     <string name="text_button_affirm_delete">确认删除</string>
     <string name="text_dialog_delete">删除</string>
     <string name="text_delete_type_note">删除该分类后，将无法在记账页选择该分类，该分类下原有账单仍保持不变</string>
-
+    <string name="text_save">保存</string>
+    <string name="text_add">添加</string>
+    <string name="text_modify">修改</string>
+    <string name="text_outlay_type">支出类型</string>
+    <string name="text_income_type">收入类型</string>
 </resources>

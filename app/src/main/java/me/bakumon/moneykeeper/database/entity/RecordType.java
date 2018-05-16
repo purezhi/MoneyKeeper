@@ -6,13 +6,15 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.io.Serializable;
+
 /**
  * 记账类型
  *
  * @author bakumon https://bakumon.me
  */
 @Entity(indices = {@Index(value = {"type", "ranking"})})
-public class RecordType {
+public class RecordType implements Serializable{
     @PrimaryKey(autoGenerate = true)
     public int id;
 
@@ -40,7 +42,7 @@ public class RecordType {
     /**
      * 排序
      */
-    public int ranking;
+    public long ranking;
     @Ignore
     public static int STATE_NORMAL = 0;
     @Ignore
@@ -68,14 +70,14 @@ public class RecordType {
     }
 
     @Ignore
-    public RecordType(String name, String imgName, int type, int ranking) {
+    public RecordType(String name, String imgName, int type, long ranking) {
         this.name = name;
         this.imgName = imgName;
         this.type = type;
         this.ranking = ranking;
     }
 
-    public RecordType(int id, String name, String imgName, int type, int ranking) {
+    public RecordType(int id, String name, String imgName, int type, long ranking) {
         this.id = id;
         this.name = name;
         this.imgName = imgName;

@@ -6,18 +6,18 @@
     <data>
 
         <variable
-            name="recordType"
-            type="me.bakumon.moneykeeper.database.entity.RecordType" />
+            name="typeImg"
+            type="me.bakumon.moneykeeper.ui.addtype.TypeImgBean" />
     </data>
 
     <LinearLayout
         android:id="@+id/ll_type_item_root"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        android:visibility="@{recordType != null}"
         tools:background="@color/colorPrimary"
         tools:layout_height="wrap_content">
 
@@ -31,25 +31,16 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_alignParentBottom="true"
-                app:src_img_name="@{recordType.imgName}"
+                app:src_img_name="@{typeImg.imgName}"
                 tools:src="@mipmap/type_eat" />
 
             <ImageView
                 android:id="@+id/iv_check"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:src="@drawable/ic_check"
-                android:visibility="@{recordType.isChecked}" />
+                android:visibility="@{typeImg.isChecked}" />
         </RelativeLayout>
-
-        <TextView
-            android:id="@+id/tv_type_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@{recordType.name}"
-            android:textColor="@color/colorTextWhite"
-            tools:text="餐饮" />
     </LinearLayout>
 </layout>

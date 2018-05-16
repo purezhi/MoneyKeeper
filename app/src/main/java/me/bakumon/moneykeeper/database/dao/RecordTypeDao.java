@@ -21,11 +21,20 @@ public interface RecordTypeDao {
     @Query("SELECT * FROM recordtype WHERE state = 0 ORDER BY ranking")
     Flowable<List<RecordType>> getAllRecordTypes();
 
-    @Query("SELECT * FROM recordtype WHERE state = 0 and type = :type ORDER BY ranking")
+    @Query("SELECT * FROM recordtype WHERE state = 0 AND type = :type ORDER BY ranking")
     Flowable<List<RecordType>> getRecordTypes(int type);
 
-    @Query("SELECT count(*) FROM recordtype")
+    @Query("SELECT count(recordtype.id) FROM recordtype")
     long getRecordTypeCount();
+
+    @Query("SELECT count(recordtype.id) FROM recordtype WHERE name = :name")
+    long isExist(String name);
+
+    @Query("SELECT count(recordtype.id) FROM recordtype WHERE state = 1 AND name = :name")
+    long isDeleted(String name);
+
+    @Query("SELECT * FROM recordtype WHERE name = :name")
+    RecordType getTypeByName(String name);
 
     @Insert
     void insertRecordTypes(RecordType... recordTypes);
