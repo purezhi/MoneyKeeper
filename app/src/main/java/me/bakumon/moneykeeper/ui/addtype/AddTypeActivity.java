@@ -66,7 +66,7 @@ public class AddTypeActivity extends BaseActivity {
         mBinding.edtTypeName.setSelection(mBinding.edtTypeName.getText().length());
 
         mBinding.titleBar.setTitle(prefix + type);
-        mBinding.titleBar.tvRight.setText(getString(R.string.text_save));
+        mBinding.titleBar.tvRight.setText(R.string.text_save);
         mBinding.titleBar.ibtClose.setOnClickListener(v -> finish());
         mBinding.titleBar.tvRight.setOnClickListener(v -> saveType());
 
@@ -109,6 +109,7 @@ public class AddTypeActivity extends BaseActivity {
     }
 
     private void saveType() {
+        mBinding.titleBar.tvRight.setEnabled(false);
         String text = mBinding.edtTypeName.getText().toString().trim();
         if (TextUtils.isEmpty(text)) {
             Animation animation = AnimationUtils.loadAnimation(App.getINSTANCE(), R.anim.shake);
@@ -120,6 +121,7 @@ public class AddTypeActivity extends BaseActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::finish, throwable -> {
+                    mBinding.titleBar.tvRight.setEnabled(true);
                     String failTip = TextUtils.isEmpty(throwable.getMessage()) ? getString(R.string.toast_type_save_fail) : throwable.getMessage();
                     ToastUtils.show(failTip);
                     Log.e(TAG, "类型保存失败", throwable);

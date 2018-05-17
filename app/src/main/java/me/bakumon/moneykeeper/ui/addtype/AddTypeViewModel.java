@@ -35,10 +35,12 @@ public class AddTypeViewModel extends BaseViewModel {
             // 添加
             return mDataSource.addRecordType(type, imgName, name);
         } else {
+            String oldName = recordType.name;
+            String oldImgName = recordType.imgName;
             // 修改
-            recordType.name = name;
-            recordType.imgName = imgName;
-            return mDataSource.updateRecordTypes(recordType);
+            RecordType updateType = new RecordType(recordType.id, name, imgName, recordType.type, recordType.ranking);
+            updateType.state = recordType.state;
+            return mDataSource.updateRecordType(oldName, oldImgName, updateType);
         }
     }
 }

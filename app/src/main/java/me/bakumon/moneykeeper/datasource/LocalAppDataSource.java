@@ -1,5 +1,7 @@
 package me.bakumon.moneykeeper.datasource;
 
+import android.text.TextUtils;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -112,6 +114,8 @@ public class LocalAppDataSource implements AppDataSource {
                 if (recordType.state == RecordType.STATE_DELETED) {
                     // 已删除状态
                     recordType.state = RecordType.STATE_NORMAL;
+                    recordType.ranking = System.currentTimeMillis();
+                    recordType.imgName = imgName;
                     mAppDatabase.recordTypeDao().updateRecordTypes(recordType);
                 } else {
                     // 提示用户该类型已经存在
@@ -121,6 +125,23 @@ public class LocalAppDataSource implements AppDataSource {
                 // 不存在，直接新增
                 RecordType insertType = new RecordType(name, imgName, type, System.currentTimeMillis());
                 mAppDatabase.recordTypeDao().insertRecordTypes(insertType);
+            }
+        });
+    }
+
+    @Override
+    public Completable updateRecordType(String oldName, String oldImgName, RecordType recordType) {
+        return Completable.fromAction(() -> {
+            if (!TextUtils.equals(oldName, recordType.name)) {
+                RecordType recordTypeFromDb = mAppDatabase.recordTypeDao().getTypeByName(recordType.name);
+                if (recordTypeFromDb != null) {
+                    // 提示用户该类型已经存在
+                    throw new IllegalStateException("该名称已经存在");
+                } else {
+                    mAppDatabase.recordTypeDao().updateRecordTypes(recordType);
+                }
+            } else if (!TextUtils.equals(oldImgName, recordType.imgName)) {
+                mAppDatabase.recordTypeDao().updateRecordTypes(recordType);
             }
         });
     }

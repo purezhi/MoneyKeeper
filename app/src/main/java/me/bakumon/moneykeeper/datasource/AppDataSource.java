@@ -99,4 +99,12 @@ public interface AppDataSource {
      * @see RecordType#TYPE_INCOME
      */
     Completable addRecordType(int type, String imgName, String name);
+
+    /**
+     * 修改记账类型
+     *
+     * @param oldName    修改之前的名称
+     * @param recordType 修改的 RecordType
+     */
+    Completable updateRecordType(String oldName, String oldImgName, RecordType recordType);
 }
