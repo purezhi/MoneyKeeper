@@ -11,6 +11,7 @@
     <string name="toast_delete_fail">删除失败</string>
     <string name="toast_type_img_fail">类型图片获取失败</string>
     <string name="toast_type_save_fail">类型保存失败</string>
+    <string name="toast_type_is_exist">&#160;类型已经存在</string>
 
     <string name="hint_enter_money">输入金额</string>
     <string name="hint_enter_remark">输入备注</string>

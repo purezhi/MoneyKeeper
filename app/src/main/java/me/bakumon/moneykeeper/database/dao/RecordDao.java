@@ -5,6 +5,7 @@ import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Transaction;
+import android.arch.persistence.room.Update;
 
 import java.util.Date;
 import java.util.List;
@@ -32,6 +33,15 @@ public interface RecordDao {
     @Delete
     void deleteRecord(Record record);
 
-    @Query("SELECT recordType.type as type, sum(record.money) as sumMoney from record left join RecordType on record.record_type_id=RecordType.id WHERE time BETWEEN :from AND :to group by RecordType.type")
+    @Query("SELECT recordType.type AS type, sum(record.money) AS sumMoney FROM record LEFT JOIN RecordType ON record.record_type_id=RecordType.id WHERE time BETWEEN :from AND :to GROUP BY RecordType.type")
     Flowable<List<SumMoneyBean>> getSumMoney(Date from, Date to);
+
+    @Query("SELECT count(id) FROM record WHERE record_type_id = :typeId")
+    long getRecordCountWithTypeId(int typeId);
+
+    @Query("SELECT * FROM record WHERE record_type_id = :typeId")
+    List<Record> getRecordsWithTypeId(int typeId);
+
+    @Update
+    void updateRecords(List<Record> records);
 }

@@ -1,6 +1,7 @@
 package me.bakumon.moneykeeper.database.dao;
 
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
@@ -27,12 +28,15 @@ public interface RecordTypeDao {
     @Query("SELECT count(recordtype.id) FROM recordtype")
     long getRecordTypeCount();
 
-    @Query("SELECT * FROM recordtype WHERE name = :name")
-    RecordType getTypeByName(String name);
+    @Query("SELECT * FROM recordtype WHERE type = :type AND name = :name")
+    RecordType getTypeByName(int type, String name);
 
     @Insert
     void insertRecordTypes(RecordType... recordTypes);
 
     @Update
     void updateRecordTypes(RecordType... recordTypes);
+
+    @Delete
+    void deleteRecordType(RecordType recordType);
 }

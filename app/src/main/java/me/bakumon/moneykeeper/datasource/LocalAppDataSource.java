@@ -9,6 +9,8 @@ import java.util.List;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import me.bakumon.moneykeeper.App;
+import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.database.AppDatabase;
 import me.bakumon.moneykeeper.database.entity.Record;
 import me.bakumon.moneykeeper.database.entity.RecordType;
@@ -87,8 +89,12 @@ public class LocalAppDataSource implements AppDataSource {
     @Override
     public Completable deleteRecordType(RecordType recordType) {
         return Completable.fromAction(() -> {
-            recordType.state = RecordType.STATE_DELETED;
-            mAppDatabase.recordTypeDao().updateRecordTypes(recordType);
+            if (mAppDatabase.recordDao().getRecordCountWithTypeId(recordType.id) > 0) {
+                recordType.state = RecordType.STATE_DELETED;
+                mAppDatabase.recordTypeDao().updateRecordTypes(recordType);
+            } else {
+                mAppDatabase.recordTypeDao().deleteRecordType(recordType);
+            }
         });
     }
 
@@ -109,7 +115,7 @@ public class LocalAppDataSource implements AppDataSource {
     @Override
     public Completable addRecordType(int type, String imgName, String name) {
         return Completable.fromAction(() -> {
-            RecordType recordType = mAppDatabase.recordTypeDao().getTypeByName(name);
+            RecordType recordType = mAppDatabase.recordTypeDao().getTypeByName(type, name);
             if (recordType != null) {
                 // name 类型存在
                 if (recordType.state == RecordType.STATE_DELETED) {
@@ -120,7 +126,7 @@ public class LocalAppDataSource implements AppDataSource {
                     mAppDatabase.recordTypeDao().updateRecordTypes(recordType);
                 } else {
                     // 提示用户该类型已经存在
-                    throw new IllegalStateException("该名称已经存在");
+                    throw new IllegalStateException(name + App.getINSTANCE().getString(R.string.toast_type_is_exist));
                 }
             } else {
                 // 不存在，直接新增
@@ -136,10 +142,37 @@ public class LocalAppDataSource implements AppDataSource {
             String oldName = oldRecordType.name;
             String oldImgName = oldRecordType.imgName;
             if (!TextUtils.equals(oldName, recordType.name)) {
-                RecordType recordTypeFromDb = mAppDatabase.recordTypeDao().getTypeByName(recordType.name);
+                RecordType recordTypeFromDb = mAppDatabase.recordTypeDao().getTypeByName(recordType.type, recordType.name);
                 if (recordTypeFromDb != null) {
-                    // 提示用户该类型已经存在
-                    throw new IllegalStateException("该名称已经存在");
+                    if (recordTypeFromDb.state == RecordType.STATE_DELETED) {
+
+                        // TODO: 2018/5/17
+                        // 1。recordTypeFromDb 改成正常状态，name改成recordType#name，imageName同理
+                        // 2。更新 recordTypeFromDb
+                        // 3。判断是否有 oldRecordType 类型的 record 记录
+                        // 4。如果有记录，把这些记录的 type_id 改成 recordTypeFromDb.id
+                        // 5。删除 oldRecordType 记录
+
+                        recordTypeFromDb.state = RecordType.STATE_NORMAL;
+                        recordTypeFromDb.name = recordType.name;
+                        recordTypeFromDb.imgName = recordType.imgName;
+                        recordTypeFromDb.ranking = System.currentTimeMillis();
+
+                        mAppDatabase.recordTypeDao().updateRecordTypes(recordTypeFromDb);
+
+                        List<Record> recordsWithOldType = mAppDatabase.recordDao().getRecordsWithTypeId(oldRecordType.id);
+                        if (recordsWithOldType != null && recordsWithOldType.size() > 0) {
+                            for (Record record : recordsWithOldType) {
+                                record.recordTypeId = recordTypeFromDb.id;
+                            }
+                            mAppDatabase.recordDao().updateRecords(recordsWithOldType);
+                        }
+
+                        mAppDatabase.recordTypeDao().deleteRecordType(oldRecordType);
+                    } else {
+                        // 提示用户该类型已经存在
+                        throw new IllegalStateException(recordType.name + App.getINSTANCE().getString(R.string.toast_type_is_exist));
+                    }
                 } else {
                     mAppDatabase.recordTypeDao().updateRecordTypes(recordType);
                 }
