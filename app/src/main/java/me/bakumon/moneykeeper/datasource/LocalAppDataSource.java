@@ -146,7 +146,6 @@ public class LocalAppDataSource implements AppDataSource {
                 if (recordTypeFromDb != null) {
                     if (recordTypeFromDb.state == RecordType.STATE_DELETED) {
 
-                        // TODO: 2018/5/17
                         // 1。recordTypeFromDb 改成正常状态，name改成recordType#name，imageName同理
                         // 2。更新 recordTypeFromDb
                         // 3。判断是否有 oldRecordType 类型的 record 记录

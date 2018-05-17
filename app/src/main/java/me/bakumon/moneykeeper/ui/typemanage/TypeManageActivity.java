@@ -59,7 +59,7 @@ public class TypeManageActivity extends BaseActivity {
 
     private void initView() {
         mCurrentType = getIntent().getIntExtra(KEY_TYPE, RecordType.TYPE_OUTLAY);
-        mBinding.titleBar.tvRight.setText(getString(R.string.text_button_sort));
+        mBinding.titleBar.tvRight.setText(R.string.text_button_sort);
         mBinding.titleBar.ibtClose.setOnClickListener(v -> finish());
         mBinding.titleBar.setTitle(getString(R.string.text_title_type_manage));
         mBinding.titleBar.tvRight.setOnClickListener(v ->
@@ -67,6 +67,7 @@ public class TypeManageActivity extends BaseActivity {
                         .putExtra(TypeSortActivity.KEY_TYPE, mCurrentType)
                         .start());
 
+        // TODO: 2018/5/18 列表最后一行增加边距或添加一个footer
         mBinding.rvType.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new TypeManageAdapter(null);
         mBinding.rvType.setAdapter(mAdapter);

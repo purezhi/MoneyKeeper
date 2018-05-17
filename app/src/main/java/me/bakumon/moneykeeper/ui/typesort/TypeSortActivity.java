@@ -70,6 +70,7 @@ public class TypeSortActivity extends BaseActivity {
 
         // open drag
         mAdapter.enableDragItem(itemTouchHelper);
+        // TODO: 2018/5/18 拖动放大效果
     }
 
     private void sortRecordTypes() {

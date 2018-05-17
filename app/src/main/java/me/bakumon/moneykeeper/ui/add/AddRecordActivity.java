@@ -69,6 +69,7 @@ public class AddRecordActivity extends BaseActivity {
 
     private void initView() {
         mCurrentType = RecordType.TYPE_OUTLAY;
+        // TODO: 2018/5/18 编辑记账记录
 
         mBinding.titleBar.ibtClose.setBackgroundResource(R.drawable.ic_close);
         mBinding.titleBar.ibtClose.setOnClickListener(v -> finish());
@@ -106,6 +107,8 @@ public class AddRecordActivity extends BaseActivity {
         // 2.设置滚动辅助工具
         PagerGridSnapHelper pageSnapHelper = new PagerGridSnapHelper();
         pageSnapHelper.attachToRecyclerView(mBinding.rvType);
+
+        // TODO: 2018/5/18 添加指示器
 
         mAdapter = new TypeAdapter(null);
         mBinding.rvType.setAdapter(mAdapter);
