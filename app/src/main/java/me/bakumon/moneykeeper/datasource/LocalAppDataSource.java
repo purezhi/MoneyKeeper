@@ -130,8 +130,10 @@ public class LocalAppDataSource implements AppDataSource {
     }
 
     @Override
-    public Completable updateRecordType(String oldName, String oldImgName, RecordType recordType) {
+    public Completable updateRecordType(RecordType oldRecordType, RecordType recordType) {
         return Completable.fromAction(() -> {
+            String oldName = oldRecordType.name;
+            String oldImgName = oldRecordType.imgName;
             if (!TextUtils.equals(oldName, recordType.name)) {
                 RecordType recordTypeFromDb = mAppDatabase.recordTypeDao().getTypeByName(recordType.name);
                 if (recordTypeFromDb != null) {

@@ -103,8 +103,8 @@ public interface AppDataSource {
     /**
      * 修改记账类型
      *
-     * @param oldName    修改之前的名称
-     * @param recordType 修改的 RecordType
+     * @param oldRecordType 修改之前的 RecordType
+     * @param recordType    修改的 RecordType
      */
-    Completable updateRecordType(String oldName, String oldImgName, RecordType recordType);
+    Completable updateRecordType(RecordType oldRecordType, RecordType recordType);
 }
