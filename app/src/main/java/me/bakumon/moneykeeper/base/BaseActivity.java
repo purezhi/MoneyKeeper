@@ -17,7 +17,6 @@ import me.bakumon.moneykeeper.utill.StatusBarUtil;
 /**
  * 1.沉浸式状态栏
  * 2.ViewDataBinding 封装
- * 3.滑动返回
  *
  * @author Bakumon
  * @date 18-1-17

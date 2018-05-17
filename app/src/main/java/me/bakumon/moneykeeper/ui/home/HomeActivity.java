@@ -16,7 +16,9 @@ import me.bakumon.moneykeeper.Injection;
 import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.Router;
 import me.bakumon.moneykeeper.base.BaseActivity;
+import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
+import me.bakumon.moneykeeper.database.entity.SumMoneyBean;
 import me.bakumon.moneykeeper.databinding.ActivityHomeBinding;
 import me.bakumon.moneykeeper.utill.ToastUtils;
 import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
@@ -105,6 +107,34 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void initData() {
+        getCurrentMonthRecords();
+        getCurrentMontySumMonty();
+    }
+
+    private void getCurrentMontySumMonty() {
+        mDisposable.add(mViewModel.getCurrentMonthSumMoney()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(sumMoneyBean -> {
+                            String outlay = "0";
+                            String inCome = "0";
+                            if (sumMoneyBean != null && sumMoneyBean.size() > 0) {
+                                for (SumMoneyBean bean : sumMoneyBean) {
+                                    if (bean.type == RecordType.TYPE_OUTLAY) {
+                                        outlay = bean.sumMoney;
+                                    } else if (bean.type == RecordType.TYPE_INCOME) {
+                                        inCome = bean.sumMoney;
+                                    }
+                                }
+                            }
+                            binding.tvMonthOutlay.setText(outlay);
+                            binding.tvMonthIncome.setText(inCome);
+                        },
+                        throwable ->
+                                Log.e(TAG, "获取记录列表失败", throwable)));
+    }
+
+    private void getCurrentMonthRecords() {
         mDisposable.add(mViewModel.getCurrentMonthRecordWithTypes()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -121,10 +151,11 @@ public class HomeActivity extends BaseActivity {
     private void setListData(List<RecordWithType> recordWithTypes) {
         mAdapter.setNewData(recordWithTypes);
         boolean isShowFooter = recordWithTypes != null
-                && recordWithTypes.size() > MAX_ITEM_TIP
-                && mAdapter.getFooterLayoutCount() == 0;
+                && recordWithTypes.size() > MAX_ITEM_TIP;
         if (isShowFooter) {
             mAdapter.setFooterView(inflate(R.layout.layout_footer_tip));
+        } else {
+            mAdapter.removeAllFooterView();
         }
     }
 

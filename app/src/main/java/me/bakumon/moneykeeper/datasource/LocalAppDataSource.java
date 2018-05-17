@@ -13,6 +13,7 @@ import me.bakumon.moneykeeper.database.AppDatabase;
 import me.bakumon.moneykeeper.database.entity.Record;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
+import me.bakumon.moneykeeper.database.entity.SumMoneyBean;
 import me.bakumon.moneykeeper.ui.addtype.TypeImgBean;
 import me.bakumon.moneykeeper.utill.DateUtils;
 
@@ -146,5 +147,12 @@ public class LocalAppDataSource implements AppDataSource {
                 mAppDatabase.recordTypeDao().updateRecordTypes(recordType);
             }
         });
+    }
+
+    @Override
+    public Flowable<List<SumMoneyBean>> getCurrentMonthSumMoney() {
+        Date dateFrom = DateUtils.getCurrentMonthStart();
+        Date dateTo = DateUtils.getCurrentMonthEnd();
+        return mAppDatabase.recordDao().getSumMoney(dateFrom, dateTo);
     }
 }

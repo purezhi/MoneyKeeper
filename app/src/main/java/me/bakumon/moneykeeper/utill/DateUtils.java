@@ -20,6 +20,8 @@ public class DateUtils {
     @SuppressLint("SimpleDateFormat")
     public static final DateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     @SuppressLint("SimpleDateFormat")
+    public static final DateFormat ALL_FORMAT = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+    @SuppressLint("SimpleDateFormat")
     public static final DateFormat MONTH_DAY_FORMAT = new SimpleDateFormat("MM月dd日");
     @SuppressLint("SimpleDateFormat")
     public static final DateFormat YEAR_MONTH_DAY_FORMAT = new SimpleDateFormat("yyyy年MM月dd日");
@@ -33,7 +35,8 @@ public class DateUtils {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
+        // 这里特别续一秒
+        calendar.set(Calendar.SECOND, 1);
         calendar.set(Calendar.MILLISECOND, 0);
         return calendar.getTime();
     }
@@ -47,8 +50,9 @@ public class DateUtils {
      * @return Date 对象
      */
     public static Date getDate(int year, int monthOfYear, int dayOfMonth) {
-        String time = year + "-" + monthOfYear + "-" + dayOfMonth;
-        return string2Date(time, FORMAT);
+        // 这里特别续一秒
+        String time = year + "-" + monthOfYear + "-" + dayOfMonth + "-00-00-01";
+        return string2Date(time, ALL_FORMAT);
     }
 
     /**

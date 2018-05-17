@@ -12,6 +12,7 @@ import java.util.List;
 import io.reactivex.Flowable;
 import me.bakumon.moneykeeper.database.entity.Record;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
+import me.bakumon.moneykeeper.database.entity.SumMoneyBean;
 
 /**
  * 记账记录表操作类
@@ -30,4 +31,7 @@ public interface RecordDao {
 
     @Delete
     void deleteRecord(Record record);
+
+    @Query("SELECT recordType.type as type, sum(record.money) as sumMoney from record left join RecordType on record.record_type_id=RecordType.id WHERE time BETWEEN :from AND :to group by RecordType.type")
+    Flowable<List<SumMoneyBean>> getSumMoney(Date from, Date to);
 }

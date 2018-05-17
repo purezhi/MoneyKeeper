@@ -70,8 +70,17 @@ public class CustomKeyboardHelper {
             textViews[i].setOnClickListener(view -> {
                 EditText target = mEditText.get();
                 if (target != null) {
+                    target.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                        @Override
+                        public void onFocusChange(View v, boolean hasFocus) {
+                            if (hasFocus) {
+                                CustomKeyboardHelper.hideSoftInput(target);
+                            }
+                        }
+                    });
                     if (!target.isFocused()) {
                         target.requestFocus();
+//                        CustomKeyboardHelper.hideSoftInput(target);
                         target.setSelection(target.getText().length());
                     }
                     StringBuilder sb = new StringBuilder(target.getText().toString().trim());

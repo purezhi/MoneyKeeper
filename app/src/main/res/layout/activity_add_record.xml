@@ -65,6 +65,7 @@
                     android:background="@drawable/bg_date"
                     android:hint="@string/hint_enter_remark"
                     android:inputType="text"
+                    android:maxLength="9"
                     android:maxLines="2"
                     android:paddingBottom="3dp"
                     android:paddingLeft="10dp"

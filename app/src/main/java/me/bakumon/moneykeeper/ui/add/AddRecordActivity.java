@@ -75,7 +75,8 @@ public class AddRecordActivity extends BaseActivity {
         mBinding.titleBar.setTitle(getString(R.string.text_add_record));
 
         configRecyclerView();
-        configCustomKeyboard();
+
+        mBinding.customKeyboard.setAffirmClickListener(this::insertRecord);
 
         mBinding.qmTvDate.setOnClickListener(v -> {
             DatePickerDialog dpd = DatePickerDialog.newInstance(
@@ -108,13 +109,6 @@ public class AddRecordActivity extends BaseActivity {
 
         mAdapter = new TypeAdapter(null);
         mBinding.rvType.setAdapter(mAdapter);
-    }
-
-    /**
-     * 配置自定义键盘
-     */
-    private void configCustomKeyboard() {
-        mBinding.customKeyboard.setAffirmClickListener(this::insertRecord);
     }
 
     private void insertRecord(String text) {

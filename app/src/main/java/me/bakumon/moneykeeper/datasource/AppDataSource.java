@@ -7,6 +7,7 @@ import io.reactivex.Flowable;
 import me.bakumon.moneykeeper.database.entity.Record;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
+import me.bakumon.moneykeeper.database.entity.SumMoneyBean;
 import me.bakumon.moneykeeper.ui.addtype.TypeImgBean;
 
 /**
@@ -107,4 +108,9 @@ public interface AppDataSource {
      * @param recordType    修改的 RecordType
      */
     Completable updateRecordType(RecordType oldRecordType, RecordType recordType);
+
+    /**
+     * 获取本月支出和收入总数
+     */
+    Flowable<List<SumMoneyBean>> getCurrentMonthSumMoney();
 }
