@@ -80,7 +80,7 @@ public class CustomKeyboardHelper {
                     });
                     if (!target.isFocused()) {
                         target.requestFocus();
-//                        CustomKeyboardHelper.hideSoftInput(target);
+                        CustomKeyboardHelper.hideSoftInput(target);
                         target.setSelection(target.getText().length());
                     }
                     StringBuilder sb = new StringBuilder(target.getText().toString().trim());

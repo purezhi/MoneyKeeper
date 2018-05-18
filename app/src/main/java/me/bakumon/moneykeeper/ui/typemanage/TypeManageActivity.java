@@ -67,7 +67,6 @@ public class TypeManageActivity extends BaseActivity {
                         .putExtra(TypeSortActivity.KEY_TYPE, mCurrentType)
                         .start());
 
-        // TODO: 2018/5/18 列表最后一行增加边距或添加一个footer
         mBinding.rvType.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new TypeManageAdapter(null);
         mBinding.rvType.setAdapter(mAdapter);

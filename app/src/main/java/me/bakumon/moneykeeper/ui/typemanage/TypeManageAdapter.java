@@ -29,6 +29,9 @@ public class TypeManageAdapter extends BaseDataBindingAdapter<RecordType> {
         ViewDataBinding binding = helper.getBinding();
 
         binding.setVariable(BR.recordType, item);
+        boolean isLastItem = helper.getAdapterPosition() == mData.size() - 1;
+        // 单位是 dp
+        binding.setVariable(BR.bottomMargin, isLastItem ? 100 : 0);
 
         binding.executePendingBindings();
     }
