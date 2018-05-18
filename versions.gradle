@@ -1,4 +1,3 @@
-
 ext.deps = [:]
 def versions = [:]
 // gradle_plugin
@@ -20,7 +19,6 @@ versions.rxandroid = "2.0.1"
 versions.BRVAH = "2.9.34"
 versions.floo = "1.1.0"
 versions.datetimepicker = "3.5.1"
-versions.pagerlayout = "2.3.8"
 
 def deps = [:]
 
@@ -53,7 +51,6 @@ deps.rxandroid = "io.reactivex.rxjava2:rxandroid:$versions.rxandroid"
 deps.BRVAH = "com.github.CymChad:BaseRecyclerViewAdapterHelper:$versions.BRVAH"
 deps.floo = "me.drakeet.floo:floo:$versions.floo"
 deps.datetimepicker = "com.wdullaer:materialdatetimepicker:$versions.datetimepicker"
-deps.pagerlayout = "com.gcssloop.recyclerview:pagerlayoutmanager:$versions.pagerlayout"
 
 ext.deps = deps
 
@@ -66,8 +63,11 @@ ext.build_versions = build_versions
 def static addRepos(RepositoryHandler handler) {
     handler.google()
     handler.jcenter()
-    handler.maven { url "http://lib.gcssloop.com/repository/gcssloop-central/" }
+    handler.maven {
+        url "https://jitpack.io"
+    }
 }
+
 ext.addRepos = this.&addRepos
 
 def static uniformSupportVersion(ConfigurationContainer configurations) {
@@ -84,4 +84,5 @@ def static uniformSupportVersion(ConfigurationContainer configurations) {
         }
     }
 }
+
 ext.uniformSupportVersion = this.&uniformSupportVersion

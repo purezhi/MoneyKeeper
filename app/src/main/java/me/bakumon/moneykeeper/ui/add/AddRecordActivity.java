@@ -4,9 +4,8 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
 
-import com.gcssloop.widget.PagerGridLayoutManager;
-import com.gcssloop.widget.PagerGridSnapHelper;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.math.BigDecimal;
@@ -24,6 +23,8 @@ import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.databinding.ActivityAddRecordBinding;
 import me.bakumon.moneykeeper.utill.DateUtils;
 import me.bakumon.moneykeeper.utill.ToastUtils;
+import me.bakumon.moneykeeper.view.pagerlayoutmanager.PagerGridLayoutManager;
+import me.bakumon.moneykeeper.view.pagerlayoutmanager.PagerGridSnapHelper;
 import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
 
 /**
@@ -108,10 +109,34 @@ public class AddRecordActivity extends BaseActivity {
         PagerGridSnapHelper pageSnapHelper = new PagerGridSnapHelper();
         pageSnapHelper.attachToRecyclerView(mBinding.rvType);
 
-        // TODO: 2018/5/18 添加指示器
-
         mAdapter = new TypeAdapter(null);
         mBinding.rvType.setAdapter(mAdapter);
+
+        layoutManager.setPageListener(new PagerGridLayoutManager.PageListener() {
+            int currentPageIndex;
+            int pageSize;
+
+            @Override
+            public void onPageSizeChanged(int pageSize) {
+                this.pageSize = pageSize;
+                setIndicator();
+            }
+
+            @Override
+            public void onPageSelect(int pageIndex) {
+                currentPageIndex = pageIndex;
+                setIndicator();
+            }
+
+            private void setIndicator() {
+                if (pageSize > 1) {
+                    mBinding.indicator.setVisibility(View.VISIBLE);
+                    mBinding.indicator.setTotal(pageSize, currentPageIndex);
+                } else {
+                    mBinding.indicator.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
     }
 
     private void insertRecord(String text) {

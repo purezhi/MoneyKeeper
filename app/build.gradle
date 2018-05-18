@@ -88,5 +88,4 @@ dependencies {
     implementation deps.floo
     // 日期时间选择器
     implementation deps.datetimepicker
-    implementation deps.pagerlayout
 }
