@@ -114,6 +114,7 @@ public class AddTypeActivity extends BaseActivity {
         if (TextUtils.isEmpty(text)) {
             Animation animation = AnimationUtils.loadAnimation(App.getINSTANCE(), R.anim.shake);
             mBinding.edtTypeName.startAnimation(animation);
+            mBinding.titleBar.tvRight.setEnabled(true);
             return;
         }
         TypeImgBean bean = mAdapter.getCurrentItem();
