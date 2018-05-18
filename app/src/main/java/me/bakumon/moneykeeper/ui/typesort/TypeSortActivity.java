@@ -71,6 +71,7 @@ public class TypeSortActivity extends BaseActivity {
         // open drag
         mAdapter.enableDragItem(itemTouchHelper);
         // TODO: 2018/5/18 拖动放大效果
+        // 添加一句注释，测试 github 的 push 操作
     }
 
     private void sortRecordTypes() {
