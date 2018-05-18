@@ -87,6 +87,9 @@ public class TypeSortActivity extends BaseActivity {
         mDisposable.add(mViewModel.getRecordTypes(mType).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((recordTypes) -> mAdapter.setNewData(recordTypes),
-                        throwable -> Log.e(TAG, "获取类型数据失败", throwable)));
+                        throwable -> {
+                            ToastUtils.show(R.string.toast_get_types_fail);
+                            Log.e(TAG, "获取类型数据失败", throwable);
+                        }));
     }
 }

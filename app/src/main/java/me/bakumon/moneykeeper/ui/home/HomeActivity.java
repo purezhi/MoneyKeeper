@@ -79,7 +79,7 @@ public class HomeActivity extends BaseActivity {
 
     private void showOperateDialog(RecordWithType record) {
         new AlertDialog.Builder(this)
-                .setItems(new String[]{"修改", "删除"}, (dialog, which) -> {
+                .setItems(new String[]{getString(R.string.text_modify), getString(R.string.text_delete)}, (dialog, which) -> {
                     if (which == 0) {
                         modifyRecord(record);
                     } else {
@@ -101,7 +101,7 @@ public class HomeActivity extends BaseActivity {
                 .subscribe(() -> {
                         },
                         throwable -> {
-                            ToastUtils.show("删除失败");
+                            ToastUtils.show(R.string.toast_record_delete_fail);
                             Log.e(TAG, "删除记账记录失败", throwable);
                         }));
     }
@@ -130,8 +130,10 @@ public class HomeActivity extends BaseActivity {
                             binding.tvMonthOutlay.setText(outlay);
                             binding.tvMonthIncome.setText(inCome);
                         },
-                        throwable ->
-                                Log.e(TAG, "获取记录列表失败", throwable)));
+                        throwable -> {
+                            ToastUtils.show(R.string.toast_current_sum_money_fail);
+                            Log.e(TAG, "本月支出收入总数获取失败", throwable);
+                        }));
     }
 
     private void getCurrentMonthRecords() {
@@ -144,8 +146,10 @@ public class HomeActivity extends BaseActivity {
                                 setEmptyView();
                             }
                         },
-                        throwable ->
-                                Log.e(TAG, "获取记录列表失败", throwable)));
+                        throwable -> {
+                            ToastUtils.show(R.string.toast_records_fail);
+                            Log.e(TAG, "获取记录列表失败", throwable);
+                        }));
     }
 
     private void setListData(List<RecordWithType> recordWithTypes) {

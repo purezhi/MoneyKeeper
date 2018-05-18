@@ -141,8 +141,10 @@ public class AddRecordActivity extends BaseActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::getAllRecordTypes,
-                        throwable ->
-                                Log.e(TAG, "初始化类型数据失败", throwable)));
+                        throwable -> {
+                            ToastUtils.show(R.string.toast_init_types_fail);
+                            Log.e(TAG, "初始化类型数据失败", throwable);
+                        }));
     }
 
     private void getAllRecordTypes() {
@@ -150,13 +152,13 @@ public class AddRecordActivity extends BaseActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((recordTypes) -> {
-                            mRecordTypes = recordTypes;
-                            int id = mCurrentType == RecordType.TYPE_OUTLAY ? R.id.rb_outlay : R.id.rb_income;
-                            mBinding.typeChoice.rgType.clearCheck();
-                            mBinding.typeChoice.rgType.check(id);
-                        }, throwable ->
-                                Log.e(TAG, "获取类型数据失败", throwable)
-                )
-        );
+                    mRecordTypes = recordTypes;
+                    int id = mCurrentType == RecordType.TYPE_OUTLAY ? R.id.rb_outlay : R.id.rb_income;
+                    mBinding.typeChoice.rgType.clearCheck();
+                    mBinding.typeChoice.rgType.check(id);
+                }, throwable -> {
+                    ToastUtils.show(R.string.toast_get_types_fail);
+                    Log.e(TAG, "获取类型数据失败", throwable);
+                }));
     }
 }

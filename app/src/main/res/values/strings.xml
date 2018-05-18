@@ -12,6 +12,11 @@
     <string name="toast_type_img_fail">类型图片获取失败</string>
     <string name="toast_type_save_fail">类型保存失败</string>
     <string name="toast_type_is_exist">&#160;类型已经存在</string>
+    <string name="toast_record_delete_fail">记录删除失败</string>
+    <string name="toast_current_sum_money_fail">本月支出收入总数获取失败</string>
+    <string name="toast_records_fail">获取记录列表失败</string>
+    <string name="toast_init_types_fail">初始化类型数据失败</string>
+    <string name="toast_get_types_fail">获取类型数据失败</string>
 
     <string name="hint_enter_money">输入金额</string>
     <string name="hint_enter_remark">输入备注</string>
@@ -68,4 +73,5 @@
     <string name="text_modify">修改</string>
     <string name="text_outlay_type">支出类型</string>
     <string name="text_income_type">收入类型</string>
+    <string name="text_delete">删除</string>
 </resources>

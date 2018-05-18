@@ -132,9 +132,9 @@ public class TypeManageActivity extends BaseActivity {
                             mBinding.typeChoice.rgType.clearCheck();
                             mBinding.typeChoice.rgType.check(id);
                         },
-                        throwable ->
-                                Log.e(TAG, "获取类型数据失败", throwable)
-                )
-        );
+                        throwable -> {
+                            ToastUtils.show(R.string.toast_get_types_fail);
+                            Log.e(TAG, "获取类型数据失败", throwable);
+                        }));
     }
 }
