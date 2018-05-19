@@ -58,6 +58,11 @@ public class CustomKeyboardView extends LinearLayout {
         mOnAffirmClickListener = listener;
     }
 
+    public void setText(String text){
+        mBinding.editInput.setText(text);
+        mBinding.editInput.setSelection(mBinding.editInput.getText().length());
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     private void init(Context context) {
         setOrientation(VERTICAL);

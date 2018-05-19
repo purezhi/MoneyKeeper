@@ -43,6 +43,13 @@ public interface AppDataSource {
     Completable insertRecord(Record record);
 
     /**
+     * 更新一条记账记录
+     *
+     * @param record 记录对象
+     */
+    Completable updateRecord(Record record);
+
+    /**
      * 删除一天记账记录
      *
      * @param record 要删除的记账记录

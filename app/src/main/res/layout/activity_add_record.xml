@@ -35,13 +35,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:visibility="gone"
                 tools:ignore="NestedWeights" />
 
             <me.bakumon.moneykeeper.view.CircleIndicator
                 android:id="@+id/indicator"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom" />
+                android:layout_gravity="bottom"
+                android:visibility="gone" />
+
+            <me.bakumon.moneykeeper.view.TypePageView
+                android:id="@+id/type_page_outlay"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:visibility="visible" />
+
+            <me.bakumon.moneykeeper.view.TypePageView
+                android:id="@+id/type_page_income"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -71,11 +87,11 @@
                     android:background="@drawable/bg_date"
                     android:hint="@string/hint_enter_remark"
                     android:maxLength="9"
-                    android:singleLine="true"
                     android:paddingBottom="3dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="3dp"
+                    android:singleLine="true"
                     android:textColor="@color/colorTextWhite2"
                     android:textColorHint="@color/colorTextGray"
                     android:textSize="14sp" />

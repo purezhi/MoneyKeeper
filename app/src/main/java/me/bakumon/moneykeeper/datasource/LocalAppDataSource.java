@@ -64,6 +64,11 @@ public class LocalAppDataSource implements AppDataSource {
     }
 
     @Override
+    public Completable updateRecord(Record record) {
+        return Completable.fromAction(() -> mAppDatabase.recordDao().updateRecords(record));
+    }
+
+    @Override
     public Completable updateRecordTypes(RecordType... recordTypes) {
         return Completable.fromAction(() -> mAppDatabase.recordTypeDao().updateRecordTypes(recordTypes));
     }
@@ -164,7 +169,7 @@ public class LocalAppDataSource implements AppDataSource {
                             for (Record record : recordsWithOldType) {
                                 record.recordTypeId = recordTypeFromDb.id;
                             }
-                            mAppDatabase.recordDao().updateRecords(recordsWithOldType);
+                            mAppDatabase.recordDao().updateRecords(recordsWithOldType.toArray(new Record[recordsWithOldType.size()]));
                         }
 
                         mAppDatabase.recordTypeDao().deleteRecordType(oldRecordType);

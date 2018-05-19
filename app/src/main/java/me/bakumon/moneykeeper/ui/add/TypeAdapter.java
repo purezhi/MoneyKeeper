@@ -2,9 +2,6 @@ package me.bakumon.moneykeeper.ui.add;
 
 import android.databinding.ViewDataBinding;
 import android.support.annotation.Nullable;
-import android.view.View;
-
-import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,14 +22,14 @@ import me.drakeet.floo.Floo;
  * @date 2018/4/9
  */
 
-public class TypeAdapter extends BaseDataBindingAdapter<RecordType> implements BaseQuickAdapter.OnItemClickListener {
+public class TypeAdapter extends BaseDataBindingAdapter<RecordType> {
 
     private int mCurrentCheckPosition;
+    private int mCurrentCheckId = -1;
     private int mType;
 
     public TypeAdapter(@Nullable List<RecordType> data) {
         super(R.layout.item_type, data);
-        setOnItemClickListener(this);
     }
 
     @Override
@@ -62,19 +59,23 @@ public class TypeAdapter extends BaseDataBindingAdapter<RecordType> implements B
             // 增加设置 item， type == -1 表示是设置 item
             RecordType settingItem = new RecordType(App.getINSTANCE().getString(R.string.text_setting), "type_item_setting", -1);
             result.add(settingItem);
-            super.setNewData(result);
-            // 选中第一个
+            // 找出上次选中的 item
+            int checkPosition = 0;
             if (result.get(0).type != -1) {
-                clickItem(0);
+                for (int i = 0; i < result.size(); i++) {
+                    if (result.get(i).id == mCurrentCheckId) {
+                        checkPosition = i;
+                        break;
+                    }
+                }
+                super.setNewData(result);
+                clickItem(checkPosition);
+            } else {
+                super.setNewData(result);
             }
         } else {
             super.setNewData(null);
         }
-    }
-
-    @Override
-    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        clickItem(position);
     }
 
     /**
@@ -100,6 +101,7 @@ public class TypeAdapter extends BaseDataBindingAdapter<RecordType> implements B
             }
         }
         mCurrentCheckPosition = position;
+        mCurrentCheckId = getCurrentItem().id;
         notifyDataSetChanged();
     }
 

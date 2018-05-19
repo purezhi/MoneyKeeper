@@ -11,7 +11,6 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -20,11 +19,10 @@ import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.base.BaseActivity;
 import me.bakumon.moneykeeper.database.entity.Record;
 import me.bakumon.moneykeeper.database.entity.RecordType;
+import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.databinding.ActivityAddRecordBinding;
 import me.bakumon.moneykeeper.utill.DateUtils;
 import me.bakumon.moneykeeper.utill.ToastUtils;
-import me.bakumon.moneykeeper.view.pagerlayoutmanager.PagerGridLayoutManager;
-import me.bakumon.moneykeeper.view.pagerlayoutmanager.PagerGridSnapHelper;
 import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
 
 /**
@@ -36,18 +34,17 @@ import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
 public class AddRecordActivity extends BaseActivity {
 
     private static final String TAG = AddRecordActivity.class.getSimpleName();
-    private static final int ROW = 2;
-    private static final int COLUMN = 4;
+    public static final String KEY_RECORD_BEAN = "AddTypeActivity.key_record_bean";
 
     private ActivityAddRecordBinding mBinding;
 
     private AddRecordViewModel mViewModel;
 
-    private TypeAdapter mAdapter;
-    private List<RecordType> mRecordTypes;
     private Date mCurrentChooseDate = DateUtils.getTodayDate();
     private Calendar mCurrentChooseCalendar = Calendar.getInstance();
     private int mCurrentType;
+
+    private RecordWithType mRecord;
 
     @Override
     protected int getLayoutId() {
@@ -69,16 +66,34 @@ public class AddRecordActivity extends BaseActivity {
     }
 
     private void initView() {
-        mCurrentType = RecordType.TYPE_OUTLAY;
-        // TODO: 2018/5/18 编辑记账记录
+        mRecord = (RecordWithType) getIntent().getSerializableExtra(KEY_RECORD_BEAN);
 
         mBinding.titleBar.ibtClose.setBackgroundResource(R.drawable.ic_close);
         mBinding.titleBar.ibtClose.setOnClickListener(v -> finish());
-        mBinding.titleBar.setTitle(getString(R.string.text_add_record));
 
-        configRecyclerView();
+        if (mRecord == null) {
+            mCurrentType = RecordType.TYPE_OUTLAY;
 
-        mBinding.customKeyboard.setAffirmClickListener(this::insertRecord);
+            mBinding.titleBar.setTitle(getString(R.string.text_add_record));
+        } else {
+            mCurrentType = mRecord.mRecordTypes.get(0).type;
+
+            mBinding.titleBar.setTitle(getString(R.string.text_modify_record));
+
+            mBinding.edtRemark.setText(mRecord.remark);
+            mBinding.customKeyboard.setText(mRecord.money.toPlainString());
+            mCurrentChooseDate = mRecord.time;
+            mCurrentChooseCalendar.setTime(mCurrentChooseDate);
+            mBinding.qmTvDate.setText(DateUtils.getWordTime(mCurrentChooseDate));
+        }
+
+        mBinding.customKeyboard.setAffirmClickListener(text -> {
+            if (mRecord == null) {
+                insertRecord(text);
+            } else {
+                modifyRecord(text);
+            }
+        });
 
         mBinding.qmTvDate.setOnClickListener(v -> {
             DatePickerDialog dpd = DatePickerDialog.newInstance(
@@ -91,51 +106,17 @@ public class AddRecordActivity extends BaseActivity {
             dpd.show(getFragmentManager(), "Datepickerdialog");
         });
         mBinding.typeChoice.rgType.setOnCheckedChangeListener((group, checkedId) -> {
-            mCurrentType = checkedId == R.id.rb_outlay ? RecordType.TYPE_OUTLAY : RecordType.TYPE_INCOME;
-            mAdapter.setNewData(mRecordTypes, mCurrentType);
-        });
-    }
 
-    /**
-     * RecyclerView 配置网格分页、指示器
-     */
-    private void configRecyclerView() {
-        // 1.水平分页布局管理器
-        PagerGridLayoutManager layoutManager = new PagerGridLayoutManager(
-                ROW, COLUMN, PagerGridLayoutManager.HORIZONTAL);
-        mBinding.rvType.setLayoutManager(layoutManager);
-
-        // 2.设置滚动辅助工具
-        PagerGridSnapHelper pageSnapHelper = new PagerGridSnapHelper();
-        pageSnapHelper.attachToRecyclerView(mBinding.rvType);
-
-        mAdapter = new TypeAdapter(null);
-        mBinding.rvType.setAdapter(mAdapter);
-
-        layoutManager.setPageListener(new PagerGridLayoutManager.PageListener() {
-            int currentPageIndex;
-            int pageSize;
-
-            @Override
-            public void onPageSizeChanged(int pageSize) {
-                this.pageSize = pageSize;
-                setIndicator();
+            if (checkedId == R.id.rb_outlay) {
+                mCurrentType = RecordType.TYPE_OUTLAY;
+                mBinding.typePageOutlay.setVisibility(View.VISIBLE);
+                mBinding.typePageIncome.setVisibility(View.GONE);
+            } else {
+                mCurrentType = RecordType.TYPE_INCOME;
+                mBinding.typePageOutlay.setVisibility(View.GONE);
+                mBinding.typePageIncome.setVisibility(View.VISIBLE);
             }
 
-            @Override
-            public void onPageSelect(int pageIndex) {
-                currentPageIndex = pageIndex;
-                setIndicator();
-            }
-
-            private void setIndicator() {
-                if (pageSize > 1) {
-                    mBinding.indicator.setVisibility(View.VISIBLE);
-                    mBinding.indicator.setTotal(pageSize, currentPageIndex);
-                } else {
-                    mBinding.indicator.setVisibility(View.INVISIBLE);
-                }
-            }
         });
     }
 
@@ -147,7 +128,8 @@ public class AddRecordActivity extends BaseActivity {
         record.remark = mBinding.edtRemark.getText().toString().trim();
         record.time = mCurrentChooseDate;
         record.createTime = new Date();
-        record.recordTypeId = mAdapter.getCurrentItem().id;
+        record.recordTypeId = mCurrentType == RecordType.TYPE_OUTLAY ?
+                mBinding.typePageOutlay.getCurrentItem().id : mBinding.typePageIncome.getCurrentItem().id;
 
         mDisposable.add(mViewModel.insertRecord(record)
                 .subscribeOn(Schedulers.io())
@@ -157,6 +139,27 @@ public class AddRecordActivity extends BaseActivity {
                             Log.e(TAG, "新增记录失败", throwable);
                             mBinding.customKeyboard.setAffirmEnable(true);
                             ToastUtils.show(R.string.toast_add_record_fail);
+                        }
+                ));
+    }
+
+    private void modifyRecord(String text) {
+        // 防止重复提交
+        mBinding.customKeyboard.setAffirmEnable(false);
+        mRecord.money = new BigDecimal(text);
+        mRecord.remark = mBinding.edtRemark.getText().toString().trim();
+        mRecord.time = mCurrentChooseDate;
+        mRecord.recordTypeId = mCurrentType == RecordType.TYPE_OUTLAY ?
+                mBinding.typePageOutlay.getCurrentItem().id : mBinding.typePageIncome.getCurrentItem().id;
+
+        mDisposable.add(mViewModel.updateRecord(mRecord)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::finish,
+                        throwable -> {
+                            Log.e(TAG, "记录修改失败", throwable);
+                            mBinding.customKeyboard.setAffirmEnable(true);
+                            ToastUtils.show(R.string.toast_modify_record_fail);
                         }
                 ));
     }
@@ -177,10 +180,20 @@ public class AddRecordActivity extends BaseActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((recordTypes) -> {
-                    mRecordTypes = recordTypes;
-                    int id = mCurrentType == RecordType.TYPE_OUTLAY ? R.id.rb_outlay : R.id.rb_income;
-                    mBinding.typeChoice.rgType.clearCheck();
-                    mBinding.typeChoice.rgType.check(id);
+
+                    if (mCurrentType == RecordType.TYPE_OUTLAY) {
+                        mBinding.typeChoice.rgType.clearCheck();
+                        mBinding.typeChoice.rgType.check(R.id.rb_outlay);
+                    } else {
+                        mBinding.typeChoice.rgType.clearCheck();
+                        mBinding.typeChoice.rgType.check(R.id.rb_income);
+                    }
+                    mBinding.typePageOutlay.setNewData(recordTypes, RecordType.TYPE_OUTLAY);
+                    mBinding.typePageOutlay.initCheckItem(mRecord);
+
+                    mBinding.typePageIncome.setNewData(recordTypes, RecordType.TYPE_INCOME);
+                    mBinding.typePageIncome.initCheckItem(mRecord);
+
                 }, throwable -> {
                     ToastUtils.show(R.string.toast_get_types_fail);
                     Log.e(TAG, "获取类型数据失败", throwable);

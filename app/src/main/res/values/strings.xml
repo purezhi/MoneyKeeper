@@ -6,6 +6,7 @@
     <string name="content_des_close">关闭</string>
 
     <string name="toast_add_record_fail">记账失败，请重试</string>
+    <string name="toast_modify_record_fail">记录修改失败</string>
     <string name="toast_sort_fail">排序失败</string>
     <string name="toast_least_one_type">请至少保留一个类型</string>
     <string name="toast_delete_fail">删除失败</string>
@@ -38,6 +39,7 @@
     <string name="text_num_point">.</string>
     <string name="text_num_0">0</string>
     <string name="text_add_record">记一笔</string>
+    <string name="text_modify_record">修改</string>
     <string name="text_done">完成</string>
     <string name="text_title_drag_sort">长按拖动排序</string>
     <string name="text_title_type_manage">分类管理</string>

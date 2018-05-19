@@ -6,6 +6,7 @@ import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -16,7 +17,7 @@ import java.util.Date;
  */
 @Entity(foreignKeys = @ForeignKey(entity = RecordType.class, parentColumns = "id", childColumns = "record_type_id"),
         indices = {@Index(value = {"record_type_id", "time"})})
-public class Record {
+public class Record implements Serializable {
     @PrimaryKey(autoGenerate = true)
     public int id;
 

@@ -30,4 +30,8 @@ public class AddRecordViewModel extends BaseViewModel {
     public Completable insertRecord(Record record) {
         return mDataSource.insertRecord(record);
     }
+
+    public Completable updateRecord(Record record){
+        return mDataSource.updateRecord(record);
+    }
 }

@@ -30,6 +30,9 @@ public interface RecordDao {
     @Insert
     void insertRecord(Record record);
 
+    @Update
+    void updateRecords(Record... records);
+
     @Delete
     void deleteRecord(Record record);
 
@@ -41,7 +44,4 @@ public interface RecordDao {
 
     @Query("SELECT * FROM record WHERE record_type_id = :typeId")
     List<Record> getRecordsWithTypeId(int typeId);
-
-    @Update
-    void updateRecords(List<Record> records);
 }

@@ -16,10 +16,12 @@ import me.bakumon.moneykeeper.Injection;
 import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.Router;
 import me.bakumon.moneykeeper.base.BaseActivity;
+import me.bakumon.moneykeeper.database.entity.Record;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.database.entity.SumMoneyBean;
 import me.bakumon.moneykeeper.databinding.ActivityHomeBinding;
+import me.bakumon.moneykeeper.ui.add.AddRecordActivity;
 import me.bakumon.moneykeeper.utill.ToastUtils;
 import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
 import me.drakeet.floo.Floo;
@@ -91,7 +93,9 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void modifyRecord(RecordWithType record) {
-        ToastUtils.show("修改" + record.mRecordTypes.get(0).name);
+        Floo.navigation(this, Router.ADD_RECORD)
+                .putExtra(AddRecordActivity.KEY_RECORD_BEAN, record)
+                .start();
     }
 
     private void deleteRecord(RecordWithType record) {
