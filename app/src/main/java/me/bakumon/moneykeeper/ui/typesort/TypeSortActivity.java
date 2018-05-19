@@ -68,7 +68,6 @@ public class TypeSortActivity extends BaseActivity {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemDragAndSwipeCallback);
         itemTouchHelper.attachToRecyclerView(mBinding.rvType);
 
-        // TODO: 2018/5/18 尝试使用 section 分组
         // open drag
         mAdapter.enableDragItem(itemTouchHelper);
     }

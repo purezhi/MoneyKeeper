@@ -44,8 +44,7 @@ public class BindAdapter {
     public static void setImg(ImageView imageView, String imgName) {
         Context context = imageView.getContext();
         if (TextUtils.isEmpty(imgName)) {
-            // TODO: 2018/5/18 默认图片
-            imgName = "ic_launcher";
+            imgName = "type_item_default";
         }
         int resId = context.getResources().getIdentifier(imgName, "mipmap", context.getPackageName());
         imageView.setImageResource(resId);
