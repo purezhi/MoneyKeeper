@@ -180,19 +180,16 @@ public class AddRecordActivity extends BaseActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((recordTypes) -> {
+                    mBinding.typePageOutlay.setNewData(recordTypes, RecordType.TYPE_OUTLAY);
+                    mBinding.typePageIncome.setNewData(recordTypes, RecordType.TYPE_INCOME);
 
                     if (mCurrentType == RecordType.TYPE_OUTLAY) {
-                        mBinding.typeChoice.rgType.clearCheck();
                         mBinding.typeChoice.rgType.check(R.id.rb_outlay);
+                        mBinding.typePageOutlay.initCheckItem(mRecord);
                     } else {
-                        mBinding.typeChoice.rgType.clearCheck();
                         mBinding.typeChoice.rgType.check(R.id.rb_income);
+                        mBinding.typePageIncome.initCheckItem(mRecord);
                     }
-                    mBinding.typePageOutlay.setNewData(recordTypes, RecordType.TYPE_OUTLAY);
-                    mBinding.typePageOutlay.initCheckItem(mRecord);
-
-                    mBinding.typePageIncome.setNewData(recordTypes, RecordType.TYPE_INCOME);
-                    mBinding.typePageIncome.initCheckItem(mRecord);
 
                 }, throwable -> {
                     ToastUtils.show(R.string.toast_get_types_fail);

@@ -3,6 +3,7 @@ package me.bakumon.moneykeeper.view;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -103,16 +104,33 @@ public class TypePageView extends LinearLayout {
     public void initCheckItem(RecordWithType record) {
         if (mCurrentTypeIndex == -1) {
             mCurrentTypeIndex = 0;
+            int isTypeExist = 0;
             int size = mAdapter.getData().size();
             if (record != null && size > 0) {
                 for (int i = 0; i < size; i++) {
                     if (record.mRecordTypes.get(0).id == mAdapter.getData().get(i).id) {
                         mCurrentTypeIndex = i;
+                        isTypeExist++;
+                        break;
                     }
                 }
             }
             mAdapter.clickItem(mCurrentTypeIndex);
+            if (record != null && isTypeExist == 0) {
+                showTypeNotExistTip();
+            }
         }
+    }
+
+    /**
+     * 提示用户该记录的类型已经被删除
+     */
+    private void showTypeNotExistTip() {
+        new AlertDialog.Builder(getContext())
+                .setMessage(R.string.text_tip_type_delete)
+                .setPositiveButton(R.string.text_button_know, null)
+                .create()
+                .show();
     }
 
     public RecordType getCurrentItem() {

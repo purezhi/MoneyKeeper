@@ -67,6 +67,7 @@
     <string name="text_type_salary">薪资</string>
     <string name="text_current_month_empty_tip">本月未开始记账\n\n点击加号，开始记账</string>
     <string name="text_button_cancel">取消</string>
+    <string name="text_button_know">我知道了</string>
     <string name="text_button_affirm_delete">确认删除</string>
     <string name="text_dialog_delete">删除</string>
     <string name="text_delete_type_note">删除该分类后，将无法在记账页选择该分类，该分类下原有账单仍保持不变</string>
@@ -76,4 +77,5 @@
     <string name="text_outlay_type">支出类型</string>
     <string name="text_income_type">收入类型</string>
     <string name="text_delete">删除</string>
+    <string name="text_tip_type_delete">该记录的类型已经被删除，已默认选择了第一个类型</string>
 </resources>
