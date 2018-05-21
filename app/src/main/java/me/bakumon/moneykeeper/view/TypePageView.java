@@ -31,6 +31,7 @@ public class TypePageView extends LinearLayout {
 
     private LayoutTypePageBinding mBinding;
     private TypeAdapter mAdapter;
+    private PagerGridLayoutManager mLayoutManager;
     private int mCurrentTypeIndex = -1;
 
     public TypePageView(Context context) {
@@ -51,9 +52,9 @@ public class TypePageView extends LinearLayout {
         mBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.layout_type_page, this, true);
 
         // 1.水平分页布局管理器
-        PagerGridLayoutManager layoutManager = new PagerGridLayoutManager(
+        mLayoutManager = new PagerGridLayoutManager(
                 ROW, COLUMN, PagerGridLayoutManager.HORIZONTAL);
-        mBinding.recyclerView.setLayoutManager(layoutManager);
+        mBinding.recyclerView.setLayoutManager(mLayoutManager);
 
         // 2.设置滚动辅助工具
         PagerGridSnapHelper pageSnapHelper = new PagerGridSnapHelper();
@@ -67,7 +68,7 @@ public class TypePageView extends LinearLayout {
         });
         mBinding.recyclerView.setAdapter(mAdapter);
 
-        layoutManager.setPageListener(new PagerGridLayoutManager.PageListener() {
+        mLayoutManager.setPageListener(new PagerGridLayoutManager.PageListener() {
             int currentPageIndex;
             int pageSize;
 
@@ -114,11 +115,15 @@ public class TypePageView extends LinearLayout {
                         break;
                     }
                 }
+                if (isTypeExist != 0) {
+                    // 选中对应的页
+                    int pageIndex = mCurrentTypeIndex / (ROW * COLUMN);
+                    post(() -> mLayoutManager.smoothScrollToPage(pageIndex));
+                } else {
+                    showTypeNotExistTip();
+                }
             }
             mAdapter.clickItem(mCurrentTypeIndex);
-            if (record != null && isTypeExist == 0) {
-                showTypeNotExistTip();
-            }
         }
     }
 
