@@ -35,19 +35,19 @@ public class CustomKeyboardHelper {
         return INSTANCE;
     }
 
-    public static void hideSoftInput(EditText editText) {
+    public static void hideSoftInput(View view) {
         try {
-            Class<EditText> cls = EditText.class;
+            Class<View> cls = View.class;
             Method setShowSoftInputOnFocus;
             setShowSoftInputOnFocus = cls.getMethod("setShowSoftInputOnFocus", boolean.class);
             setShowSoftInputOnFocus.setAccessible(true);
-            setShowSoftInputOnFocus.invoke(editText, false);
+            setShowSoftInputOnFocus.invoke(view, false);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        InputMethodManager imm = (InputMethodManager) editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
-            imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 

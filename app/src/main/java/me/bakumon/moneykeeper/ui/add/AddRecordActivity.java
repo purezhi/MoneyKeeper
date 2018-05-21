@@ -4,7 +4,9 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
@@ -23,6 +25,7 @@ import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.databinding.ActivityAddRecordBinding;
 import me.bakumon.moneykeeper.utill.DateUtils;
 import me.bakumon.moneykeeper.utill.ToastUtils;
+import me.bakumon.moneykeeper.view.utill.CustomKeyboardHelper;
 import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
 
 /**
@@ -70,6 +73,15 @@ public class AddRecordActivity extends BaseActivity {
 
         mBinding.titleBar.ibtClose.setBackgroundResource(R.drawable.ic_close);
         mBinding.titleBar.ibtClose.setOnClickListener(v -> finish());
+
+        mBinding.edtRemark.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                CustomKeyboardHelper.hideSoftInput(mBinding.typePageOutlay);
+                mBinding.customKeyboard.setEditTextFocus();
+                return false;
+            }
+        });
 
         if (mRecord == null) {
             mCurrentType = RecordType.TYPE_OUTLAY;

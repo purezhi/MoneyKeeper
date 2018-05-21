@@ -91,6 +91,7 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="3dp"
+                    android:imeOptions="actionDone"
                     android:singleLine="true"
                     android:textColor="@color/colorTextWhite2"
                     android:textColorHint="@color/colorTextGray"

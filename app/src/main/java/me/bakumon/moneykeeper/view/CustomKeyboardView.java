@@ -63,12 +63,16 @@ public class CustomKeyboardView extends LinearLayout {
         mBinding.editInput.setSelection(mBinding.editInput.getText().length());
     }
 
+    public void setEditTextFocus(){
+        mBinding.editInput.requestFocus();
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     private void init(Context context) {
         setOrientation(VERTICAL);
         mBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.layout_keyboard, this, true);
-        mBinding.editInput.setFocusable(true);
-        mBinding.editInput.setFocusableInTouchMode(true);
+//        mBinding.editInput.setFocusable(true);
+//        mBinding.editInput.setFocusableInTouchMode(true);
         mBinding.editInput.requestFocus();
         CustomKeyboardHelper.with(((Activity) context).getWindow(), mBinding.editInput)
                 .setInputTextViews(mBinding.keyboardNum0, mBinding.keyboardNum1,
