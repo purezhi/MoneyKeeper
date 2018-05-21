@@ -4,9 +4,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.widget.TextView;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
@@ -24,8 +22,8 @@ import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.databinding.ActivityAddRecordBinding;
 import me.bakumon.moneykeeper.utill.DateUtils;
+import me.bakumon.moneykeeper.utill.SoftInputUtils;
 import me.bakumon.moneykeeper.utill.ToastUtils;
-import me.bakumon.moneykeeper.view.utill.CustomKeyboardHelper;
 import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
 
 /**
@@ -74,32 +72,26 @@ public class AddRecordActivity extends BaseActivity {
         mBinding.titleBar.ibtClose.setBackgroundResource(R.drawable.ic_close);
         mBinding.titleBar.ibtClose.setOnClickListener(v -> finish());
 
-        mBinding.edtRemark.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                CustomKeyboardHelper.hideSoftInput(mBinding.typePageOutlay);
-                mBinding.customKeyboard.setEditTextFocus();
-                return false;
-            }
+        mBinding.edtRemark.setOnEditorActionListener((v, actionId, event) -> {
+            SoftInputUtils.hideSoftInput(mBinding.typePageOutlay);
+            mBinding.keyboard.setEditTextFocus();
+            return false;
         });
 
         if (mRecord == null) {
             mCurrentType = RecordType.TYPE_OUTLAY;
-
             mBinding.titleBar.setTitle(getString(R.string.text_add_record));
         } else {
             mCurrentType = mRecord.mRecordTypes.get(0).type;
-
             mBinding.titleBar.setTitle(getString(R.string.text_modify_record));
-
             mBinding.edtRemark.setText(mRecord.remark);
-            mBinding.customKeyboard.setText(mRecord.money.toPlainString());
+            mBinding.keyboard.setText(mRecord.money.toPlainString());
             mCurrentChooseDate = mRecord.time;
             mCurrentChooseCalendar.setTime(mCurrentChooseDate);
             mBinding.qmTvDate.setText(DateUtils.getWordTime(mCurrentChooseDate));
         }
 
-        mBinding.customKeyboard.setAffirmClickListener(text -> {
+        mBinding.keyboard.setAffirmClickListener(text -> {
             if (mRecord == null) {
                 insertRecord(text);
             } else {
@@ -134,7 +126,7 @@ public class AddRecordActivity extends BaseActivity {
 
     private void insertRecord(String text) {
         // 防止重复提交
-        mBinding.customKeyboard.setAffirmEnable(false);
+        mBinding.keyboard.setAffirmEnable(false);
         Record record = new Record();
         record.money = new BigDecimal(text);
         record.remark = mBinding.edtRemark.getText().toString().trim();
@@ -149,7 +141,7 @@ public class AddRecordActivity extends BaseActivity {
                 .subscribe(this::finish,
                         throwable -> {
                             Log.e(TAG, "新增记录失败", throwable);
-                            mBinding.customKeyboard.setAffirmEnable(true);
+                            mBinding.keyboard.setAffirmEnable(true);
                             ToastUtils.show(R.string.toast_add_record_fail);
                         }
                 ));
@@ -157,7 +149,7 @@ public class AddRecordActivity extends BaseActivity {
 
     private void modifyRecord(String text) {
         // 防止重复提交
-        mBinding.customKeyboard.setAffirmEnable(false);
+        mBinding.keyboard.setAffirmEnable(false);
         mRecord.money = new BigDecimal(text);
         mRecord.remark = mBinding.edtRemark.getText().toString().trim();
         mRecord.time = mCurrentChooseDate;
@@ -170,7 +162,7 @@ public class AddRecordActivity extends BaseActivity {
                 .subscribe(this::finish,
                         throwable -> {
                             Log.e(TAG, "记录修改失败", throwable);
-                            mBinding.customKeyboard.setAffirmEnable(true);
+                            mBinding.keyboard.setAffirmEnable(true);
                             ToastUtils.show(R.string.toast_modify_record_fail);
                         }
                 ));

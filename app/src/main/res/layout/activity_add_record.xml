@@ -99,8 +99,8 @@
             </LinearLayout>
         </LinearLayout>
 
-        <me.bakumon.moneykeeper.view.CustomKeyboardView
-            android:id="@+id/custom_Keyboard"
+        <me.bakumon.moneykeeper.view.KeyboardView
+            android:id="@+id/keyboard"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="9"
