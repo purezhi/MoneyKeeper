@@ -103,11 +103,15 @@ public class KeyboardView extends LinearLayout {
 
         mBinding.keyboardAffirm.setOnClickListener(v -> {
             if (mOnAffirmClickListener != null) {
-                if (TextUtils.isEmpty(mBinding.editInput.getText().toString())) {
+                String text = mBinding.editInput.getText().toString();
+                boolean isDigital = !TextUtils.isEmpty(text)
+                        && !TextUtils.equals("0", text)
+                        && !TextUtils.equals("0.", text);
+                if (!isDigital) {
                     Animation animation = AnimationUtils.loadAnimation(App.getINSTANCE(), R.anim.shake);
                     mBinding.editInput.startAnimation(animation);
                 } else {
-                    mOnAffirmClickListener.onAffirmClick(mBinding.editInput.getText().toString());
+                    mOnAffirmClickListener.onAffirmClick(text);
                 }
             }
         });
