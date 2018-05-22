@@ -20,6 +20,7 @@ import me.bakumon.moneykeeper.App;
 import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.databinding.LayoutKeyboardBinding;
 import me.bakumon.moneykeeper.utill.SoftInputUtils;
+import me.bakumon.moneykeeper.utill.ToastUtils;
 
 /**
  * 自定义键盘
@@ -66,6 +67,10 @@ public class KeyboardView extends LinearLayout {
     public void setText(String text) {
         mBinding.editInput.setText(text);
         mBinding.editInput.setSelection(mBinding.editInput.getText().length());
+        SoftInputUtils.hideSoftInput(mBinding.editInput);
+        if (!mBinding.editInput.isFocused()) {
+            mBinding.editInput.requestFocus();
+        }
     }
 
     public void setEditTextFocus() {
@@ -83,6 +88,8 @@ public class KeyboardView extends LinearLayout {
         mBinding.editInput.setOnTouchListener((v, event) -> {
             SoftInputUtils.hideSoftInput(mBinding.editInput);
             mBinding.editInput.requestFocus();
+            // 返回 true，拦截了默认的点击和长按操作，这是一个妥协的做法
+            // 不再考虑多选粘贴的情况
             return true;
         });
 
@@ -110,35 +117,62 @@ public class KeyboardView extends LinearLayout {
      * 设置键盘输入字符的textView，注意，textView点击后text将会输入到editText上
      */
     private void setInputTextViews(final TextView... textViews) {
-        if (textViews == null || textViews.length < 1) {
+        EditText target = mBinding.editInput;
+        if (target == null || textViews == null || textViews.length < 1) {
             return;
         }
         for (int i = 0; i < textViews.length; i++) {
             final int finalI = i;
             textViews[i].setOnClickListener(view -> {
-                EditText target = mBinding.editInput;
-                if (target != null) {
-                    StringBuilder sb = new StringBuilder(target.getText().toString().trim());
-                    int selectedEnd = target.getSelectionEnd();
-                    int selectedStart = target.getSelectionStart();
-                    // 没有多选
-                    if (selectedStart == selectedEnd) {
-                        sb.insert(selectedStart, textViews[finalI].getText());
-                        target.setText(sb.toString());
-                        if (selectedStart + 1 <= sb.length()) {
-                            target.setSelection(selectedStart + 1);
-                        }
-                        // 多选
-                    } else {
-                        sb.replace(selectedStart, selectedEnd, textViews[finalI].getText().toString());
-                        target.setText(sb.toString());
-                        if (selectedStart + 1 <= sb.length()) {
-                            target.setSelection(selectedStart + 1);
-                        }
-                    }
-                }
+                StringBuilder sb = new StringBuilder(target.getText().toString().trim());
+                String result = inputFilter(sb, textViews[finalI].getText().toString());
+                setText(result);
             });
         }
+    }
+
+    /**
+     * 整数9位，小数2位
+     */
+    private String inputFilter(StringBuilder sb, String text) {
+        if (sb.length() < 1) {
+            // 输入第一个字符
+            if (TextUtils.equals(text, ".")) {
+                sb.insert(0, "0.");
+            } else {
+                sb.insert(0, text);
+            }
+        } else if (sb.length() == 1) {
+            // 输入第二个字符
+            if (sb.toString().startsWith("0")) {
+                if (TextUtils.equals(".", text)) {
+                    sb.insert(sb.length(), ".");
+                } else {
+                    sb.replace(0, 1, text);
+                }
+            } else {
+                sb.insert(sb.length(), text);
+            }
+        } else if (sb.toString().contains(".")) {
+            // 已经输入了小数点
+            int length = sb.length();
+            int index = sb.indexOf(".");
+            if (!TextUtils.equals(".", text)) {
+                if (length - index < 3) {
+                    sb.insert(sb.length(), text);
+                }
+            }
+        } else {
+            // 整数
+            if (TextUtils.equals(".", text)) {
+                sb.insert(sb.length(), text);
+            } else {
+                if (sb.length() < 9) {
+                    sb.insert(sb.length(), text);
+                }
+            }
+        }
+        return sb.toString();
     }
 
     /**
@@ -146,38 +180,20 @@ public class KeyboardView extends LinearLayout {
      */
     public void setDeleteView(final View deleteView) {
         final EditText target = mBinding.editInput;
+        if (target == null) {
+            return;
+        }
         deleteView.setOnClickListener(view -> {
-
-            if (target != null) {
-                // TODO: 2018/5/21  限制输入
-                // 整数9位，小数2位
-                StringBuilder sb = new StringBuilder(target.getText().toString().trim());
-                if (sb.length() > 0) {
-                    int selectedEnd = target.getSelectionEnd();
-                    int selectedStart = target.getSelectionStart();
-                    // 没有多选
-                    if (selectedStart == selectedEnd) {
-                        if (selectedStart - 1 >= 0) {
-                            sb.deleteCharAt(selectedStart - 1);
-                            target.setText(sb.toString());
-                            target.setSelection(selectedStart - 1);
-                        }
-                        // 多选
-                    } else {
-                        sb.delete(selectedStart, selectedEnd);
-                        target.setText(sb.toString());
-                        target.setSelection(selectedStart);
-                    }
-                }
+            StringBuilder sb = new StringBuilder(target.getText().toString().trim());
+            if (sb.length() > 0) {
+                sb.deleteCharAt(sb.length() - 1);
+                setText(sb.toString());
             }
         });
         deleteView.setOnLongClickListener(v -> {
-            if (target != null) {
-                StringBuilder sb = new StringBuilder(target.getText().toString().trim());
-                if (sb.length() > 0) {
-                    target.setText("");
-                    target.setSelection(0);
-                }
+            StringBuilder sb = new StringBuilder(target.getText().toString().trim());
+            if (sb.length() > 0) {
+                setText("");
             }
             return false;
         });

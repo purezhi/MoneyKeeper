@@ -35,6 +35,7 @@ import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
 public class AddRecordActivity extends BaseActivity {
 
     private static final String TAG = AddRecordActivity.class.getSimpleName();
+    private static final String TAG_PICKER_DIALOG = "Datepickerdialog";
     public static final String KEY_RECORD_BEAN = "AddTypeActivity.key_record_bean";
 
     private ActivityAddRecordBinding mBinding;
@@ -107,7 +108,7 @@ public class AddRecordActivity extends BaseActivity {
                         mBinding.qmTvDate.setText(DateUtils.getWordTime(mCurrentChooseDate));
                     }, mCurrentChooseCalendar);
             dpd.setMaxDate(Calendar.getInstance());
-            dpd.show(getFragmentManager(), "Datepickerdialog");
+            dpd.show(getFragmentManager(), TAG_PICKER_DIALOG);
         });
         mBinding.typeChoice.rgType.setOnCheckedChangeListener((group, checkedId) -> {
 
