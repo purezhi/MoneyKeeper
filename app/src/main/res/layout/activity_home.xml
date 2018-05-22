@@ -78,7 +78,6 @@
                         android:layout_marginTop="5dp"
                         android:ellipsize="end"
                         android:maxLines="2"
-                        android:paddingRight="15dp"
                         android:text="0"
                         android:textColor="@color/colorTextWhite"
                         android:textSize="34sp" />
@@ -89,6 +88,8 @@
                     android:layout_width="1px"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="25dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="25dp"
                     android:background="@android:color/white" />
 
@@ -112,7 +113,6 @@
                         android:layout_marginTop="5dp"
                         android:ellipsize="end"
                         android:maxLines="2"
-                        android:paddingLeft="15dp"
                         android:text="0"
                         android:textColor="@color/colorTextWhite"
                         android:textSize="34sp" />
