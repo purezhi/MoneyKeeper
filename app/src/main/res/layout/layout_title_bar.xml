@@ -28,18 +28,36 @@
             android:background="@drawable/ic_back"
             android:contentDescription="@string/content_des_close" />
 
-        <TextView
-            android:id="@+id/tv_title"
+        <me.bakumon.moneykeeper.view.QMUIAlphaLinearLayout
+            android:id="@+id/ll_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginEnd="50dp"
             android:layout_marginStart="50dp"
-            android:singleLine="true"
-            android:text="@{title}"
-            android:textColor="@color/colorTextWhite"
-            android:textSize="20sp"
-            tools:text="TITLE" />
+            android:gravity="center_vertical"
+            android:paddingEnd="5dp"
+            android:paddingStart="5dp">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="@{title}"
+                android:textColor="@color/colorTextWhite"
+                android:textSize="20sp"
+                tools:text="TITLE" />
+
+            <ImageView
+                android:id="@+id/iv_title"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginStart="5dp"
+                android:src="@drawable/ic_arrow_down"
+                android:visibility="gone" />
+        </me.bakumon.moneykeeper.view.QMUIAlphaLinearLayout>
+
 
         <me.bakumon.moneykeeper.view.QMUIAlphaTextView
             android:id="@+id/tv_right"

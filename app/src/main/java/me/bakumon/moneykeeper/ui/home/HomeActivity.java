@@ -72,7 +72,8 @@ public class HomeActivity extends BaseActivity {
     }
 
     public void statisticsClick(View view) {
-        ToastUtils.show("统计");
+        Floo.navigation(this, Router.STATISTICS)
+                .start();
     }
 
     public void addRecordClick(View view) {
