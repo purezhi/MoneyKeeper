@@ -78,4 +78,6 @@
     <string name="text_income_type">收入类型</string>
     <string name="text_delete">删除</string>
     <string name="text_tip_type_delete">该记录的类型已经被删除，已默认选择了第一个类型</string>
+    <string name="text_order">账单</string>
+    <string name="text_reports">报表</string>
 </resources>

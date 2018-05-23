@@ -1,5 +1,6 @@
 package me.bakumon.moneykeeper.datasource;
 
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Completable;
@@ -34,6 +35,13 @@ public interface AppDataSource {
      * @return 当前月份的记录数据的 Flowable 对象
      */
     Flowable<List<RecordWithType>> getCurrentMonthRecordWithTypes();
+
+    /**
+     * 获取某段时间的记账记录数据
+     *
+     * @return 包含记录数据的 Flowable 对象
+     */
+    Flowable<List<RecordWithType>> getRecordWithTypes(Date dateFrom, Date dateTo);
 
     /**
      * 新增一条记账记录

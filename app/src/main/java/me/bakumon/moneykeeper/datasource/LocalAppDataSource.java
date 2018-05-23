@@ -59,6 +59,11 @@ public class LocalAppDataSource implements AppDataSource {
     }
 
     @Override
+    public Flowable<List<RecordWithType>> getRecordWithTypes(Date dateFrom, Date dateTo) {
+        return mAppDatabase.recordDao().getRangeRecordWithTypes(dateFrom, dateTo);
+    }
+
+    @Override
     public Completable insertRecord(Record record) {
         return Completable.fromAction(() -> mAppDatabase.recordDao().insertRecord(record));
     }
