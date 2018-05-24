@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="top"
+    android:orientation="vertical"
+    tools:background="@color/colorPrimary">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="20dp"
+        android:drawableTop="@mipmap/icon_home_empty"
+        android:gravity="center|bottom"
+        android:paddingBottom="3dp"
+        android:paddingTop="20dp"
+        android:text="@string/text_month_empty_tip"
+        android:textColor="@color/colorTextWhite3"
+        android:textSize="14sp">
+
+    </TextView>
+</LinearLayout>

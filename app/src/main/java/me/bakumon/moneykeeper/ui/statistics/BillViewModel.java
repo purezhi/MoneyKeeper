@@ -1,13 +1,12 @@
 package me.bakumon.moneykeeper.ui.statistics;
 
-import com.github.mikephil.charting.data.BarEntry;
-
 import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import me.bakumon.moneykeeper.base.BaseViewModel;
+import me.bakumon.moneykeeper.database.entity.DaySumMoneyBean;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.database.entity.SumMoneyBean;
 import me.bakumon.moneykeeper.datasource.AppDataSource;
@@ -29,7 +28,7 @@ public class BillViewModel extends BaseViewModel {
         return mDataSource.getRecordWithTypes(dateFrom, dateTo, type);
     }
 
-    public Flowable<List<BarEntry>> getDaySumMoney(int year, int month, int type) {
+    public Flowable<List<DaySumMoneyBean>> getDaySumMoney(int year, int month, int type) {
         return mDataSource.getDaySumMoney(year, month, type);
     }
 

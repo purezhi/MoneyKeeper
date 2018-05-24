@@ -110,6 +110,10 @@ public abstract class BaseFragment extends Fragment {
      */
     protected abstract void lazyInitData();
 
+    protected View inflate(@LayoutRes int resource) {
+        return getLayoutInflater().inflate(resource, null, false);
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();

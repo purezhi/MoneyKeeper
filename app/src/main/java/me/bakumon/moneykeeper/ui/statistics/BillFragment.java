@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
+import android.view.View;
 
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -22,12 +23,14 @@ import me.bakumon.moneykeeper.Injection;
 import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.Router;
 import me.bakumon.moneykeeper.base.BaseFragment;
+import me.bakumon.moneykeeper.database.entity.DaySumMoneyBean;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.database.entity.SumMoneyBean;
 import me.bakumon.moneykeeper.databinding.FragmentBillBinding;
 import me.bakumon.moneykeeper.ui.add.AddRecordActivity;
 import me.bakumon.moneykeeper.ui.home.HomeAdapter;
+import me.bakumon.moneykeeper.utill.DateUtils;
 import me.bakumon.moneykeeper.utill.ToastUtils;
 import me.bakumon.moneykeeper.view.BarChartMarkerView;
 import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
@@ -147,7 +150,17 @@ public class BillFragment extends BaseFragment {
                         }));
     }
 
-    private void setChartData(List<BarEntry> barEntries) {
+    private void setChartData(List<DaySumMoneyBean> daySumMoneyBeans) {
+        if (daySumMoneyBeans == null || daySumMoneyBeans.size() < 1) {
+            mBinding.barChart.setVisibility(View.INVISIBLE);
+            return;
+        } else {
+            mBinding.barChart.setVisibility(View.VISIBLE);
+        }
+
+        int count = DateUtils.getDayCount(mYear, mMonth);
+        List<BarEntry> barEntries = BarEntryConverter.getBarEntryList(count, daySumMoneyBeans);
+
         BarDataSet set1;
         if (mBinding.barChart.getData() != null && mBinding.barChart.getData().getDataSetCount() > 0) {
             set1 = (BarDataSet) mBinding.barChart.getData().getDataSetByIndex(0);
@@ -194,7 +207,12 @@ public class BillFragment extends BaseFragment {
         mDisposable.add(mViewModel.getRecordWithTypes(mYear, mMonth, mType)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(recordWithTypes -> mAdapter.setNewData(recordWithTypes),
+                .subscribe(recordWithTypes -> {
+                            mAdapter.setNewData(recordWithTypes);
+                            if (recordWithTypes == null || recordWithTypes.size() < 1) {
+                                mAdapter.setEmptyView(inflate(R.layout.layout_statistics_empty));
+                            }
+                        },
                         throwable -> {
                             ToastUtils.show(R.string.toast_records_fail);
                             Log.e(TAG, "获取记录列表失败", throwable);

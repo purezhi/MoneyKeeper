@@ -207,32 +207,9 @@ public class LocalAppDataSource implements AppDataSource {
     }
 
     @Override
-    public Flowable<List<BarEntry>> getDaySumMoney(int year, int month, int type) {
-        return Flowable.create(e -> {
+    public Flowable<List<DaySumMoneyBean>> getDaySumMoney(int year, int month, int type) {
             Date dateFrom = DateUtils.getMonthStart(year, month);
             Date dateTo = DateUtils.getMonthEnd(year, month);
-            List<DaySumMoneyBean> moneyBeans = mAppDatabase.recordDao().getDaySumMoney(dateFrom, dateTo, type);
-
-            if (moneyBeans != null && moneyBeans.size() > 1) {
-                int days = DateUtils.getDayCount(year, month);
-
-                List<BarEntry> entryList = new ArrayList<>();
-
-                BarEntry barEntry;
-
-                for (int i = 0; i < days; i++) {
-                    for (int j = 0; j < moneyBeans.size(); j++) {
-                        if (i + 1 == moneyBeans.get(j).time.getDate()) {
-                            barEntry = new BarEntry(i + 1, Float.parseFloat(moneyBeans.get(j).daySumMoney));
-                            entryList.add(barEntry);
-                        }
-                    }
-                    barEntry = new BarEntry(i + 1, 0);
-                    entryList.add(barEntry);
-                }
-                e.onNext(entryList);
-            }
-            e.onComplete();
-        }, BackpressureStrategy.BUFFER);
+            return mAppDatabase.recordDao().getDaySumMoney(dateFrom, dateTo, type);
     }
 }

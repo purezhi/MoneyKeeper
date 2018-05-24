@@ -1,12 +1,11 @@
 package me.bakumon.moneykeeper.datasource;
 
-import com.github.mikephil.charting.data.BarEntry;
-
 import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import me.bakumon.moneykeeper.database.entity.DaySumMoneyBean;
 import me.bakumon.moneykeeper.database.entity.Record;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
@@ -143,5 +142,5 @@ public interface AppDataSource {
      * @param month 月
      * @param type  类型
      */
-    Flowable<List<BarEntry>> getDaySumMoney(int year, int month, int type);
+    Flowable<List<DaySumMoneyBean>> getDaySumMoney(int year, int month, int type);
 }

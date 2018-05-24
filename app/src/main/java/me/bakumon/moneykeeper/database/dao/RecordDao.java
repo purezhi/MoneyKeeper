@@ -50,6 +50,10 @@ public interface RecordDao {
     @Query("SELECT * FROM record WHERE record_type_id = :typeId")
     List<Record> getRecordsWithTypeId(int typeId);
 
+    /**
+     * 尽量使用 Flowable 返回，因为当数据库数据改变时，会自动回调
+     * 而直接用 List ，在调用的地方自己写 Flowable 不会自动回调
+     */
     @Query("SELECT recordType.type AS type, record.time AS time, sum(record.money) AS daySumMoney FROM record LEFT JOIN RecordType ON record.record_type_id=RecordType.id where (RecordType.type=:type and record.time BETWEEN :from AND :to) GROUP BY record.time")
-    List<DaySumMoneyBean> getDaySumMoney(Date from, Date to, int type);
+    Flowable<List<DaySumMoneyBean>> getDaySumMoney(Date from, Date to, int type);
 }
