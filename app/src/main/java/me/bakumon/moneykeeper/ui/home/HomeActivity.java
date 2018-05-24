@@ -16,7 +16,6 @@ import me.bakumon.moneykeeper.Injection;
 import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.Router;
 import me.bakumon.moneykeeper.base.BaseActivity;
-import me.bakumon.moneykeeper.database.entity.Record;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.database.entity.SumMoneyBean;
@@ -36,7 +35,7 @@ public class HomeActivity extends BaseActivity {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
     private static final int MAX_ITEM_TIP = 5;
-    private ActivityHomeBinding binding;
+    private ActivityHomeBinding mBinding;
 
     private HomeViewModel mViewModel;
     private HomeAdapter mAdapter;
@@ -48,7 +47,7 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void onInit(@Nullable Bundle savedInstanceState) {
-        binding = getDataBinding();
+        mBinding = getDataBinding();
         ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(this);
         mViewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel.class);
 
@@ -57,9 +56,9 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void initView() {
-        binding.rvHome.setLayoutManager(new LinearLayoutManager(this));
+        mBinding.rvHome.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new HomeAdapter(null);
-        binding.rvHome.setAdapter(mAdapter);
+        mBinding.rvHome.setAdapter(mAdapter);
 
         mAdapter.setOnItemChildLongClickListener((adapter, view, position) -> {
             showOperateDialog(mAdapter.getData().get(position));
@@ -132,8 +131,8 @@ public class HomeActivity extends BaseActivity {
                                     }
                                 }
                             }
-                            binding.tvMonthOutlay.setText(outlay);
-                            binding.tvMonthIncome.setText(inCome);
+                            mBinding.tvMonthOutlay.setText(outlay);
+                            mBinding.tvMonthIncome.setText(inCome);
                         },
                         throwable -> {
                             ToastUtils.show(R.string.toast_current_sum_money_fail);

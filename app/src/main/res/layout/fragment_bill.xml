@@ -13,28 +13,25 @@
             android:id="@+id/rg_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingEnd="15dp"
-            android:paddingStart="15dp"
-            android:visibility="gone">
+            android:paddingStart="15dp">
 
             <RadioButton
                 android:id="@+id/rb_outlay"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="5dp"
-                android:text="@string/text_outlay"
-                android:textColor="@color/colorTextWhite2" />
+                android:textColor="@color/colorTextWhite2"
+                tools:text="支出 ¥3580" />
 
             <RadioButton
                 android:id="@+id/rb_income"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="5dp"
-                android:text="@string/text_income"
-                android:textColor="@color/colorTextWhite2" />
+                android:layout_marginStart="10dp"
+                android:textColor="@color/colorTextWhite2"
+                tools:text="收入 ¥9827" />
         </RadioGroup>
 
         <com.github.mikephil.charting.charts.BarChart

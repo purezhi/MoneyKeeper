@@ -132,6 +132,11 @@ public interface AppDataSource {
     Flowable<List<SumMoneyBean>> getCurrentMonthSumMoney();
 
     /**
+     * 获取本月支出和收入总数
+     */
+    Flowable<List<SumMoneyBean>> getMonthSumMoney(Date dateFrom, Date dateTo);
+
+    /**
      * 获取某天的合计
      *
      * @param year  年

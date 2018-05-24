@@ -29,7 +29,7 @@ public interface RecordDao {
     Flowable<List<RecordWithType>> getRangeRecordWithTypes(Date from, Date to);
 
     @Transaction
-    @Query("SELECT * from record LEFT JOIN RecordType ON record.record_type_id=RecordType.id WHERE (RecordType.type=:type AND time BETWEEN :from AND :to) ORDER BY time DESC, create_time DESC")
+    @Query("SELECT record.* from record LEFT JOIN RecordType ON record.record_type_id=RecordType.id WHERE (RecordType.type=:type AND time BETWEEN :from AND :to) ORDER BY time DESC, create_time DESC")
     Flowable<List<RecordWithType>> getRangeRecordWithTypes(Date from, Date to, int type);
 
     @Insert

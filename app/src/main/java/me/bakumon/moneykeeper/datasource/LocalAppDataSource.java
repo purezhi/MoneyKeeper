@@ -202,6 +202,11 @@ public class LocalAppDataSource implements AppDataSource {
     }
 
     @Override
+    public Flowable<List<SumMoneyBean>> getMonthSumMoney(Date dateFrom, Date dateTo) {
+        return mAppDatabase.recordDao().getSumMoney(dateFrom, dateTo);
+    }
+
+    @Override
     public Flowable<List<BarEntry>> getDaySumMoney(int year, int month, int type) {
         return Flowable.create(e -> {
             Date dateFrom = DateUtils.getMonthStart(year, month);
