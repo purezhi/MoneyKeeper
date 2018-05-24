@@ -19,6 +19,7 @@ versions.rxandroid = "2.0.1"
 versions.BRVAH = "2.9.34"
 versions.floo = "1.1.0"
 versions.datetimepicker = "3.5.1"
+versions.MPChart = "v3.0.3"
 
 def deps = [:]
 
@@ -51,6 +52,7 @@ deps.rxandroid = "io.reactivex.rxjava2:rxandroid:$versions.rxandroid"
 deps.BRVAH = "com.github.CymChad:BaseRecyclerViewAdapterHelper:$versions.BRVAH"
 deps.floo = "me.drakeet.floo:floo:$versions.floo"
 deps.datetimepicker = "com.wdullaer:materialdatetimepicker:$versions.datetimepicker"
+deps.MPChart = "com.github.PhilJay:MPAndroidChart:$versions.MPChart"
 
 ext.deps = deps
 

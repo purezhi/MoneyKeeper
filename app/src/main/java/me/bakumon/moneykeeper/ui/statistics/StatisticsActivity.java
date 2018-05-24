@@ -2,7 +2,6 @@ package me.bakumon.moneykeeper.ui.statistics;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import me.bakumon.moneykeeper.R;
@@ -50,31 +49,11 @@ public class StatisticsActivity extends BaseActivity {
         mBinding.viewPager.setAdapter(infoPagerAdapter);
         mBinding.viewPager.setOffscreenPageLimit(2);
 
-        mBinding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                if (position == 0) {
-                    mBinding.typeChoice.rgType.check(R.id.rb_outlay);
-                } else {
-                    mBinding.typeChoice.rgType.check(R.id.rb_income);
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
         mBinding.typeChoice.rgType.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.rb_outlay) {
-                mBinding.viewPager.setCurrentItem(0);
+                mBinding.viewPager.setCurrentItem(0, false);
             } else {
-                mBinding.viewPager.setCurrentItem(1);
+                mBinding.viewPager.setCurrentItem(1, false);
             }
         });
         mBinding.typeChoice.rgType.check(R.id.rb_outlay);

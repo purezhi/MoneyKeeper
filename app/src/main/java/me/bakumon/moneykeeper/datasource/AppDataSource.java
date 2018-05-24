@@ -1,5 +1,7 @@
 package me.bakumon.moneykeeper.datasource;
 
+import com.github.mikephil.charting.data.BarEntry;
+
 import java.util.Date;
 import java.util.List;
 
@@ -37,11 +39,11 @@ public interface AppDataSource {
     Flowable<List<RecordWithType>> getCurrentMonthRecordWithTypes();
 
     /**
-     * 获取某段时间的记账记录数据
+     * 根据类型获取某段时间的记账记录数据
      *
      * @return 包含记录数据的 Flowable 对象
      */
-    Flowable<List<RecordWithType>> getRecordWithTypes(Date dateFrom, Date dateTo);
+    Flowable<List<RecordWithType>> getRecordWithTypes(Date dateFrom, Date dateTo, int type);
 
     /**
      * 新增一条记账记录
@@ -128,4 +130,13 @@ public interface AppDataSource {
      * 获取本月支出和收入总数
      */
     Flowable<List<SumMoneyBean>> getCurrentMonthSumMoney();
+
+    /**
+     * 获取某天的合计
+     *
+     * @param year  年
+     * @param month 月
+     * @param type  类型
+     */
+    Flowable<List<BarEntry>> getDaySumMoney(int year, int month, int type);
 }

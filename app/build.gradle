@@ -88,4 +88,6 @@ dependencies {
     implementation deps.floo
     // 日期时间选择器
     implementation deps.datetimepicker
+    // 图表
+    implementation deps.MPChart
 }

@@ -2,6 +2,8 @@ package me.bakumon.moneykeeper.datasource;
 
 import android.text.TextUtils;
 
+import com.github.mikephil.charting.data.BarEntry;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +14,7 @@ import io.reactivex.Flowable;
 import me.bakumon.moneykeeper.App;
 import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.database.AppDatabase;
+import me.bakumon.moneykeeper.database.entity.DaySumMoneyBean;
 import me.bakumon.moneykeeper.database.entity.Record;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
@@ -59,8 +62,8 @@ public class LocalAppDataSource implements AppDataSource {
     }
 
     @Override
-    public Flowable<List<RecordWithType>> getRecordWithTypes(Date dateFrom, Date dateTo) {
-        return mAppDatabase.recordDao().getRangeRecordWithTypes(dateFrom, dateTo);
+    public Flowable<List<RecordWithType>> getRecordWithTypes(Date dateFrom, Date dateTo, int type) {
+        return mAppDatabase.recordDao().getRangeRecordWithTypes(dateFrom, dateTo, type);
     }
 
     @Override
@@ -196,5 +199,35 @@ public class LocalAppDataSource implements AppDataSource {
         Date dateFrom = DateUtils.getCurrentMonthStart();
         Date dateTo = DateUtils.getCurrentMonthEnd();
         return mAppDatabase.recordDao().getSumMoney(dateFrom, dateTo);
+    }
+
+    @Override
+    public Flowable<List<BarEntry>> getDaySumMoney(int year, int month, int type) {
+        return Flowable.create(e -> {
+            Date dateFrom = DateUtils.getMonthStart(year, month);
+            Date dateTo = DateUtils.getMonthEnd(year, month);
+            List<DaySumMoneyBean> moneyBeans = mAppDatabase.recordDao().getDaySumMoney(dateFrom, dateTo, type);
+
+            if (moneyBeans != null && moneyBeans.size() > 1) {
+                int days = DateUtils.getDayCount(year, month);
+
+                List<BarEntry> entryList = new ArrayList<>();
+
+                BarEntry barEntry;
+
+                for (int i = 0; i < days; i++) {
+                    for (int j = 0; j < moneyBeans.size(); j++) {
+                        if (i + 1 == moneyBeans.get(j).time.getDate()) {
+                            barEntry = new BarEntry(i + 1, Float.parseFloat(moneyBeans.get(j).daySumMoney));
+                            entryList.add(barEntry);
+                        }
+                    }
+                    barEntry = new BarEntry(i + 1, 0);
+                    entryList.add(barEntry);
+                }
+                e.onNext(entryList);
+            }
+            e.onComplete();
+        }, BackpressureStrategy.BUFFER);
     }
 }

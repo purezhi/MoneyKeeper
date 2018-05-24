@@ -18,6 +18,7 @@
     <string name="toast_records_fail">获取记录列表失败</string>
     <string name="toast_init_types_fail">初始化类型数据失败</string>
     <string name="toast_get_types_fail">获取类型数据失败</string>
+    <string name="toast_get_statistics_fail">获取统计数据失败</string>
 
     <string name="hint_enter_money">输入金额</string>
     <string name="hint_enter_remark">输入备注</string>
@@ -80,4 +81,5 @@
     <string name="text_tip_type_delete">该记录的类型已经被删除，已默认选择了第一个类型</string>
     <string name="text_order">账单</string>
     <string name="text_reports">报表</string>
+    <string name="text_money_symbol">¥</string>
 </resources>

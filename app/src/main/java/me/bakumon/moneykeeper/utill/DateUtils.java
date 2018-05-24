@@ -119,14 +119,30 @@ public class DateUtils {
     }
 
     /**
-     * 获取当前月份开始时刻的 Date
-     * 比如当前是 2018年4月
-     * 返回的 Date 是 format 后： 2018-04-01T00:00:00.000+0800
+     * 获取某月有多少天
+     * @param year 年份
+     * @param month 月份
+     * @return 该月的天数
+     */
+    public static int getDayCount(int year, int month){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month - 1);
+
+        return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+    }
+
+    /**
+     * 获取某月份开始时刻的 Date
      *
+     * @param year  年份
+     * @param month 月份
      * @return 当前月份开始的 Date
      */
-    public static Date getCurrentMonthStart() {
+    public static Date getMonthStart(int year, int month) {
         Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month - 1);
         calendar.set(Calendar.DAY_OF_MONTH, 1);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
@@ -136,14 +152,16 @@ public class DateUtils {
     }
 
     /**
-     * 获取当前月份结束时刻的 Date
-     * 比如当前是 2018年4月
-     * 返回的 Date 是 format 后： 2018-04-30T23:59:59.999+0800
+     * 获取某月份结束时刻的 Date
      *
+     * @param year  年份
+     * @param month 月份
      * @return 当前月份结束的 Date
      */
-    public static Date getCurrentMonthEnd() {
+    public static Date getMonthEnd(int year, int month) {
         Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month - 1);
         int maxDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         int maxHour = calendar.getActualMaximum(Calendar.HOUR_OF_DAY);
         int maxMinute = calendar.getActualMaximum(Calendar.MINUTE);
@@ -157,6 +175,30 @@ public class DateUtils {
         calendar.set(Calendar.MILLISECOND, maxMillisecond);
 
         return calendar.getTime();
+    }
+
+    /**
+     * 获取当前月份开始时刻的 Date
+     * 比如当前是 2018年4月
+     * 返回的 Date 是 format 后： 2018-04-01T00:00:00.000+0800
+     *
+     * @return 当前月份开始的 Date
+     */
+    public static Date getCurrentMonthStart() {
+        Calendar calendar = Calendar.getInstance();
+        return getMonthStart(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1);
+    }
+
+    /**
+     * 获取当前月份结束时刻的 Date
+     * 比如当前是 2018年4月
+     * 返回的 Date 是 format 后： 2018-04-30T23:59:59.999+0800
+     *
+     * @return 当前月份结束的 Date
+     */
+    public static Date getCurrentMonthEnd() {
+        Calendar calendar = Calendar.getInstance();
+        return getMonthEnd(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1);
     }
 
     /**

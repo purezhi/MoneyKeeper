@@ -1,5 +1,7 @@
 package me.bakumon.moneykeeper.ui.statistics;
 
+import com.github.mikephil.charting.data.BarEntry;
+
 import java.util.Date;
 import java.util.List;
 
@@ -19,11 +21,14 @@ public class BillViewModel extends BaseViewModel {
         super(dataSource);
     }
 
-    public Flowable<List<RecordWithType>> getRecordWithTypes(int year, int month) {
+    public Flowable<List<RecordWithType>> getRecordWithTypes(int year, int month, int type) {
+        Date dateFrom = DateUtils.getMonthStart(year, month);
+        Date dateTo = DateUtils.getMonthEnd(year, month);
+        return mDataSource.getRecordWithTypes(dateFrom, dateTo, type);
+    }
 
-        Date dateFrom = DateUtils.getCurrentMonthStart();
-        Date dateTo = DateUtils.getCurrentMonthEnd();
-        return mDataSource.getRecordWithTypes(dateFrom, dateTo);
+    public Flowable<List<BarEntry>> getDaySumMoney(int year, int month, int type) {
+        return mDataSource.getDaySumMoney(year, month, type);
     }
 
 

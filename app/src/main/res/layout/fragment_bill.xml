@@ -9,10 +9,39 @@
         android:background="@color/colorPrimary"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:text="账单" />
+        <RadioGroup
+            android:id="@+id/rg_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            android:visibility="gone">
+
+            <RadioButton
+                android:id="@+id/rb_outlay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="@string/text_outlay"
+                android:textColor="@color/colorTextWhite2" />
+
+            <RadioButton
+                android:id="@+id/rb_income"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="@string/text_income"
+                android:textColor="@color/colorTextWhite2" />
+        </RadioGroup>
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/bar_chart"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginBottom="5dp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_record_bill"
