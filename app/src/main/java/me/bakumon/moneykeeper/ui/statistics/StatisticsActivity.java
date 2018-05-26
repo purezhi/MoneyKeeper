@@ -7,7 +7,7 @@ import android.view.View;
 import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.base.BaseActivity;
 import me.bakumon.moneykeeper.databinding.ActivityStatisticsBinding;
-import me.bakumon.moneykeeper.utill.ToastUtils;
+import me.bakumon.moneykeeper.utill.DateUtils;
 
 /**
  * 统计
@@ -16,6 +16,8 @@ import me.bakumon.moneykeeper.utill.ToastUtils;
  */
 public class StatisticsActivity extends BaseActivity {
     private ActivityStatisticsBinding mBinding;
+    private BillFragment mBillFragment;
+    private ReportsFragment mReportsFragment;
 
     @Override
     protected int getLayoutId() {
@@ -30,7 +32,8 @@ public class StatisticsActivity extends BaseActivity {
     }
 
     private void initView() {
-        mBinding.titleBar.setTitle("2018-05");
+        String title = DateUtils.getCurrentYearMonth();
+        mBinding.titleBar.setTitle(title);
         mBinding.titleBar.ivTitle.setVisibility(View.VISIBLE);
         mBinding.titleBar.llTitle.setOnClickListener(v -> chooseMonth());
         mBinding.titleBar.ibtClose.setOnClickListener(v -> finish());
@@ -42,10 +45,10 @@ public class StatisticsActivity extends BaseActivity {
 
     private void setUpFragment() {
         ViewPagerAdapter infoPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        BillFragment billFragment = new BillFragment();
-        ReportsFragment reportsFragment = new ReportsFragment();
-        infoPagerAdapter.addFragment(billFragment);
-        infoPagerAdapter.addFragment(reportsFragment);
+        mBillFragment = new BillFragment();
+        mReportsFragment = new ReportsFragment();
+        infoPagerAdapter.addFragment(mBillFragment);
+        infoPagerAdapter.addFragment(mReportsFragment);
         mBinding.viewPager.setAdapter(infoPagerAdapter);
         mBinding.viewPager.setOffscreenPageLimit(2);
 
@@ -60,6 +63,7 @@ public class StatisticsActivity extends BaseActivity {
     }
 
     private void chooseMonth() {
-        ToastUtils.show("选择月份");
+//        mBillFragment.setYearMonth(2018, 4);
+//        mReportsFragment.setYearMonth(2018, 4);
     }
 }

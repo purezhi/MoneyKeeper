@@ -10,6 +10,7 @@ import me.bakumon.moneykeeper.database.entity.Record;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.database.entity.SumMoneyBean;
+import me.bakumon.moneykeeper.database.entity.TypeSumMoneyBean;
 import me.bakumon.moneykeeper.ui.addtype.TypeImgBean;
 
 /**
@@ -143,4 +144,9 @@ public interface AppDataSource {
      * @param type  类型
      */
     Flowable<List<DaySumMoneyBean>> getDaySumMoney(int year, int month, int type);
+
+    /**
+     * 获取按类型汇总数据
+     */
+    Flowable<List<TypeSumMoneyBean>> getTypeSumMoney(Date from, Date to, int type);
 }

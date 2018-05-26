@@ -2,8 +2,6 @@ package me.bakumon.moneykeeper.datasource;
 
 import android.text.TextUtils;
 
-import com.github.mikephil.charting.data.BarEntry;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +17,7 @@ import me.bakumon.moneykeeper.database.entity.Record;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.database.entity.SumMoneyBean;
+import me.bakumon.moneykeeper.database.entity.TypeSumMoneyBean;
 import me.bakumon.moneykeeper.ui.addtype.TypeImgBean;
 import me.bakumon.moneykeeper.utill.DateUtils;
 
@@ -208,8 +207,13 @@ public class LocalAppDataSource implements AppDataSource {
 
     @Override
     public Flowable<List<DaySumMoneyBean>> getDaySumMoney(int year, int month, int type) {
-            Date dateFrom = DateUtils.getMonthStart(year, month);
-            Date dateTo = DateUtils.getMonthEnd(year, month);
-            return mAppDatabase.recordDao().getDaySumMoney(dateFrom, dateTo, type);
+        Date dateFrom = DateUtils.getMonthStart(year, month);
+        Date dateTo = DateUtils.getMonthEnd(year, month);
+        return mAppDatabase.recordDao().getDaySumMoney(dateFrom, dateTo, type);
+    }
+
+    @Override
+    public Flowable<List<TypeSumMoneyBean>> getTypeSumMoney(Date from, Date to, int type) {
+        return mAppDatabase.recordDao().getTypeSumMoney(from, to, type);
     }
 }

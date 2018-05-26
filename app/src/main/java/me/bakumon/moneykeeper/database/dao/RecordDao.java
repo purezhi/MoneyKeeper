@@ -15,6 +15,7 @@ import me.bakumon.moneykeeper.database.entity.DaySumMoneyBean;
 import me.bakumon.moneykeeper.database.entity.Record;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.database.entity.SumMoneyBean;
+import me.bakumon.moneykeeper.database.entity.TypeSumMoneyBean;
 
 /**
  * 记账记录表操作类
@@ -56,4 +57,7 @@ public interface RecordDao {
      */
     @Query("SELECT recordType.type AS type, record.time AS time, sum(record.money) AS daySumMoney FROM record LEFT JOIN RecordType ON record.record_type_id=RecordType.id where (RecordType.type=:type and record.time BETWEEN :from AND :to) GROUP BY record.time")
     Flowable<List<DaySumMoneyBean>> getDaySumMoney(Date from, Date to, int type);
+
+    @Query("SELECT t_type.img_name AS imgName,t_type.name AS typeName, record.record_type_id AS typeId,sum(record.money) AS typeSumMoney, count(record.record_type_id) AS count FROM record LEFT JOIN RecordType AS t_type ON record.record_type_id=t_type.id where (t_type.type=:type and record.time BETWEEN :from AND :to) GROUP by record.record_type_id Order by sum(record.money) DESC")
+    Flowable<List<TypeSumMoneyBean>> getTypeSumMoney(Date from, Date to, int type);
 }

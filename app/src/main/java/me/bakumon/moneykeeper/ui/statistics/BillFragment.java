@@ -63,8 +63,8 @@ public class BillFragment extends BaseFragment {
         ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(getContext());
         mViewModel = ViewModelProviders.of(this, viewModelFactory).get(BillViewModel.class);
 
-        mYear = 2018;
-        mMonth = 5;
+        mYear = DateUtils.getCurrentYear();
+        mMonth = DateUtils.getCurrentMonth();
         mType = RecordType.TYPE_OUTLAY;
 
         initView();
@@ -167,7 +167,6 @@ public class BillFragment extends BaseFragment {
             set1.setValues(barEntries);
             mBinding.barChart.getData().notifyDataChanged();
             mBinding.barChart.notifyDataSetChanged();
-            mBinding.barChart.invalidate();
         } else {
             set1 = new BarDataSet(barEntries, "");
             set1.setDrawIcons(false);
@@ -181,8 +180,9 @@ public class BillFragment extends BaseFragment {
             data.setBarWidth(0.5f);
             data.setHighlightEnabled(true);
             mBinding.barChart.setData(data);
-            mBinding.barChart.invalidate();
         }
+        mBinding.barChart.invalidate();
+        mBinding.barChart.animateY(1000);
     }
 
     /**
@@ -195,7 +195,9 @@ public class BillFragment extends BaseFragment {
         mYear = year;
         mMonth = month;
         // 更新数据
-//        getOrderData();
+        getOrderData();
+        getDaySumData();
+        getMonthSumMoney();
     }
 
     @Override
@@ -236,18 +238,18 @@ public class BillFragment extends BaseFragment {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(sumMoneyBean -> {
                             String outlay = getString(R.string.text_month_outlay_symbol) + "0";
-                            String inCome = getString(R.string.text_month_income_symbol) + "0";
+                            String income = getString(R.string.text_month_income_symbol) + "0";
                             if (sumMoneyBean != null && sumMoneyBean.size() > 0) {
                                 for (SumMoneyBean bean : sumMoneyBean) {
                                     if (bean.type == RecordType.TYPE_OUTLAY) {
                                         outlay = getString(R.string.text_month_outlay_symbol) + bean.sumMoney;
                                     } else if (bean.type == RecordType.TYPE_INCOME) {
-                                        inCome = getString(R.string.text_month_income_symbol) + bean.sumMoney;
+                                        income = getString(R.string.text_month_income_symbol) + bean.sumMoney;
                                     }
                                 }
                             }
                             mBinding.rbOutlay.setText(outlay);
-                            mBinding.rbIncome.setText(inCome);
+                            mBinding.rbIncome.setText(income);
                         },
                         throwable -> {
                             ToastUtils.show(R.string.toast_get_month_summary_fail);

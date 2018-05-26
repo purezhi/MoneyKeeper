@@ -18,7 +18,7 @@ import me.bakumon.moneykeeper.R;
  */
 public class DateUtils {
     @SuppressLint("SimpleDateFormat")
-    public static final DateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    public static final DateFormat FORMAT = new SimpleDateFormat("yyyy-MM");
     @SuppressLint("SimpleDateFormat")
     public static final DateFormat ALL_FORMAT = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
     @SuppressLint("SimpleDateFormat")
@@ -119,12 +119,37 @@ public class DateUtils {
     }
 
     /**
+     * 获取当前年份
+     */
+    public static String getCurrentYearMonth() {
+        Calendar calendar = Calendar.getInstance();
+        return date2String(calendar.getTime(), FORMAT);
+    }
+
+    /**
+     * 获取当前年份
+     */
+    public static int getCurrentYear() {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.YEAR);
+    }
+
+    /**
+     * 获取修正后的当前月份
+     */
+    public static int getCurrentMonth() {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.MONTH) + 1;
+    }
+
+    /**
      * 获取某月有多少天
-     * @param year 年份
+     *
+     * @param year  年份
      * @param month 月份
      * @return 该月的天数
      */
-    public static int getDayCount(int year, int month){
+    public static int getDayCount(int year, int month) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, month - 1);

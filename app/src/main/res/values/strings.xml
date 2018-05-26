@@ -20,6 +20,7 @@
     <string name="toast_get_types_fail">获取类型数据失败</string>
     <string name="toast_get_statistics_fail">获取统计数据失败</string>
     <string name="toast_get_month_summary_fail">获取该月汇总数据失败</string>
+    <string name="toast_get_type_summary_fail">获取类型汇总数据失败</string>
 
     <string name="hint_enter_money">输入金额</string>
     <string name="hint_enter_remark">输入备注</string>
@@ -86,4 +87,6 @@
     <string name="text_money_symbol">¥</string>
     <string name="text_month_outlay_symbol">支出&#160;¥</string>
     <string name="text_month_income_symbol">收入&#160;¥</string>
+    <string name="text_unit_account">笔</string>
+    <string name="text_day">日&#160;</string>
 </resources>

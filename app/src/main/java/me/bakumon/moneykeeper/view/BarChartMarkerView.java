@@ -27,7 +27,8 @@ public class BarChartMarkerView extends MarkerView {
 
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
-        tvContent.setText((int)e.getX() + "日 " + getResources().getString(R.string.text_money_symbol) + e.getY());
+        String content = (int) e.getX() + getContext().getString(R.string.text_day) + getResources().getString(R.string.text_money_symbol) + e.getY();
+        tvContent.setText(content);
         super.refreshContent(e, highlight);
     }
 
