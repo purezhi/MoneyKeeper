@@ -31,6 +31,7 @@ public class ChooseMonthDialog implements DialogInterface.OnDismissListener {
     private static final int MAX_YEAR = DateUtils.getCurrentYear();
 
     private Context mContext;
+    private RecyclerView mRvMonth;
     private PickerAdapter mYearAdapter;
     private PickerAdapter mMonthAdapter;
 
@@ -57,18 +58,18 @@ public class ChooseMonthDialog implements DialogInterface.OnDismissListener {
         LayoutInflater layoutInflater = LayoutInflater.from(mContext);
         View contentView = layoutInflater.inflate(R.layout.dialog_choose_month, null, false);
         RecyclerView rvYear = contentView.findViewById(R.id.rv_year);
-        RecyclerView rvMonth = contentView.findViewById(R.id.rv_month);
+        mRvMonth = contentView.findViewById(R.id.rv_month);
 
         // 设置 pickerLayoutManage
         PickerLayoutManager lmYear = new PickerLayoutManager(mContext, rvYear, PickerLayoutManager.VERTICAL, false, 3, 0.4f, true);
         rvYear.setLayoutManager(lmYear);
-        PickerLayoutManager lmMonth = new PickerLayoutManager(mContext, rvMonth, PickerLayoutManager.VERTICAL, false, 3, 0.4f, true);
-        rvMonth.setLayoutManager(lmMonth);
+        PickerLayoutManager lmMonth = new PickerLayoutManager(mContext, mRvMonth, PickerLayoutManager.VERTICAL, false, 3, 0.4f, true);
+        mRvMonth.setLayoutManager(lmMonth);
 
         mYearAdapter = new PickerAdapter(null);
         rvYear.setAdapter(mYearAdapter);
         mMonthAdapter = new PickerAdapter(null);
-        rvMonth.setAdapter(mMonthAdapter);
+        mRvMonth.setAdapter(mMonthAdapter);
 
         setYearAdapter();
 
@@ -91,7 +92,7 @@ public class ChooseMonthDialog implements DialogInterface.OnDismissListener {
         // 选中对于月份
         for (int i = 0; i < mMonthAdapter.getData().size(); i++) {
             if (mMonthAdapter.getData().get(i) == mMonth) {
-                rvMonth.scrollToPosition(i);
+                mRvMonth.scrollToPosition(i);
                 break;
             }
         }
@@ -124,7 +125,15 @@ public class ChooseMonthDialog implements DialogInterface.OnDismissListener {
         for (int i = 1; i <= maxMonth; i++) {
             monthList.add(i);
         }
-        mMonthAdapter.setNewData(monthList);
+        List<Integer> lastData = mMonthAdapter.getData();
+        if (lastData.size() > monthList.size()) {
+            mMonthAdapter.setNewData(monthList);
+            // 修正月份
+            mMonth = 1;
+            mRvMonth.scrollToPosition(0);
+        } else {
+            mMonthAdapter.setNewData(monthList);
+        }
     }
 
     public void show() {
