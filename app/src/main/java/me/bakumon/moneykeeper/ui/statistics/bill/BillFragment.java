@@ -1,4 +1,4 @@
-package me.bakumon.moneykeeper.ui.statistics;
+package me.bakumon.moneykeeper.ui.statistics.bill;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;

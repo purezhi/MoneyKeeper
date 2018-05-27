@@ -1,4 +1,4 @@
-package me.bakumon.moneykeeper.ui.statistics;
+package me.bakumon.moneykeeper.ui.statistics.reports;
 
 import com.github.mikephil.charting.data.PieEntry;
 

@@ -7,6 +7,8 @@ import android.view.View;
 import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.base.BaseActivity;
 import me.bakumon.moneykeeper.databinding.ActivityStatisticsBinding;
+import me.bakumon.moneykeeper.ui.statistics.bill.BillFragment;
+import me.bakumon.moneykeeper.ui.statistics.reports.ReportsFragment;
 import me.bakumon.moneykeeper.utill.DateUtils;
 
 /**

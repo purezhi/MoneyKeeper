@@ -8,8 +8,8 @@ import me.bakumon.moneykeeper.datasource.AppDataSource;
 import me.bakumon.moneykeeper.ui.add.AddRecordViewModel;
 import me.bakumon.moneykeeper.ui.addtype.AddTypeViewModel;
 import me.bakumon.moneykeeper.ui.home.HomeViewModel;
-import me.bakumon.moneykeeper.ui.statistics.BillViewModel;
-import me.bakumon.moneykeeper.ui.statistics.ReportsViewModel;
+import me.bakumon.moneykeeper.ui.statistics.bill.BillViewModel;
+import me.bakumon.moneykeeper.ui.statistics.reports.ReportsViewModel;
 import me.bakumon.moneykeeper.ui.typemanage.TypeManageViewModel;
 import me.bakumon.moneykeeper.ui.typesort.TypeSortViewModel;
 
