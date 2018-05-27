@@ -68,7 +68,9 @@ public class StatisticsActivity extends BaseActivity {
     }
 
     private void chooseMonth() {
+        mBinding.titleBar.llTitle.setEnabled(false);
         ChooseMonthDialog chooseMonthDialog = new ChooseMonthDialog(this, mCurrentYear, mCurrentMonth);
+        chooseMonthDialog.setOnDismissListener(() -> mBinding.titleBar.llTitle.setEnabled(true));
         chooseMonthDialog.setOnChooseAffirmListener((year, month) -> {
             mCurrentYear = year;
             mCurrentMonth = month;

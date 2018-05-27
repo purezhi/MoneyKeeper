@@ -1,6 +1,7 @@
 package me.bakumon.moneykeeper.ui.statistics.reports;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +21,7 @@ import me.bakumon.moneykeeper.view.PickerLayoutManager;
  *
  * @author Bakumon https://bakumon
  */
-public class ChooseMonthDialog {
+public class ChooseMonthDialog implements DialogInterface.OnDismissListener {
 
     /**
      * 为什么是 1900
@@ -34,6 +35,7 @@ public class ChooseMonthDialog {
     private PickerAdapter mMonthAdapter;
 
     private OnChooseAffirmListener mOnChooseAffirmListener;
+    private OnDismissListener mOnDismissListener;
     private AlertDialog.Builder builder;
 
     private int mYear = DateUtils.getCurrentYear();
@@ -103,6 +105,7 @@ public class ChooseMonthDialog {
                         mOnChooseAffirmListener.onClick(mYear, mMonth);
                     }
                 });
+        builder.setOnDismissListener(this);
 
     }
 
@@ -126,6 +129,24 @@ public class ChooseMonthDialog {
 
     public void show() {
         builder.create().show();
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        if (mOnDismissListener != null) {
+            mOnDismissListener.onDismiss();
+        }
+    }
+
+    public void setOnDismissListener(OnDismissListener onDismissListener) {
+        mOnDismissListener = onDismissListener;
+    }
+
+    public interface OnDismissListener {
+        /**
+         * dialog 取消
+         */
+        void onDismiss();
     }
 
     public void setOnChooseAffirmListener(OnChooseAffirmListener onChooseAffirmListener) {
