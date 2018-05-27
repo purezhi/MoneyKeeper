@@ -8,6 +8,7 @@ import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.base.BaseActivity;
 import me.bakumon.moneykeeper.databinding.ActivityStatisticsBinding;
 import me.bakumon.moneykeeper.ui.statistics.bill.BillFragment;
+import me.bakumon.moneykeeper.ui.statistics.reports.ChooseMonthDialog;
 import me.bakumon.moneykeeper.ui.statistics.reports.ReportsFragment;
 import me.bakumon.moneykeeper.utill.DateUtils;
 
@@ -20,6 +21,8 @@ public class StatisticsActivity extends BaseActivity {
     private ActivityStatisticsBinding mBinding;
     private BillFragment mBillFragment;
     private ReportsFragment mReportsFragment;
+    private int mCurrentYear = DateUtils.getCurrentYear();
+    private int mCurrentMonth = DateUtils.getCurrentMonth();
 
     @Override
     protected int getLayoutId() {
@@ -65,7 +68,15 @@ public class StatisticsActivity extends BaseActivity {
     }
 
     private void chooseMonth() {
-//        mBillFragment.setYearMonth(2018, 4);
-//        mReportsFragment.setYearMonth(2018, 4);
+        ChooseMonthDialog chooseMonthDialog = new ChooseMonthDialog(this, mCurrentYear, mCurrentMonth);
+        chooseMonthDialog.setOnChooseAffirmListener((year, month) -> {
+            mCurrentYear = year;
+            mCurrentMonth = month;
+            String title = DateUtils.getYearMonthFormatString(year, month);
+            mBinding.titleBar.setTitle(title);
+            mBillFragment.setYearMonth(year, month);
+            mReportsFragment.setYearMonth(year, month);
+        });
+        chooseMonthDialog.show();
     }
 }

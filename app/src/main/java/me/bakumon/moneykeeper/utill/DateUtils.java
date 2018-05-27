@@ -127,6 +127,19 @@ public class DateUtils {
     }
 
     /**
+     * 格式化年月
+     *
+     * @param year  年份
+     * @param month 月份（字面）
+     */
+    public static String getYearMonthFormatString(int year, int month) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month - 1);
+        return date2String(calendar.getTime(), FORMAT);
+    }
+
+    /**
      * 获取当前年份
      */
     public static int getCurrentYear() {

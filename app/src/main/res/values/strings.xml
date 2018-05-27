@@ -89,4 +89,5 @@
     <string name="text_month_income_symbol">收入&#160;¥</string>
     <string name="text_unit_account">笔</string>
     <string name="text_day">日&#160;</string>
+    <string name="text_choose_month">选择月份</string>
 </resources>
