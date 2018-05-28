@@ -50,11 +50,7 @@
     <string name="text_type_3c">3c</string>
     <string name="text_type_pet">pet</string>
     <string name="text_type_pill">pill</string>
-    <string name="text_type_cigarette">cigarette</string>
-    <string name="text_type_sim">phone</string>
     <string name="text_type_calendar">necessary</string>
-    <string name="text_type_fitness">fitness</string>
-    <string name="text_type_study">study</string>
     <string name="text_type_pluralism">pluralism</string>
     <string name="text_type_salary">salary</string>
     <string name="text_current_month_empty_tip">No bookkeeping started this month\n\nClick the button to start bookkeeping</string>

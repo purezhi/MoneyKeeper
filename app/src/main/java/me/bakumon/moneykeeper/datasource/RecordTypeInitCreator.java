@@ -38,30 +38,17 @@ public class RecordTypeInitCreator {
         type = new RecordType(res.getString(R.string.text_type_clothes), "type_clothes", 0, 3);
         list.add(type);
 
-        type = new RecordType(res.getString(R.string.text_type_candy), "type_candy", 0, 4);
+        type = new RecordType(res.getString(R.string.text_type_pill), "type_pill", 0, 4);
         list.add(type);
 
-        type = new RecordType(res.getString(R.string.text_type_cigarette), "type_cigarette", 0, 5);
+        type = new RecordType(res.getString(R.string.text_type_candy), "type_candy", 0, 5);
         list.add(type);
 
         type = new RecordType(res.getString(R.string.text_type_humanity), "type_humanity", 0, 6);
         list.add(type);
 
-        type = new RecordType(res.getString(R.string.text_type_pill), "type_pill", 0, 7);
+        type = new RecordType(res.getString(R.string.text_type_pet), "type_pet", 0, 7);
         list.add(type);
-
-        type = new RecordType(res.getString(R.string.text_type_fitness), "type_fitness", 0, 8);
-        list.add(type);
-
-        type = new RecordType(res.getString(R.string.text_type_sim), "type_sim", 0, 9);
-        list.add(type);
-
-        type = new RecordType(res.getString(R.string.text_type_study), "type_study", 0, 10);
-        list.add(type);
-
-        type = new RecordType(res.getString(R.string.text_type_pet), "type_pet", 0, 11);
-        list.add(type);
-
 
         // 收入
         type = new RecordType(res.getString(R.string.text_type_salary), "type_salary", 1, 0);

@@ -45,16 +45,12 @@
     <string name="text_yesterday">昨天</string>
     <string name="text_type_eat">餐饮</string>
     <string name="text_type_clothes">衣服</string>
-    <string name="text_type_humanity">人情</string>
+    <string name="text_type_humanity">礼物</string>
     <string name="text_type_candy">零食</string>
     <string name="text_type_3c">电子产品</string>
     <string name="text_type_pet">宠物</string>
     <string name="text_type_pill">医疗</string>
-    <string name="text_type_cigarette">烟酒</string>
-    <string name="text_type_sim">话费</string>
     <string name="text_type_calendar">日用</string>
-    <string name="text_type_fitness">运动健身</string>
-    <string name="text_type_study">学习</string>
     <string name="text_type_pluralism">兼职</string>
     <string name="text_type_salary">薪资</string>
     <string name="text_current_month_empty_tip">本月未开始记账\n\n点击加号，开始记账</string>
