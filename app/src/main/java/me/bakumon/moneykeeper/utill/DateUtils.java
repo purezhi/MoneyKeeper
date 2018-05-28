@@ -22,9 +22,9 @@ public class DateUtils {
     @SuppressLint("SimpleDateFormat")
     public static final DateFormat ALL_FORMAT = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
     @SuppressLint("SimpleDateFormat")
-    public static final DateFormat MONTH_DAY_FORMAT = new SimpleDateFormat("MM月dd日");
+    public static final DateFormat MONTH_DAY_FORMAT = new SimpleDateFormat("MM-dd");
     @SuppressLint("SimpleDateFormat")
-    public static final DateFormat YEAR_MONTH_DAY_FORMAT = new SimpleDateFormat("yyyy年MM月dd日");
+    public static final DateFormat YEAR_MONTH_DAY_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
      * 获取今天 Date 对象，精确到日
