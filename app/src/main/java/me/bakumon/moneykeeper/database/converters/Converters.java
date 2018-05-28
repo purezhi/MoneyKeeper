@@ -22,12 +22,12 @@ public class Converters {
     }
 
     @TypeConverter
-    public static BigDecimal stringToBig(String strDecimal) {
-        return new BigDecimal(strDecimal);
+    public static BigDecimal stringToBig(int intDecimal) {
+        return new BigDecimal(intDecimal);
     }
 
     @TypeConverter
-    public static String bigToString(BigDecimal bigDecimal) {
-        return bigDecimal.toPlainString();
+    public static int bigToString(BigDecimal bigDecimal) {
+        return bigDecimal.intValue();
     }
 }

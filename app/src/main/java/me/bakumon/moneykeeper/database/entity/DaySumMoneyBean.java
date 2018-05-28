@@ -1,5 +1,6 @@
 package me.bakumon.moneykeeper.database.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -22,5 +23,5 @@ public class DaySumMoneyBean {
     /**
      * 支出或收入的总和
      */
-    public String daySumMoney;
+    public BigDecimal daySumMoney;
 }

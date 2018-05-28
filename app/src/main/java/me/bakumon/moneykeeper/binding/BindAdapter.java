@@ -8,6 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
+
+import me.bakumon.moneykeeper.R;
+import me.bakumon.moneykeeper.utill.BigDecimalUtil;
 import me.bakumon.moneykeeper.utill.SizeUtils;
 
 /**
@@ -48,5 +52,16 @@ public class BindAdapter {
         }
         int resId = context.getResources().getIdentifier(imgName, "mipmap", context.getPackageName());
         imageView.setImageResource(resId);
+    }
+
+    @BindingAdapter("text_money")
+    public static void setMoneyText(TextView textView, BigDecimal bigDecimal) {
+        textView.setText(BigDecimalUtil.fen2Yuan(bigDecimal));
+    }
+
+    @BindingAdapter("text_money_with_prefix")
+    public static void setMoneyTextWithPrefix(TextView textView, BigDecimal bigDecimal) {
+        String symbol = textView.getResources().getString(R.string.text_money_symbol);
+        textView.setText(symbol + BigDecimalUtil.fen2Yuan(bigDecimal));
     }
 }

@@ -2,10 +2,12 @@ package me.bakumon.moneykeeper.ui.statistics.bill;
 
 import com.github.mikephil.charting.data.BarEntry;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import me.bakumon.moneykeeper.database.entity.DaySumMoneyBean;
+import me.bakumon.moneykeeper.utill.BigDecimalUtil;
 
 /**
  * 柱状图数据转换器
@@ -27,7 +29,9 @@ public class BarEntryConverter {
             for (int i = 0; i < count; i++) {
                 for (int j = 0; j < daySumMoneyBeans.size(); j++) {
                     if (i + 1 == daySumMoneyBeans.get(j).time.getDate()) {
-                        barEntry = new BarEntry(i + 1, Float.parseFloat(daySumMoneyBeans.get(j).daySumMoney));
+                        BigDecimal money = BigDecimalUtil.fen2YuanBD(daySumMoneyBeans.get(j).daySumMoney);
+                        // 这里的 y 由于是 float，所以数值很大的话，还是会出现科学计数法
+                        barEntry = new BarEntry(i + 1, money.floatValue());
                         entryList.add(barEntry);
                     }
                 }

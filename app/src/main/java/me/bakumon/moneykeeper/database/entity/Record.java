@@ -16,7 +16,7 @@ import java.util.Date;
  * @author bakumon https://bakumon.me
  */
 @Entity(foreignKeys = @ForeignKey(entity = RecordType.class, parentColumns = "id", childColumns = "record_type_id"),
-        indices = {@Index(value = {"record_type_id", "time"})})
+        indices = {@Index(value = {"record_type_id", "time", "money", "create_time"})})
 public class Record implements Serializable {
     @PrimaryKey(autoGenerate = true)
     public int id;

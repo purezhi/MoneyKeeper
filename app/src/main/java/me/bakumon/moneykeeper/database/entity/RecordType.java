@@ -13,8 +13,8 @@ import java.io.Serializable;
  *
  * @author bakumon https://bakumon.me
  */
-@Entity(indices = {@Index(value = {"type", "ranking"})})
-public class RecordType implements Serializable{
+@Entity(indices = {@Index(value = {"type", "ranking", "state"})})
+public class RecordType implements Serializable {
     @PrimaryKey(autoGenerate = true)
     public int id;
 

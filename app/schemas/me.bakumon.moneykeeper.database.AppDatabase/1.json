@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "8025b61aa319a9419e7deefb68a1f4d3",
+    "identityHash": "2acfd778e8246ef99f7ad4261f283c64",
     "entities": [
       {
         "tableName": "Record",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `money` TEXT, `remark` TEXT, `time` INTEGER, `create_time` INTEGER, `record_type_id` INTEGER NOT NULL, FOREIGN KEY(`record_type_id`) REFERENCES `RecordType`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `money` INTEGER, `remark` TEXT, `time` INTEGER, `create_time` INTEGER, `record_type_id` INTEGER NOT NULL, FOREIGN KEY(`record_type_id`) REFERENCES `RecordType`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -17,7 +17,7 @@
           {
             "fieldPath": "money",
             "columnName": "money",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": false
           },
           {
@@ -53,13 +53,15 @@
         },
         "indices": [
           {
-            "name": "index_Record_record_type_id_time",
+            "name": "index_Record_record_type_id_time_money_create_time",
             "unique": false,
             "columnNames": [
               "record_type_id",
-              "time"
+              "time",
+              "money",
+              "create_time"
             ],
-            "createSql": "CREATE  INDEX `index_Record_record_type_id_time` ON `${TABLE_NAME}` (`record_type_id`, `time`)"
+            "createSql": "CREATE  INDEX `index_Record_record_type_id_time_money_create_time` ON `${TABLE_NAME}` (`record_type_id`, `time`, `money`, `create_time`)"
           }
         ],
         "foreignKeys": [
@@ -125,13 +127,14 @@
         },
         "indices": [
           {
-            "name": "index_RecordType_type_ranking",
+            "name": "index_RecordType_type_ranking_state",
             "unique": false,
             "columnNames": [
               "type",
-              "ranking"
+              "ranking",
+              "state"
             ],
-            "createSql": "CREATE  INDEX `index_RecordType_type_ranking` ON `${TABLE_NAME}` (`type`, `ranking`)"
+            "createSql": "CREATE  INDEX `index_RecordType_type_ranking_state` ON `${TABLE_NAME}` (`type`, `ranking`, `state`)"
           }
         ],
         "foreignKeys": []
@@ -139,7 +142,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"8025b61aa319a9419e7deefb68a1f4d3\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"2acfd778e8246ef99f7ad4261f283c64\")"
     ]
   }
 }

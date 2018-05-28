@@ -23,7 +23,7 @@ public class PieEntryConverter {
     public static List<PieEntry> getBarEntryList(List<TypeSumMoneyBean> typeSumMoneyBeans) {
         List<PieEntry> entryList = new ArrayList<>();
         for (int i = 0; i < typeSumMoneyBeans.size(); i++) {
-            BigDecimal typeMoney = new BigDecimal(typeSumMoneyBeans.get(i).typeSumMoney);
+            BigDecimal typeMoney = typeSumMoneyBeans.get(i).typeSumMoney;
             entryList.add(new PieEntry(typeMoney.intValue(), typeSumMoneyBeans.get(i).typeName, typeSumMoneyBeans.get(i)));
         }
         return entryList;

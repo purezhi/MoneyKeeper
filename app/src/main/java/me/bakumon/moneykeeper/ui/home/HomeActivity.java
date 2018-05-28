@@ -21,6 +21,7 @@ import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.database.entity.SumMoneyBean;
 import me.bakumon.moneykeeper.databinding.ActivityHomeBinding;
 import me.bakumon.moneykeeper.ui.add.AddRecordActivity;
+import me.bakumon.moneykeeper.utill.BigDecimalUtil;
 import me.bakumon.moneykeeper.utill.ToastUtils;
 import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
 import me.drakeet.floo.Floo;
@@ -125,9 +126,9 @@ public class HomeActivity extends BaseActivity {
                             if (sumMoneyBean != null && sumMoneyBean.size() > 0) {
                                 for (SumMoneyBean bean : sumMoneyBean) {
                                     if (bean.type == RecordType.TYPE_OUTLAY) {
-                                        outlay = bean.sumMoney;
+                                        outlay = BigDecimalUtil.fen2Yuan(bean.sumMoney);
                                     } else if (bean.type == RecordType.TYPE_INCOME) {
-                                        inCome = bean.sumMoney;
+                                        inCome = BigDecimalUtil.fen2Yuan(bean.sumMoney);
                                     }
                                 }
                             }

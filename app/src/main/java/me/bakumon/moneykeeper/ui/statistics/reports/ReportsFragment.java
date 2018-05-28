@@ -30,6 +30,7 @@ import me.bakumon.moneykeeper.database.entity.SumMoneyBean;
 import me.bakumon.moneykeeper.database.entity.TypeSumMoneyBean;
 import me.bakumon.moneykeeper.databinding.FragmentReportsBinding;
 import me.bakumon.moneykeeper.ui.typerecords.TypeRecordsActivity;
+import me.bakumon.moneykeeper.utill.BigDecimalUtil;
 import me.bakumon.moneykeeper.utill.DateUtils;
 import me.bakumon.moneykeeper.utill.ToastUtils;
 import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
@@ -211,9 +212,9 @@ public class ReportsFragment extends BaseFragment {
                             if (sumMoneyBean != null && sumMoneyBean.size() > 0) {
                                 for (SumMoneyBean bean : sumMoneyBean) {
                                     if (bean.type == RecordType.TYPE_OUTLAY) {
-                                        outlay = getString(R.string.text_month_outlay_symbol) + bean.sumMoney;
+                                        outlay = getString(R.string.text_month_outlay_symbol) + BigDecimalUtil.fen2Yuan(bean.sumMoney);
                                     } else if (bean.type == RecordType.TYPE_INCOME) {
-                                        income = getString(R.string.text_month_income_symbol) + bean.sumMoney;
+                                        income = getString(R.string.text_month_income_symbol) + BigDecimalUtil.fen2Yuan(bean.sumMoney);
                                     }
                                 }
                             }

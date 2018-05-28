@@ -28,6 +28,7 @@ import me.bakumon.moneykeeper.utill.ToastUtils;
  * @author Bakumon https://bakumon.me
  */
 public class KeyboardView extends LinearLayout {
+    private static final int MAX_INTEGER_NUMBER = 6;
 
     private LayoutKeyboardBinding mBinding;
     private OnAffirmClickListener mOnAffirmClickListener;
@@ -171,7 +172,7 @@ public class KeyboardView extends LinearLayout {
             if (TextUtils.equals(".", text)) {
                 sb.insert(sb.length(), text);
             } else {
-                if (sb.length() < 9) {
+                if (sb.length() < MAX_INTEGER_NUMBER) {
                     sb.insert(sb.length(), text);
                 }
             }

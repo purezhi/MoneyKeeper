@@ -60,15 +60,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{typeSumMoney.typeSumMoney}"
                 android:textColor="@color/colorTextWhite"
                 android:textSize="16sp"
+                app:text_money_with_prefix="@{typeSumMoney.typeSumMoney}"
                 tools:text="¥12312" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{typeSumMoney.count}"
+                android:text='@{typeSumMoney.count+@string/text_unit_account}'
                 android:textColor="@color/colorTextGray"
                 android:textSize="16sp"
                 tools:text="43笔" />

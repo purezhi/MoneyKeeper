@@ -8,7 +8,6 @@ import android.view.View;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
-import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -21,6 +20,7 @@ import me.bakumon.moneykeeper.database.entity.Record;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.databinding.ActivityAddRecordBinding;
+import me.bakumon.moneykeeper.utill.BigDecimalUtil;
 import me.bakumon.moneykeeper.utill.DateUtils;
 import me.bakumon.moneykeeper.utill.SoftInputUtils;
 import me.bakumon.moneykeeper.utill.ToastUtils;
@@ -86,7 +86,7 @@ public class AddRecordActivity extends BaseActivity {
             mCurrentType = mRecord.mRecordTypes.get(0).type;
             mBinding.titleBar.setTitle(getString(R.string.text_modify_record));
             mBinding.edtRemark.setText(mRecord.remark);
-            mBinding.keyboard.setText(mRecord.money.toPlainString());
+            mBinding.keyboard.setText(BigDecimalUtil.fen2Yuan(mRecord.money));
             mCurrentChooseDate = mRecord.time;
             mCurrentChooseCalendar.setTime(mCurrentChooseDate);
             mBinding.qmTvDate.setText(DateUtils.getWordTime(mCurrentChooseDate));
@@ -129,7 +129,7 @@ public class AddRecordActivity extends BaseActivity {
         // 防止重复提交
         mBinding.keyboard.setAffirmEnable(false);
         Record record = new Record();
-        record.money = new BigDecimal(text);
+        record.money = BigDecimalUtil.yuan2FenBD(text);
         record.remark = mBinding.edtRemark.getText().toString().trim();
         record.time = mCurrentChooseDate;
         record.createTime = new Date();
@@ -151,7 +151,7 @@ public class AddRecordActivity extends BaseActivity {
     private void modifyRecord(String text) {
         // 防止重复提交
         mBinding.keyboard.setAffirmEnable(false);
-        mRecord.money = new BigDecimal(text);
+        mRecord.money = BigDecimalUtil.yuan2FenBD(text);
         mRecord.remark = mBinding.edtRemark.getText().toString().trim();
         mRecord.time = mCurrentChooseDate;
         mRecord.recordTypeId = mCurrentType == RecordType.TYPE_OUTLAY ?

@@ -1,5 +1,7 @@
 package me.bakumon.moneykeeper.database.entity;
 
+import java.math.BigDecimal;
+
 /**
  * 类型汇总实体
  *
@@ -8,7 +10,7 @@ package me.bakumon.moneykeeper.database.entity;
 public class TypeSumMoneyBean {
     public String imgName;
     public String typeName;
-    public String typeSumMoney;
+    public BigDecimal typeSumMoney;
     public int typeId;
-    public String count;
+    public int count;
 }
