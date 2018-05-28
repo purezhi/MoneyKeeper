@@ -18,7 +18,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="11"
+            android:layout_weight="123"
             android:background="@color/colorPrimary"
             android:orientation="vertical">
 
@@ -30,27 +30,13 @@
                 android:id="@+id/type_choice"
                 layout="@layout/layout_type_choice" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_type"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:visibility="gone"
-                tools:ignore="NestedWeights" />
-
-            <me.bakumon.moneykeeper.view.CircleIndicator
-                android:id="@+id/indicator"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:visibility="gone" />
-
             <me.bakumon.moneykeeper.view.TypePageView
                 android:id="@+id/type_page_outlay"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:visibility="visible" />
+                android:visibility="visible"
+                tools:ignore="NestedWeights" />
 
             <me.bakumon.moneykeeper.view.TypePageView
                 android:id="@+id/type_page_income"
@@ -63,7 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center">
 
                 <me.bakumon.moneykeeper.view.QMUIAlphaTextView
@@ -86,12 +72,12 @@
                     android:layout_marginStart="5dp"
                     android:background="@drawable/bg_date"
                     android:hint="@string/hint_enter_remark"
+                    android:imeOptions="actionDone"
                     android:maxLength="9"
                     android:paddingBottom="3dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="3dp"
-                    android:imeOptions="actionDone"
                     android:singleLine="true"
                     android:textColor="@color/colorTextWhite2"
                     android:textColorHint="@color/colorTextGray"
@@ -103,7 +89,7 @@
             android:id="@+id/keyboard"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="9"
+            android:layout_weight="100"
             android:background="@color/colorItem" />
 
     </LinearLayout>
