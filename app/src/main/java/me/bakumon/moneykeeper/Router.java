@@ -6,6 +6,8 @@ package me.bakumon.moneykeeper;
  * @author Bakumon https://bakumon.me
  */
 public class Router {
+    public static final String MAIN_SCHEME = "mk";
+
     public static final String HOME = "home";
     public static final String ADD_RECORD = "add_record";
     public static final String TYPE_MANAGE = "type_Manage";

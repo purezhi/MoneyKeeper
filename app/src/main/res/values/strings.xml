@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MoneyKeeper</string>
+    <!--<string name="app_name">记账</string>-->
 
     <string name="content_des_setting">设置</string>
     <string name="content_des_statistics">统计</string>
@@ -30,17 +30,6 @@
     <string name="text_symbol_outlay">-</string>
     <string name="text_symbol_income">+</string>
     <string name="text_home_footer_tip">统计页面可以查看往月记录</string>
-    <string name="text_num_1">1</string>
-    <string name="text_num_2">2</string>
-    <string name="text_num_3">3</string>
-    <string name="text_num_4">4</string>
-    <string name="text_num_5">5</string>
-    <string name="text_num_6">6</string>
-    <string name="text_num_7">7</string>
-    <string name="text_num_8">8</string>
-    <string name="text_num_9">9</string>
-    <string name="text_num_point">.</string>
-    <string name="text_num_0">0</string>
     <string name="text_add_record">记一笔</string>
     <string name="text_modify_record">修改</string>
     <string name="text_done">完成</string>

@@ -35,7 +35,7 @@
                 <data
                     android:host="bakumon.me"
                     android:path="/home"
-                    android:scheme="mk" />
+                    android:scheme="@string/scheme" />
             </intent-filter>
         </activity>
         <activity
@@ -53,7 +53,7 @@
                 <data
                     android:host="bakumon.me"
                     android:path="/addRecord"
-                    android:scheme="mk" />
+                    android:scheme="@string/scheme" />
             </intent-filter>
         </activity>
         <activity
@@ -71,7 +71,7 @@
                 <data
                     android:host="bakumon.me"
                     android:path="/typeManage"
-                    android:scheme="mk" />
+                    android:scheme="@string/scheme" />
             </intent-filter>
         </activity>
         <activity
@@ -89,7 +89,7 @@
                 <data
                     android:host="bakumon.me"
                     android:path="/typeSort"
-                    android:scheme="mk" />
+                    android:scheme="@string/scheme" />
             </intent-filter>
         </activity>
         <activity
@@ -108,7 +108,7 @@
                 <data
                     android:host="bakumon.me"
                     android:path="/addType"
-                    android:scheme="mk" />
+                    android:scheme="@string/scheme" />
             </intent-filter>
         </activity>
         <activity
@@ -127,7 +127,7 @@
                 <data
                     android:host="bakumon.me"
                     android:path="/statistics"
-                    android:scheme="mk" />
+                    android:scheme="@string/scheme" />
             </intent-filter>
         </activity>
         <activity
@@ -146,7 +146,7 @@
                 <data
                     android:host="bakumon.me"
                     android:path="/typeRecords"
-                    android:scheme="mk" />
+                    android:scheme="@string/scheme" />
             </intent-filter>
         </activity>
     </application>

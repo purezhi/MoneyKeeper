@@ -12,9 +12,7 @@ android {
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
         versionCode 3
-        versionName "debug_1.0.2"
-//        versionCode 1
-//        versionName "1.0.0"
+        versionName "1.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         // 指定room.schemaLocation生成的文件路径
         javaCompileOptions {
@@ -48,10 +46,17 @@ android {
         debug {
             // 签名
             signingConfig signingConfigs.debug
+            versionNameSuffix ".debug"
+            applicationIdSuffix ".debug"
+            resValue "string", "scheme", "mk-debug"
+            // 只会给 res/values/string.xml 增加，不会影响其他 values 文件夹
+            resValue "string", "app_name", "记账debug"
         }
         release {
             // 签名
             signingConfig signingConfigs.release
+            resValue "string", "scheme", "mk"
+            resValue "string", "app_name", "记账"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

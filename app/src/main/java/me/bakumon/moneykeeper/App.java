@@ -35,7 +35,9 @@ public class App extends Application {
 
         Floo.configuration()
                 .setDebugEnabled(BuildConfig.DEBUG)
+                .addRequestInterceptor(new PureSchemeInterceptor(getString(R.string.scheme)))
                 .addRequestInterceptor(new LogInterceptor("Request"))
+                .addTargetInterceptor(new PureSchemeInterceptor(getString(R.string.scheme)))
                 .addTargetInterceptor(new LogInterceptor("Target"))
                 .addTargetNotFoundHandler(new OpenDirectlyHandler());
 
