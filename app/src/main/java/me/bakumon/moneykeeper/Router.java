@@ -12,4 +12,5 @@ public class Router {
     public static final String TYPE_SORT = "type_sort";
     public static final String ADD_TYPE = "add_type";
     public static final String STATISTICS = "statistics";
+    public static final String TYPE_RECORDS = "type_records";
 }

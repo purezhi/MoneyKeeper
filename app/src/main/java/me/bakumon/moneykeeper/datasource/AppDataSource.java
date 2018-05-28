@@ -46,6 +46,20 @@ public interface AppDataSource {
     Flowable<List<RecordWithType>> getRecordWithTypes(Date dateFrom, Date dateTo, int type);
 
     /**
+     * 获取某一类型某段时间的记账记录数据
+     *
+     * @return 包含记录数据的 Flowable 对象
+     */
+    Flowable<List<RecordWithType>> getRecordWithTypes(Date dateFrom, Date dateTo, int type, int typeId);
+
+    /**
+     * 获取某一类型某段时间的记账记录数据，money 排序
+     *
+     * @return 包含记录数据的 Flowable 对象
+     */
+    Flowable<List<RecordWithType>> getRecordWithTypesSortMoney(Date dateFrom, Date dateTo, int type, int typeId);
+
+    /**
      * 新增一条记账记录
      *
      * @param record 记账记录实体

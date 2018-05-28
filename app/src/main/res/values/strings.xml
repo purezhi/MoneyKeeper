@@ -90,4 +90,6 @@
     <string name="text_unit_account">笔</string>
     <string name="text_day">日&#160;</string>
     <string name="text_choose_month">选择月份</string>
+    <string name="text_sort_time">按时间</string>
+    <string name="text_sort_money">按金额</string>
 </resources>

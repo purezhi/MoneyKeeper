@@ -33,6 +33,14 @@ public interface RecordDao {
     @Query("SELECT record.* from record LEFT JOIN RecordType ON record.record_type_id=RecordType.id WHERE (RecordType.type=:type AND time BETWEEN :from AND :to) ORDER BY time DESC, create_time DESC")
     Flowable<List<RecordWithType>> getRangeRecordWithTypes(Date from, Date to, int type);
 
+    @Transaction
+    @Query("SELECT record.* from record LEFT JOIN RecordType ON record.record_type_id=RecordType.id WHERE (RecordType.type=:type AND record.record_type_id=:typeId AND time BETWEEN :from AND :to) ORDER BY time DESC, create_time DESC")
+    Flowable<List<RecordWithType>> getRangeRecordWithTypes(Date from, Date to, int type, int typeId);
+
+    @Transaction
+    @Query("SELECT record.* from record LEFT JOIN RecordType ON record.record_type_id=RecordType.id WHERE (RecordType.type=:type AND record.record_type_id=:typeId AND time BETWEEN :from AND :to) ORDER BY money DESC, create_time DESC")
+    Flowable<List<RecordWithType>> getRecordWithTypesSortMoney(Date from, Date to, int type, int typeId);
+
     @Insert
     void insertRecord(Record record);
 

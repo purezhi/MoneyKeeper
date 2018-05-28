@@ -8,10 +8,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
 
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.List;
@@ -20,14 +23,17 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.bakumon.moneykeeper.Injection;
 import me.bakumon.moneykeeper.R;
+import me.bakumon.moneykeeper.Router;
 import me.bakumon.moneykeeper.base.BaseFragment;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.database.entity.SumMoneyBean;
 import me.bakumon.moneykeeper.database.entity.TypeSumMoneyBean;
 import me.bakumon.moneykeeper.databinding.FragmentReportsBinding;
+import me.bakumon.moneykeeper.ui.typerecords.TypeRecordsActivity;
 import me.bakumon.moneykeeper.utill.DateUtils;
 import me.bakumon.moneykeeper.utill.ToastUtils;
 import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
+import me.drakeet.floo.Floo;
 
 /**
  * 统计-报表
@@ -68,7 +74,8 @@ public class ReportsFragment extends BaseFragment {
         mAdapter = new ReportAdapter(null);
         mBinding.rvRecordReports.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            ToastUtils.show("position:" + position);
+            TypeSumMoneyBean bean = mAdapter.getData().get(position);
+            navTypeRecords(bean.typeName, bean.typeId);
         });
 
         initPieChart();
@@ -84,6 +91,18 @@ public class ReportsFragment extends BaseFragment {
         });
     }
 
+    private void navTypeRecords(String typeName, int typeId) {
+        if (getContext() != null) {
+            Floo.navigation(getContext(), Router.TYPE_RECORDS)
+                    .putExtra(TypeRecordsActivity.KEY_TYPE_NAME, typeName)
+                    .putExtra(TypeRecordsActivity.KEY_RECORD_TYPE, mType)
+                    .putExtra(TypeRecordsActivity.KEY_RECORD_TYPE_ID, typeId)
+                    .putExtra(TypeRecordsActivity.KEY_YEAR, mYear)
+                    .putExtra(TypeRecordsActivity.KEY_MONTH, mMonth)
+                    .start();
+        }
+    }
+
     private void initPieChart() {
         mBinding.pieChart.getDescription().setEnabled(false);
         mBinding.pieChart.setNoDataText("");
@@ -92,6 +111,19 @@ public class ReportsFragment extends BaseFragment {
         mBinding.pieChart.setRotationEnabled(false);
 
         mBinding.pieChart.getLegend().setEnabled(false);
+        mBinding.pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                String typeName = ((TypeSumMoneyBean) e.getData()).typeName;
+                int typeId = ((TypeSumMoneyBean) e.getData()).typeId;
+                navTypeRecords(typeName, typeId);
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
     }
 
     private void setChartData(List<TypeSumMoneyBean> typeSumMoneyBeans) {

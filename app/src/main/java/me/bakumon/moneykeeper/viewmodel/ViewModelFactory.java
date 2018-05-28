@@ -11,6 +11,7 @@ import me.bakumon.moneykeeper.ui.home.HomeViewModel;
 import me.bakumon.moneykeeper.ui.statistics.bill.BillViewModel;
 import me.bakumon.moneykeeper.ui.statistics.reports.ReportsViewModel;
 import me.bakumon.moneykeeper.ui.typemanage.TypeManageViewModel;
+import me.bakumon.moneykeeper.ui.typerecords.TypeRecordsViewModel;
 import me.bakumon.moneykeeper.ui.typesort.TypeSortViewModel;
 
 /**
@@ -42,6 +43,8 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return (T) new BillViewModel(mDataSource);
         } else if (modelClass.isAssignableFrom(ReportsViewModel.class)) {
             return (T) new ReportsViewModel(mDataSource);
+        } else if (modelClass.isAssignableFrom(TypeRecordsViewModel.class)) {
+            return (T) new TypeRecordsViewModel(mDataSource);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }

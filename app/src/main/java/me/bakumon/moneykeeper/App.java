@@ -31,6 +31,7 @@ public class App extends Application {
         mappings.put(Router.TYPE_SORT, new Target("mk://bakumon.me/typeSort"));
         mappings.put(Router.ADD_TYPE, new Target("mk://bakumon.me/addType"));
         mappings.put(Router.STATISTICS, new Target("mk://bakumon.me/statistics"));
+        mappings.put(Router.TYPE_RECORDS, new Target("mk://bakumon.me/typeRecords"));
 
         Floo.configuration()
                 .setDebugEnabled(BuildConfig.DEBUG)

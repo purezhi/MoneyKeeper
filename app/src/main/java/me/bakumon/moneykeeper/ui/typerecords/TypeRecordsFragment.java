@@ -1,0 +1,171 @@
+package me.bakumon.moneykeeper.ui.typerecords;
+
+import android.arch.lifecycle.ViewModelProviders;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import me.bakumon.moneykeeper.Injection;
+import me.bakumon.moneykeeper.R;
+import me.bakumon.moneykeeper.Router;
+import me.bakumon.moneykeeper.base.BaseFragment;
+import me.bakumon.moneykeeper.database.entity.RecordWithType;
+import me.bakumon.moneykeeper.databinding.FragmentTypeRecordsBinding;
+import me.bakumon.moneykeeper.ui.add.AddRecordActivity;
+import me.bakumon.moneykeeper.ui.home.HomeAdapter;
+import me.bakumon.moneykeeper.utill.ToastUtils;
+import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
+import me.drakeet.floo.Floo;
+
+/**
+ * 某一类型记账记录
+ * 按金额或时间排序
+ *
+ * @author Bakumon https://bakumon.me
+ */
+public class TypeRecordsFragment extends BaseFragment {
+    private static final String TAG = TypeRecordsFragment.class.getSimpleName();
+    public static final int SORT_TIME = 0;
+    public static final int SORT_MONEY = 1;
+    public static final String KEY_SORT_TYPE = "TypeRecordsFragment.key_sort_type";
+    public static final String KEY_RECORD_TYPE = "TypeRecordsFragment.key_record_type";
+    public static final String KEY_RECORD_TYPE_ID = "TypeRecordsFragment.key_record_type_id";
+    public static final String KEY_YEAR = "TypeRecordsFragment.key_year";
+    public static final String KEY_MONTH = "TypeRecordsFragment.key_month";
+
+    private FragmentTypeRecordsBinding mBinding;
+    private TypeRecordsViewModel mViewModel;
+    private HomeAdapter mSortTimeAdapter;
+    private RecordAdapter mSortMoneyAdapter;
+
+    private int mSortType;
+    private int mRecordType;
+    private int mRecordTypeId;
+    private int mYear;
+    private int mMonth;
+
+    public static TypeRecordsFragment newInstance(int sortType, int recordType, int recordTypeId, int year, int month) {
+        TypeRecordsFragment fragment = new TypeRecordsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(KEY_SORT_TYPE, sortType);
+        bundle.putInt(KEY_RECORD_TYPE, recordType);
+        bundle.putInt(KEY_RECORD_TYPE_ID, recordTypeId);
+        bundle.putInt(KEY_YEAR, year);
+        bundle.putInt(KEY_MONTH, month);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_type_records;
+    }
+
+    @Override
+    protected void onInit(@Nullable Bundle savedInstanceState) {
+        mBinding = getDataBinding();
+        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(getContext());
+        mViewModel = ViewModelProviders.of(this, viewModelFactory).get(TypeRecordsViewModel.class);
+
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            mSortType = bundle.getInt(KEY_SORT_TYPE);
+            mRecordType = bundle.getInt(KEY_RECORD_TYPE);
+            mRecordTypeId = bundle.getInt(KEY_RECORD_TYPE_ID);
+            mYear = bundle.getInt(KEY_YEAR);
+            mMonth = bundle.getInt(KEY_MONTH);
+        }
+
+        initView();
+
+        getData();
+    }
+
+    private void initView() {
+        mBinding.rvRecords.setLayoutManager(new LinearLayoutManager(getContext()));
+        if (mSortType == SORT_TIME) {
+            mSortTimeAdapter = new HomeAdapter(null);
+            mBinding.rvRecords.setAdapter(mSortTimeAdapter);
+            mSortTimeAdapter.setOnItemChildLongClickListener((adapter, view, position) -> {
+                showOperateDialog(mSortTimeAdapter.getData().get(position));
+                return false;
+            });
+        } else {
+            mSortMoneyAdapter = new RecordAdapter(null);
+            mBinding.rvRecords.setAdapter(mSortMoneyAdapter);
+            mSortMoneyAdapter.setOnItemChildLongClickListener((adapter, view, position) -> {
+                showOperateDialog(mSortMoneyAdapter.getData().get(position));
+                return false;
+            });
+        }
+    }
+
+    private void showOperateDialog(RecordWithType record) {
+        if (getContext() == null) {
+            return;
+        }
+        new AlertDialog.Builder(getContext())
+                .setItems(new String[]{getString(R.string.text_modify), getString(R.string.text_delete)}, (dialog, which) -> {
+                    if (which == 0) {
+                        modifyRecord(record);
+                    } else {
+                        deleteRecord(record);
+                    }
+                })
+                .create()
+                .show();
+    }
+
+    private void modifyRecord(RecordWithType record) {
+        if (getContext() == null) {
+            return;
+        }
+        Floo.navigation(getContext(), Router.ADD_RECORD)
+                .putExtra(AddRecordActivity.KEY_RECORD_BEAN, record)
+                .start();
+    }
+
+    private void deleteRecord(RecordWithType record) {
+        mDisposable.add(mViewModel.deleteRecord(record)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {
+                        },
+                        throwable -> {
+                            ToastUtils.show(R.string.toast_record_delete_fail);
+                            Log.e(TAG, "删除记账记录失败", throwable);
+                        }));
+    }
+
+    @Override
+    protected void lazyInitData() {
+
+    }
+
+    private void getData() {
+        mDisposable.add(mViewModel.getRecordWithTypes(mSortType, mRecordType, mRecordTypeId, mYear, mMonth)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(recordWithTypes -> {
+                            if (mSortType == 0) {
+                                mSortTimeAdapter.setNewData(recordWithTypes);
+                                if (recordWithTypes == null || recordWithTypes.size() < 1) {
+                                    mSortTimeAdapter.setEmptyView(inflate(R.layout.layout_record_empty));
+                                }
+                            } else {
+                                mSortMoneyAdapter.setNewData(recordWithTypes);
+                                if (recordWithTypes == null || recordWithTypes.size() < 1) {
+                                    mSortMoneyAdapter.setEmptyView(inflate(R.layout.layout_record_empty));
+                                }
+                            }
+                        },
+                        throwable -> {
+                            ToastUtils.show(R.string.toast_records_fail);
+                            Log.e(TAG, "获取记录列表失败", throwable);
+                        }));
+    }
+}
