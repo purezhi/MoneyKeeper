@@ -24,7 +24,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         INSTANCE = this;
-        Map<String, Target> mappings = new HashMap<>(4);
+        Map<String, Target> mappings = new HashMap<>(8);
         mappings.put(Router.HOME, new Target("mk://bakumon.me/home"));
         mappings.put(Router.ADD_RECORD, new Target("mk://bakumon.me/addRecord"));
         mappings.put(Router.TYPE_MANAGE, new Target("mk://bakumon.me/typeManage"));
@@ -32,6 +32,7 @@ public class App extends Application {
         mappings.put(Router.ADD_TYPE, new Target("mk://bakumon.me/addType"));
         mappings.put(Router.STATISTICS, new Target("mk://bakumon.me/statistics"));
         mappings.put(Router.TYPE_RECORDS, new Target("mk://bakumon.me/typeRecords"));
+        mappings.put(Router.SETTING, new Target("mk://bakumon.me/setting"));
 
         Floo.configuration()
                 .setDebugEnabled(BuildConfig.DEBUG)

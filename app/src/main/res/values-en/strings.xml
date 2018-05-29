@@ -21,6 +21,8 @@
     <string name="toast_get_statistics_fail">Failed to get statistics</string>
     <string name="toast_get_month_summary_fail">Failed to get summary data for the month</string>
     <string name="toast_get_type_summary_fail">Failed to get type summary data</string>
+    <string name="toast_not_install_market">Your phone does not have an Android app market installed</string>
+    <string name="toast_not_install_alipay">Thank you, you did not install Alipay application</string>
 
     <string name="hint_enter_money">Enter the amount</string>
     <string name="hint_enter_remark">Enter a note</string>
@@ -38,7 +40,8 @@
     <string name="text_button_sort">Sort</string>
     <string name="text_outlay">Pay</string>
     <string name="text_income">Earn</string>
-    <string name="text_setting">Setting</string>
+    <string name="text_setting">setting</string>
+    <string name="text_title_setting">Setting</string>
     <string name="text_month_outlay">Pay($)</string>
     <string name="text_month_income">Earn($)</string>
     <string name="text_today">today</string>

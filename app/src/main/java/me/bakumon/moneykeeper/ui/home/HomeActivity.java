@@ -68,7 +68,8 @@ public class HomeActivity extends BaseActivity {
     }
 
     public void settingClick(View view) {
-        ToastUtils.show("设置");
+        Floo.navigation(this, Router.SETTING)
+                .start();
     }
 
     public void statisticsClick(View view) {
