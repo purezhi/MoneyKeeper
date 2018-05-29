@@ -2,6 +2,8 @@ package me.bakumon.moneykeeper;
 
 import android.app.Application;
 
+import com.squareup.leakcanary.LeakCanary;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +25,13 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
+        // Normal app init code...
         INSTANCE = this;
         Map<String, Target> mappings = new HashMap<>(8);
         mappings.put(Router.HOME, new Target("mk://bakumon.me/home"));

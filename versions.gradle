@@ -20,6 +20,7 @@ versions.BRVAH = "2.9.34"
 versions.floo = "1.1.0"
 versions.datetimepicker = "3.5.1"
 versions.MPChart = "v3.0.3"
+versions.leakcanary = "1.5.4"
 
 def deps = [:]
 
@@ -53,6 +54,8 @@ deps.BRVAH = "com.github.CymChad:BaseRecyclerViewAdapterHelper:$versions.BRVAH"
 deps.floo = "me.drakeet.floo:floo:$versions.floo"
 deps.datetimepicker = "com.wdullaer:materialdatetimepicker:$versions.datetimepicker"
 deps.MPChart = "com.github.PhilJay:MPAndroidChart:$versions.MPChart"
+deps.leakcanary_debug = "com.squareup.leakcanary:leakcanary-android:$versions.leakcanary"
+deps.leakcanary_release = "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakcanary"
 
 ext.deps = deps
 

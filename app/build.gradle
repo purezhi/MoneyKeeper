@@ -101,4 +101,7 @@ dependencies {
     implementation deps.datetimepicker
     // 图表
     implementation deps.MPChart
+    // 内存泄漏检测
+    debugImplementation deps.leakcanary_debug
+    releaseImplementation deps.leakcanary_release
 }
