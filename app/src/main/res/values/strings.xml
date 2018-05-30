@@ -23,6 +23,7 @@
     <string name="toast_get_type_summary_fail">获取类型汇总数据失败</string>
     <string name="toast_not_install_market">您的手机没有安装Android应用市场</string>
     <string name="toast_not_install_alipay">谢谢，您没有安装支付宝客户端</string>
+    <string name="toast_is_not_writable_external">备份失败，外部存储不可用</string>
 
     <string name="hint_enter_money">输入金额</string>
     <string name="hint_enter_remark">输入备注</string>

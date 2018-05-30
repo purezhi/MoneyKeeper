@@ -22,6 +22,8 @@ import me.bakumon.moneykeeper.database.entity.RecordType;
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
 
+    public static final String DB_NAME = "moneykeeper.db";
+
     private static volatile AppDatabase INSTANCE;
 
     public static AppDatabase getInstance(Context context) {
@@ -29,7 +31,7 @@ public abstract class AppDatabase extends RoomDatabase {
             synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            AppDatabase.class, "app.db")
+                            AppDatabase.class, DB_NAME)
                             .build();
                 }
             }

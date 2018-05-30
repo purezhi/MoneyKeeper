@@ -13,6 +13,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.bakumon.moneykeeper.Injection;
 import me.bakumon.moneykeeper.R;
+import me.bakumon.moneykeeper.Router;
 import me.bakumon.moneykeeper.base.BaseActivity;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.databinding.ActivityTypeSortBinding;
@@ -28,7 +29,6 @@ import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
 public class TypeSortActivity extends BaseActivity {
 
     private static final String TAG = TypeSortActivity.class.getSimpleName();
-    public static final String KEY_TYPE = "TypeSortActivity.key_type";
 
     private static final int COLUMN = 4;
 
@@ -53,7 +53,7 @@ public class TypeSortActivity extends BaseActivity {
     }
 
     private void initView() {
-        mType = getIntent().getIntExtra(KEY_TYPE, RecordType.TYPE_OUTLAY);
+        mType = getIntent().getIntExtra(Router.ExtraKey.KEY_TYPE, RecordType.TYPE_OUTLAY);
 
         mBinding.titleBar.ibtClose.setOnClickListener(v -> finish());
         mBinding.titleBar.setTitle(getString(R.string.text_title_drag_sort));

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import me.bakumon.moneykeeper.R;
+import me.bakumon.moneykeeper.Router;
 import me.bakumon.moneykeeper.base.BaseActivity;
 import me.bakumon.moneykeeper.databinding.ActivityStatisticsBinding;
 import me.bakumon.moneykeeper.ui.statistics.ViewPagerAdapter;
@@ -14,11 +15,7 @@ import me.bakumon.moneykeeper.ui.statistics.ViewPagerAdapter;
  * @author Bakumon https://bakumon
  */
 public class TypeRecordsActivity extends BaseActivity {
-    public static final String KEY_TYPE_NAME = "TypeRecordsActivity.key_type_name";
-    public static final String KEY_RECORD_TYPE = "TypeRecordsActivity.key_record_type";
-    public static final String KEY_RECORD_TYPE_ID = "TypeRecordsActivity.key_record_type_id";
-    public static final String KEY_YEAR = "TypeRecordsActivity.key_year";
-    public static final String KEY_MONTH = "TypeRecordsActivity.key_month";
+
     private ActivityStatisticsBinding mBinding;
 
     private int mRecordType;
@@ -40,11 +37,11 @@ public class TypeRecordsActivity extends BaseActivity {
 
     private void initView() {
         if (getIntent() != null) {
-            mBinding.titleBar.setTitle(getIntent().getStringExtra(KEY_TYPE_NAME));
-            mRecordType = getIntent().getIntExtra(KEY_RECORD_TYPE, 0);
-            mRecordTypeId = getIntent().getIntExtra(KEY_RECORD_TYPE_ID, 0);
-            mYear = getIntent().getIntExtra(KEY_YEAR, 0);
-            mMonth = getIntent().getIntExtra(KEY_MONTH, 0);
+            mBinding.titleBar.setTitle(getIntent().getStringExtra(Router.ExtraKey.KEY_TYPE_NAME));
+            mRecordType = getIntent().getIntExtra(Router.ExtraKey.KEY_RECORD_TYPE, 0);
+            mRecordTypeId = getIntent().getIntExtra(Router.ExtraKey.KEY_RECORD_TYPE_ID, 0);
+            mYear = getIntent().getIntExtra(Router.ExtraKey.KEY_YEAR, 0);
+            mMonth = getIntent().getIntExtra(Router.ExtraKey.KEY_MONTH, 0);
         }
 
         mBinding.titleBar.ibtClose.setOnClickListener(v -> finish());

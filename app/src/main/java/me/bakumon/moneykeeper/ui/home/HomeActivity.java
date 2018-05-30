@@ -20,11 +20,11 @@ import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.database.entity.SumMoneyBean;
 import me.bakumon.moneykeeper.databinding.ActivityHomeBinding;
-import me.bakumon.moneykeeper.ui.add.AddRecordActivity;
 import me.bakumon.moneykeeper.utill.BigDecimalUtil;
 import me.bakumon.moneykeeper.utill.ToastUtils;
 import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
 import me.drakeet.floo.Floo;
+import me.drakeet.floo.StackCallback;
 
 /**
  * HomeActivity
@@ -32,7 +32,7 @@ import me.drakeet.floo.Floo;
  * @author bakumon https://bakumon.me
  * @date 2018/4/9
  */
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity implements StackCallback {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
     private static final int MAX_ITEM_TIP = 5;
@@ -68,17 +68,17 @@ public class HomeActivity extends BaseActivity {
     }
 
     public void settingClick(View view) {
-        Floo.navigation(this, Router.SETTING)
+        Floo.navigation(this, Router.Url.URL_SETTING)
                 .start();
     }
 
     public void statisticsClick(View view) {
-        Floo.navigation(this, Router.STATISTICS)
+        Floo.navigation(this, Router.Url.URL_STATISTICS)
                 .start();
     }
 
     public void addRecordClick(View view) {
-        Floo.navigation(this, Router.ADD_RECORD).start();
+        Floo.navigation(this, Router.Url.URL_ADD_RECORD).start();
     }
 
     private void showOperateDialog(RecordWithType record) {
@@ -95,8 +95,8 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void modifyRecord(RecordWithType record) {
-        Floo.navigation(this, Router.ADD_RECORD)
-                .putExtra(AddRecordActivity.KEY_RECORD_BEAN, record)
+        Floo.navigation(this, Router.Url.URL_ADD_RECORD)
+                .putExtra(Router.ExtraKey.KEY_RECORD_BEAN, record)
                 .start();
     }
 
@@ -173,4 +173,14 @@ public class HomeActivity extends BaseActivity {
         mAdapter.setEmptyView(inflate(R.layout.layout_home_empty));
     }
 
+    @Nullable
+    @Override
+    public String indexKeyForStackTarget() {
+        return Router.IndexKey.INDEX_KEY_HOME;
+    }
+
+    @Override
+    public void onReceivedResult(@Nullable Object result) {
+        initData();
+    }
 }

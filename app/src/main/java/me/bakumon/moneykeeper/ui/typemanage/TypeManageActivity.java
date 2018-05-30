@@ -18,8 +18,6 @@ import me.bakumon.moneykeeper.Router;
 import me.bakumon.moneykeeper.base.BaseActivity;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.databinding.ActivityTypeManageBinding;
-import me.bakumon.moneykeeper.ui.addtype.AddTypeActivity;
-import me.bakumon.moneykeeper.ui.typesort.TypeSortActivity;
 import me.bakumon.moneykeeper.utill.ToastUtils;
 import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
 import me.drakeet.floo.Floo;
@@ -33,7 +31,6 @@ import me.drakeet.floo.Floo;
 public class TypeManageActivity extends BaseActivity {
 
     private static final String TAG = TypeManageActivity.class.getSimpleName();
-    public static final String KEY_TYPE = "TypeManageActivity.key_type";
 
     private ActivityTypeManageBinding mBinding;
     private TypeManageViewModel mViewModel;
@@ -58,13 +55,13 @@ public class TypeManageActivity extends BaseActivity {
     }
 
     private void initView() {
-        mCurrentType = getIntent().getIntExtra(KEY_TYPE, RecordType.TYPE_OUTLAY);
+        mCurrentType = getIntent().getIntExtra(Router.ExtraKey.KEY_TYPE, RecordType.TYPE_OUTLAY);
         mBinding.titleBar.tvRight.setText(R.string.text_button_sort);
         mBinding.titleBar.ibtClose.setOnClickListener(v -> finish());
         mBinding.titleBar.setTitle(getString(R.string.text_title_type_manage));
         mBinding.titleBar.tvRight.setOnClickListener(v ->
-                Floo.navigation(this, Router.TYPE_SORT)
-                        .putExtra(TypeSortActivity.KEY_TYPE, mCurrentType)
+                Floo.navigation(this, Router.Url.URL_TYPE_SORT)
+                        .putExtra(Router.ExtraKey.KEY_TYPE, mCurrentType)
                         .start());
 
         mBinding.rvType.setLayoutManager(new LinearLayoutManager(this));
@@ -81,9 +78,9 @@ public class TypeManageActivity extends BaseActivity {
         });
 
         mAdapter.setOnItemClickListener((adapter, view, position) ->
-                Floo.navigation(this, Router.ADD_TYPE)
-                        .putExtra(AddTypeActivity.KEY_TYPE_BEAN, mAdapter.getItem(position))
-                        .putExtra(AddTypeActivity.KEY_TYPE, mCurrentType)
+                Floo.navigation(this, Router.Url.URL_ADD_TYPE)
+                        .putExtra(Router.ExtraKey.KEY_TYPE_BEAN, mAdapter.getItem(position))
+                        .putExtra(Router.ExtraKey.KEY_TYPE, mCurrentType)
                         .start());
 
         mBinding.typeChoice.rgType.setOnCheckedChangeListener((group, checkedId) -> {
@@ -106,8 +103,8 @@ public class TypeManageActivity extends BaseActivity {
     }
 
     public void addType(View view) {
-        Floo.navigation(this, Router.ADD_TYPE)
-                .putExtra(AddTypeActivity.KEY_TYPE, mCurrentType)
+        Floo.navigation(this, Router.Url.URL_ADD_TYPE)
+                .putExtra(Router.ExtraKey.KEY_TYPE, mCurrentType)
                 .start();
     }
 

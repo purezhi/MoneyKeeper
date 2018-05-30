@@ -21,6 +21,8 @@ versions.floo = "1.1.0"
 versions.datetimepicker = "3.5.1"
 versions.MPChart = "v3.0.3"
 versions.leakcanary = "1.5.4"
+versions.permission = "2.0.0-rc5"
+versions.storage = "2.1.0"
 
 def deps = [:]
 
@@ -56,6 +58,8 @@ deps.datetimepicker = "com.wdullaer:materialdatetimepicker:$versions.datetimepic
 deps.MPChart = "com.github.PhilJay:MPAndroidChart:$versions.MPChart"
 deps.leakcanary_debug = "com.squareup.leakcanary:leakcanary-android:$versions.leakcanary"
 deps.leakcanary_release = "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakcanary"
+deps.permission = "com.yanzhenjie:permission:$versions.permission"
+deps.storage = "com.snatik:storage:$versions.storage"
 
 ext.deps = deps
 

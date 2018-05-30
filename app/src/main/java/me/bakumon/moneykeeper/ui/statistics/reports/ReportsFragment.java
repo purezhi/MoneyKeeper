@@ -29,7 +29,6 @@ import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.database.entity.SumMoneyBean;
 import me.bakumon.moneykeeper.database.entity.TypeSumMoneyBean;
 import me.bakumon.moneykeeper.databinding.FragmentReportsBinding;
-import me.bakumon.moneykeeper.ui.typerecords.TypeRecordsActivity;
 import me.bakumon.moneykeeper.utill.BigDecimalUtil;
 import me.bakumon.moneykeeper.utill.DateUtils;
 import me.bakumon.moneykeeper.utill.ToastUtils;
@@ -94,12 +93,12 @@ public class ReportsFragment extends BaseFragment {
 
     private void navTypeRecords(String typeName, int typeId) {
         if (getContext() != null) {
-            Floo.navigation(getContext(), Router.TYPE_RECORDS)
-                    .putExtra(TypeRecordsActivity.KEY_TYPE_NAME, typeName)
-                    .putExtra(TypeRecordsActivity.KEY_RECORD_TYPE, mType)
-                    .putExtra(TypeRecordsActivity.KEY_RECORD_TYPE_ID, typeId)
-                    .putExtra(TypeRecordsActivity.KEY_YEAR, mYear)
-                    .putExtra(TypeRecordsActivity.KEY_MONTH, mMonth)
+            Floo.navigation(getContext(), Router.Url.URL_TYPE_RECORDS)
+                    .putExtra(Router.ExtraKey.KEY_TYPE_NAME, typeName)
+                    .putExtra(Router.ExtraKey.KEY_RECORD_TYPE, mType)
+                    .putExtra(Router.ExtraKey.KEY_RECORD_TYPE_ID, typeId)
+                    .putExtra(Router.ExtraKey.KEY_YEAR, mYear)
+                    .putExtra(Router.ExtraKey.KEY_MONTH, mMonth)
                     .start();
         }
     }

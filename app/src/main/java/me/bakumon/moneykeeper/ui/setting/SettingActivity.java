@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +17,7 @@ import me.bakumon.moneykeeper.Router;
 import me.bakumon.moneykeeper.base.BaseActivity;
 import me.bakumon.moneykeeper.databinding.ActivitySettingBinding;
 import me.bakumon.moneykeeper.utill.AlipayZeroSdk;
+import me.bakumon.moneykeeper.utill.BackupUtil;
 import me.bakumon.moneykeeper.utill.ToastUtils;
 import me.drakeet.floo.Floo;
 
@@ -50,12 +54,11 @@ public class SettingActivity extends BaseActivity {
         list.add(new SettingSectionEntity("记账"));
         list.add(new SettingSectionEntity(new SettingSectionEntity.Item("极速记账", "打开应用立即记账", true)));
         list.add(new SettingSectionEntity(new SettingSectionEntity.Item("收支类型管理", null, false)));
-        list.add(new SettingSectionEntity(new SettingSectionEntity.Item("收支类型排序", null, false)));
 
         list.add(new SettingSectionEntity("备份"));
-        list.add(new SettingSectionEntity(new SettingSectionEntity.Item("立即备份", "备份文件位于sd卡/backup/moneykeeper目录", false)));
-        list.add(new SettingSectionEntity(new SettingSectionEntity.Item("恢复备份", "备份文件位于sd卡/backup/moneykeeper目录", false)));
-        list.add(new SettingSectionEntity(new SettingSectionEntity.Item("实时备份", "数据有改变就备份", true)));
+        list.add(new SettingSectionEntity(new SettingSectionEntity.Item("立即备份", "备份文件将保存到sdcard/Backup/moneykeeper", false)));
+        list.add(new SettingSectionEntity(new SettingSectionEntity.Item("恢复备份", "备份文件将从sdcard/Backup/moneykeeper读取", false)));
+        list.add(new SettingSectionEntity(new SettingSectionEntity.Item("实时备份", "数据有改变自动备份(建议开启)", true)));
 
         list.add(new SettingSectionEntity("关于|帮助"));
         list.add(new SettingSectionEntity(new SettingSectionEntity.Item("关于", "了解我们的设计理念", false)));
@@ -76,11 +79,12 @@ public class SettingActivity extends BaseActivity {
                     goTypeManage();
                     break;
                 case 3:
-                    goTypeSort();
                     break;
                 case 4:
+                    backupDB();
                     break;
                 case 5:
+                    restoreDB();
                     break;
                 case 6:
                     break;
@@ -89,16 +93,14 @@ public class SettingActivity extends BaseActivity {
                 case 8:
                     break;
                 case 9:
-                    break;
-                case 10:
                     market();
                     break;
-                case 11:
+                case 10:
                     alipay();
                     break;
-                case 12:
+                case 11:
                     break;
-                case 13:
+                case 12:
                     break;
                 default:
                     break;
@@ -107,21 +109,46 @@ public class SettingActivity extends BaseActivity {
         mBinding.rvSetting.setAdapter(adapter);
     }
 
-    private void goTypeManage() {
-        Floo.navigation(this, Router.TYPE_MANAGE)
+    private void backupDB() {
+        AndPermission.with(this)
+                .runtime()
+                .permission(Permission.Group.STORAGE)
+                .onGranted(permissions -> {
+                    BackupUtil.autoBackup();
+                })
+                .onDenied(permissions -> {
+                    ToastUtils.show("备份数据需要开启读写权限");
+                })
                 .start();
     }
 
-    private void goTypeSort() {
-        Floo.navigation(this, Router.TYPE_SORT)
+    private void restoreDB() {
+        AndPermission.with(this)
+                .runtime()
+                .permission(Permission.Group.STORAGE)
+                .onGranted(permissions -> {
+                    BackupUtil.restoreDB();
+                    Floo.stack(this)
+                            .target(Router.IndexKey.INDEX_KEY_HOME)
+                            .result("refresh")
+                            .start();
+                })
+                .onDenied(permissions -> {
+                    ToastUtils.show("备份数据需要开启读写权限");
+                })
+                .start();
+    }
+
+    private void goTypeManage() {
+        Floo.navigation(this, Router.Url.URL_TYPE_MANAGE)
                 .start();
     }
 
     private void market() {
         try {
-            Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setData(Uri.parse("market://details?id=" + getPackageName()));
-            startActivity(i);
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("market://details?id=" + getPackageName()));
+            startActivity(intent);
         } catch (Exception e) {
             ToastUtils.show(R.string.toast_not_install_market);
             e.printStackTrace();

@@ -20,7 +20,7 @@ public class PureSchemeInterceptor implements Interceptor {
     @NonNull
     @Override
     public Chain intercept(@NonNull Chain chain) {
-        if (BuildConfig.DEBUG && Router.MAIN_SCHEME.equals(chain.request().getScheme())) {
+        if (BuildConfig.DEBUG && Router.SCHEME.equals(chain.request().getScheme())) {
             chain = new Chain(chain.request().buildUpon().scheme(scheme).build());
         }
         return chain;

@@ -104,4 +104,8 @@ dependencies {
     // 内存泄漏检测
     debugImplementation deps.leakcanary_debug
     releaseImplementation deps.leakcanary_release
+    // permission
+    implementation deps.permission
+    // 保存文件
+    compile deps.storage
 }

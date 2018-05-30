@@ -15,6 +15,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.bakumon.moneykeeper.Injection;
 import me.bakumon.moneykeeper.R;
+import me.bakumon.moneykeeper.Router;
 import me.bakumon.moneykeeper.base.BaseActivity;
 import me.bakumon.moneykeeper.database.entity.Record;
 import me.bakumon.moneykeeper.database.entity.RecordType;
@@ -36,7 +37,6 @@ public class AddRecordActivity extends BaseActivity {
 
     private static final String TAG = AddRecordActivity.class.getSimpleName();
     private static final String TAG_PICKER_DIALOG = "Datepickerdialog";
-    public static final String KEY_RECORD_BEAN = "AddTypeActivity.key_record_bean";
 
     private ActivityAddRecordBinding mBinding;
 
@@ -68,7 +68,7 @@ public class AddRecordActivity extends BaseActivity {
     }
 
     private void initView() {
-        mRecord = (RecordWithType) getIntent().getSerializableExtra(KEY_RECORD_BEAN);
+        mRecord = (RecordWithType) getIntent().getSerializableExtra(Router.ExtraKey.KEY_RECORD_BEAN);
 
         mBinding.titleBar.ibtClose.setBackgroundResource(R.drawable.ic_close);
         mBinding.titleBar.ibtClose.setOnClickListener(v -> finish());

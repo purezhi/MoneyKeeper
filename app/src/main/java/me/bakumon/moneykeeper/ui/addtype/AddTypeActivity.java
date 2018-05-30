@@ -14,6 +14,7 @@ import io.reactivex.schedulers.Schedulers;
 import me.bakumon.moneykeeper.App;
 import me.bakumon.moneykeeper.Injection;
 import me.bakumon.moneykeeper.R;
+import me.bakumon.moneykeeper.Router;
 import me.bakumon.moneykeeper.base.BaseActivity;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.databinding.ActivityAddTypeBinding;
@@ -28,8 +29,6 @@ import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
 public class AddTypeActivity extends BaseActivity {
 
     private static final String TAG = AddTypeActivity.class.getSimpleName();
-    public static final String KEY_TYPE = "AddTypeActivity.key_type";
-    public static final String KEY_TYPE_BEAN = "AddTypeActivity.key_type_bean";
 
     private static final int COLUMN = 4;
 
@@ -56,8 +55,8 @@ public class AddTypeActivity extends BaseActivity {
     }
 
     private void initView() {
-        mType = getIntent().getIntExtra(KEY_TYPE, RecordType.TYPE_OUTLAY);
-        mRecordType = (RecordType) getIntent().getSerializableExtra(KEY_TYPE_BEAN);
+        mType = getIntent().getIntExtra(Router.ExtraKey.KEY_TYPE, RecordType.TYPE_OUTLAY);
+        mRecordType = (RecordType) getIntent().getSerializableExtra(Router.ExtraKey.KEY_TYPE_BEAN);
 
         String prefix = mRecordType == null ? getString(R.string.text_add) : getString(R.string.text_modify);
         String type = mType == RecordType.TYPE_OUTLAY ? getString(R.string.text_outlay_type) : getString(R.string.text_income_type);

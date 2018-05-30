@@ -28,7 +28,6 @@ import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.database.entity.SumMoneyBean;
 import me.bakumon.moneykeeper.databinding.FragmentBillBinding;
-import me.bakumon.moneykeeper.ui.add.AddRecordActivity;
 import me.bakumon.moneykeeper.ui.home.HomeAdapter;
 import me.bakumon.moneykeeper.utill.BigDecimalUtil;
 import me.bakumon.moneykeeper.utill.DateUtils;
@@ -134,8 +133,8 @@ public class BillFragment extends BaseFragment {
         if (getContext() == null) {
             return;
         }
-        Floo.navigation(getContext(), Router.ADD_RECORD)
-                .putExtra(AddRecordActivity.KEY_RECORD_BEAN, record)
+        Floo.navigation(getContext(), Router.Url.URL_ADD_RECORD)
+                .putExtra(Router.ExtraKey.KEY_RECORD_BEAN, record)
                 .start();
     }
 

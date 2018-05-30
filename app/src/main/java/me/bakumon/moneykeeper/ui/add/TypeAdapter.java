@@ -12,7 +12,6 @@ import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.Router;
 import me.bakumon.moneykeeper.base.BaseDataBindingAdapter;
 import me.bakumon.moneykeeper.database.entity.RecordType;
-import me.bakumon.moneykeeper.ui.typemanage.TypeManageActivity;
 import me.drakeet.floo.Floo;
 
 /**
@@ -87,8 +86,8 @@ public class TypeAdapter extends BaseDataBindingAdapter<RecordType> {
         // 点击设置 item
         RecordType item = getItem(position);
         if (item != null && item.type == -1) {
-            Floo.navigation(mContext, Router.TYPE_MANAGE)
-                    .putExtra(TypeManageActivity.KEY_TYPE, mType)
+            Floo.navigation(mContext, Router.Url.URL_TYPE_MANAGE)
+                    .putExtra(Router.ExtraKey.KEY_TYPE, mType)
                     .start();
             return;
         }

@@ -15,7 +15,6 @@ import me.bakumon.moneykeeper.Router;
 import me.bakumon.moneykeeper.base.BaseFragment;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.databinding.FragmentTypeRecordsBinding;
-import me.bakumon.moneykeeper.ui.add.AddRecordActivity;
 import me.bakumon.moneykeeper.ui.home.HomeAdapter;
 import me.bakumon.moneykeeper.utill.ToastUtils;
 import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
@@ -31,11 +30,6 @@ public class TypeRecordsFragment extends BaseFragment {
     private static final String TAG = TypeRecordsFragment.class.getSimpleName();
     public static final int SORT_TIME = 0;
     public static final int SORT_MONEY = 1;
-    public static final String KEY_SORT_TYPE = "TypeRecordsFragment.key_sort_type";
-    public static final String KEY_RECORD_TYPE = "TypeRecordsFragment.key_record_type";
-    public static final String KEY_RECORD_TYPE_ID = "TypeRecordsFragment.key_record_type_id";
-    public static final String KEY_YEAR = "TypeRecordsFragment.key_year";
-    public static final String KEY_MONTH = "TypeRecordsFragment.key_month";
 
     private FragmentTypeRecordsBinding mBinding;
     private TypeRecordsViewModel mViewModel;
@@ -51,11 +45,11 @@ public class TypeRecordsFragment extends BaseFragment {
     public static TypeRecordsFragment newInstance(int sortType, int recordType, int recordTypeId, int year, int month) {
         TypeRecordsFragment fragment = new TypeRecordsFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(KEY_SORT_TYPE, sortType);
-        bundle.putInt(KEY_RECORD_TYPE, recordType);
-        bundle.putInt(KEY_RECORD_TYPE_ID, recordTypeId);
-        bundle.putInt(KEY_YEAR, year);
-        bundle.putInt(KEY_MONTH, month);
+        bundle.putInt(Router.ExtraKey.KEY_SORT_TYPE, sortType);
+        bundle.putInt(Router.ExtraKey.KEY_RECORD_TYPE, recordType);
+        bundle.putInt(Router.ExtraKey.KEY_RECORD_TYPE_ID, recordTypeId);
+        bundle.putInt(Router.ExtraKey.KEY_YEAR, year);
+        bundle.putInt(Router.ExtraKey.KEY_MONTH, month);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -73,11 +67,11 @@ public class TypeRecordsFragment extends BaseFragment {
 
         Bundle bundle = getArguments();
         if (bundle != null) {
-            mSortType = bundle.getInt(KEY_SORT_TYPE);
-            mRecordType = bundle.getInt(KEY_RECORD_TYPE);
-            mRecordTypeId = bundle.getInt(KEY_RECORD_TYPE_ID);
-            mYear = bundle.getInt(KEY_YEAR);
-            mMonth = bundle.getInt(KEY_MONTH);
+            mSortType = bundle.getInt(Router.ExtraKey.KEY_SORT_TYPE);
+            mRecordType = bundle.getInt(Router.ExtraKey.KEY_RECORD_TYPE);
+            mRecordTypeId = bundle.getInt(Router.ExtraKey.KEY_RECORD_TYPE_ID);
+            mYear = bundle.getInt(Router.ExtraKey.KEY_YEAR);
+            mMonth = bundle.getInt(Router.ExtraKey.KEY_MONTH);
         }
 
         initView();
@@ -124,8 +118,8 @@ public class TypeRecordsFragment extends BaseFragment {
         if (getContext() == null) {
             return;
         }
-        Floo.navigation(getContext(), Router.ADD_RECORD)
-                .putExtra(AddRecordActivity.KEY_RECORD_BEAN, record)
+        Floo.navigation(getContext(), Router.Url.URL_ADD_RECORD)
+                .putExtra(Router.ExtraKey.KEY_RECORD_BEAN, record)
                 .start();
     }
 

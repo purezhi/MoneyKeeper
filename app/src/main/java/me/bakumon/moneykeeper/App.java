@@ -34,14 +34,14 @@ public class App extends Application {
         // Normal app init code...
         INSTANCE = this;
         Map<String, Target> mappings = new HashMap<>(8);
-        mappings.put(Router.HOME, new Target("mk://bakumon.me/home"));
-        mappings.put(Router.ADD_RECORD, new Target("mk://bakumon.me/addRecord"));
-        mappings.put(Router.TYPE_MANAGE, new Target("mk://bakumon.me/typeManage"));
-        mappings.put(Router.TYPE_SORT, new Target("mk://bakumon.me/typeSort"));
-        mappings.put(Router.ADD_TYPE, new Target("mk://bakumon.me/addType"));
-        mappings.put(Router.STATISTICS, new Target("mk://bakumon.me/statistics"));
-        mappings.put(Router.TYPE_RECORDS, new Target("mk://bakumon.me/typeRecords"));
-        mappings.put(Router.SETTING, new Target("mk://bakumon.me/setting"));
+        mappings.put(Router.Url.URL_HOME, new Target("mk://bakumon.me/home"));
+        mappings.put(Router.Url.URL_ADD_RECORD, new Target("mk://bakumon.me/addRecord"));
+        mappings.put(Router.Url.URL_TYPE_MANAGE, new Target("mk://bakumon.me/typeManage"));
+        mappings.put(Router.Url.URL_TYPE_SORT, new Target("mk://bakumon.me/typeSort"));
+        mappings.put(Router.Url.URL_ADD_TYPE, new Target("mk://bakumon.me/addType"));
+        mappings.put(Router.Url.URL_STATISTICS, new Target("mk://bakumon.me/statistics"));
+        mappings.put(Router.Url.URL_TYPE_RECORDS, new Target("mk://bakumon.me/typeRecords"));
+        mappings.put(Router.Url.URL_SETTING, new Target("mk://bakumon.me/setting"));
 
         Floo.configuration()
                 .setDebugEnabled(BuildConfig.DEBUG)
