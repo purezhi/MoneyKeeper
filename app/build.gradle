@@ -54,13 +54,13 @@ android {
             applicationIdSuffix ".debug"
             resValue "string", "scheme", "mk-debug"
             // 只会给 res/values/string.xml 增加，不会影响其他 values 文件夹
-            resValue "string", "app_name", "记账debug"
+            resValue "string", "app_name", "那样记账debug"
         }
         release {
             // 签名
             signingConfig signingConfigs.release
             resValue "string", "scheme", "mk"
-            resValue "string", "app_name", "记账"
+            resValue "string", "app_name", "那样记账"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -107,5 +107,7 @@ dependencies {
     // permission
     implementation deps.permission
     // 保存文件
-    compile deps.storage
+    implementation deps.storage
+    // customtabs
+    implementation deps.customtabs
 }

@@ -2,9 +2,11 @@ package me.bakumon.moneykeeper.ui.setting;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -106,6 +108,7 @@ public class SettingActivity extends BaseActivity {
                     alipay();
                     break;
                 case 11:
+                    openWeb();
                     break;
                 case 12:
                     break;
@@ -211,5 +214,14 @@ public class SettingActivity extends BaseActivity {
         } else {
             ToastUtils.show(R.string.toast_not_install_alipay);
         }
+    }
+
+    private void openWeb() {
+        String url = "https://github.com/Bakumon/MoneyKeeper/blob/master/PrivacyPolicy.md";
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+        // github 黑色把
+        builder.setToolbarColor(Color.parseColor("#ff24292d"));
+        CustomTabsIntent customTabsIntent = builder.build();
+        customTabsIntent.launchUrl(this, Uri.parse(url));
     }
 }

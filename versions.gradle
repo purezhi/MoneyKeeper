@@ -60,6 +60,7 @@ deps.leakcanary_debug = "com.squareup.leakcanary:leakcanary-android:$versions.le
 deps.leakcanary_release = "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakcanary"
 deps.permission = "com.yanzhenjie:permission:$versions.permission"
 deps.storage = "com.snatik:storage:$versions.storage"
+deps.customtabs = "com.android.support:customtabs:$versions.support"
 
 ext.deps = deps
 
