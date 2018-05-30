@@ -19,6 +19,10 @@ public class HomeViewModel extends BaseViewModel {
         super(dataSource);
     }
 
+    public Completable initRecordTypes() {
+        return mDataSource.initRecordTypes();
+    }
+
     public Flowable<List<RecordWithType>> getCurrentMonthRecordWithTypes() {
         return mDataSource.getCurrentMonthRecordWithTypes();
     }

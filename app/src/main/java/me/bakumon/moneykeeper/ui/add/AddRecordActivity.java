@@ -64,7 +64,7 @@ public class AddRecordActivity extends BaseActivity {
     }
 
     private void initData() {
-        initRecordTypes();
+        getAllRecordTypes();
     }
 
     private void initView() {
@@ -167,17 +167,6 @@ public class AddRecordActivity extends BaseActivity {
                             ToastUtils.show(R.string.toast_modify_record_fail);
                         }
                 ));
-    }
-
-    private void initRecordTypes() {
-        mDisposable.add(mViewModel.initRecordTypes()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::getAllRecordTypes,
-                        throwable -> {
-                            ToastUtils.show(R.string.toast_init_types_fail);
-                            Log.e(TAG, "初始化类型数据失败", throwable);
-                        }));
     }
 
     private void getAllRecordTypes() {

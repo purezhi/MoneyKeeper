@@ -23,15 +23,11 @@ public class AddRecordViewModel extends BaseViewModel {
         return mDataSource.getAllRecordType();
     }
 
-    public Completable initRecordTypes() {
-        return mDataSource.initRecordTypes();
-    }
-
     public Completable insertRecord(Record record) {
         return mDataSource.insertRecord(record);
     }
 
-    public Completable updateRecord(Record record){
+    public Completable updateRecord(Record record) {
         return mDataSource.updateRecord(record);
     }
 }

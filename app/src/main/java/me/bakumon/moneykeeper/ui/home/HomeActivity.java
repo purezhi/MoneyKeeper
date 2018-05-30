@@ -113,8 +113,21 @@ public class HomeActivity extends BaseActivity implements StackCallback {
     }
 
     private void initData() {
+        initRecordTypes();
         getCurrentMonthRecords();
         getCurrentMontySumMonty();
+    }
+
+    private void initRecordTypes() {
+        mDisposable.add(mViewModel.initRecordTypes()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {
+                        },
+                        throwable -> {
+                            ToastUtils.show(R.string.toast_init_types_fail);
+                            Log.e(TAG, "初始化类型数据失败", throwable);
+                        }));
     }
 
     private void getCurrentMontySumMonty() {
