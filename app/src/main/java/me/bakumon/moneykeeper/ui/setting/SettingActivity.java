@@ -108,9 +108,12 @@ public class SettingActivity extends BaseActivity {
                     alipay();
                     break;
                 case 11:
-                    openWeb();
+                    openWeb("https://github.com/Bakumon/MoneyKeeper/blob/master/PrivacyPolicy.md");
                     break;
                 case 12:
+                    break;
+                case 13:
+                    openWeb("https://github.com/Bakumon/MoneyKeeper/blob/master/Help.md");
                     break;
                 default:
                     break;
@@ -216,8 +219,7 @@ public class SettingActivity extends BaseActivity {
         }
     }
 
-    private void openWeb() {
-        String url = "https://github.com/Bakumon/MoneyKeeper/blob/master/PrivacyPolicy.md";
+    private void openWeb(String url) {
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
         // github 黑色把
         builder.setToolbarColor(Color.parseColor("#ff24292d"));
