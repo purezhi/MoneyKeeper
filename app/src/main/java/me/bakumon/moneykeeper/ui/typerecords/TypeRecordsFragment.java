@@ -62,7 +62,7 @@ public class TypeRecordsFragment extends BaseFragment {
     @Override
     protected void onInit(@Nullable Bundle savedInstanceState) {
         mBinding = getDataBinding();
-        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(getContext());
+        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory();
         mViewModel = ViewModelProviders.of(this, viewModelFactory).get(TypeRecordsViewModel.class);
 
         Bundle bundle = getArguments();

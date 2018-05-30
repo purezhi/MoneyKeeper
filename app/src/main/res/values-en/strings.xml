@@ -24,6 +24,8 @@
     <string name="toast_not_install_market">Your phone does not have an Android app market installed</string>
     <string name="toast_not_install_alipay">Thank you, you did not install Alipay application</string>
     <string name="toast_is_not_writable_external">Backup failed, external storage is unavailable</string>
+    <string name="toast_restore_fail">Failed to restore the backup</string>
+    <string name="toast_backup_list_fail">Failed to get backup file list</string>
 
     <string name="hint_enter_money">Enter the amount</string>
     <string name="hint_enter_remark">Enter a note</string>

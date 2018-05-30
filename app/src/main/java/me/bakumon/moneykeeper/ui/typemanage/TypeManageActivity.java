@@ -47,7 +47,7 @@ public class TypeManageActivity extends BaseActivity {
     @Override
     protected void onInit(@Nullable Bundle savedInstanceState) {
         mBinding = getDataBinding();
-        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(this);
+        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory();
         mViewModel = ViewModelProviders.of(this, viewModelFactory).get(TypeManageViewModel.class);
 
         initView();

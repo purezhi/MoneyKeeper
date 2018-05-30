@@ -4,8 +4,8 @@ import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
-import android.content.Context;
 
+import me.bakumon.moneykeeper.App;
 import me.bakumon.moneykeeper.database.converters.Converters;
 import me.bakumon.moneykeeper.database.dao.RecordDao;
 import me.bakumon.moneykeeper.database.dao.RecordTypeDao;
@@ -22,15 +22,15 @@ import me.bakumon.moneykeeper.database.entity.RecordType;
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
 
-    public static final String DB_NAME = "moneykeeper.db";
+    public static final String DB_NAME = "MoneyKeeper.db";
 
     private static volatile AppDatabase INSTANCE;
 
-    public static AppDatabase getInstance(Context context) {
+    public static AppDatabase getInstance() {
         if (INSTANCE == null) {
             synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                    INSTANCE = Room.databaseBuilder(App.getINSTANCE(),
                             AppDatabase.class, DB_NAME)
                             .build();
                 }

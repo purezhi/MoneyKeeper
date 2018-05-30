@@ -49,7 +49,7 @@ public class HomeActivity extends BaseActivity implements StackCallback {
     @Override
     protected void onInit(@Nullable Bundle savedInstanceState) {
         mBinding = getDataBinding();
-        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(this);
+        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory();
         mViewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel.class);
 
         initView();
