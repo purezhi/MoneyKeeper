@@ -109,4 +109,6 @@ dependencies {
     implementation deps.permission
     // 保存文件
     implementation deps.storage
+    // 时间格式化
+    implementation deps.prettytime
 }

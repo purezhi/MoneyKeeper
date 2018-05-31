@@ -23,6 +23,7 @@ versions.MPChart = "v3.0.3"
 versions.leakcanary = "1.5.4"
 versions.permission = "2.0.0-rc5"
 versions.storage = "2.1.0"
+versions.prettytime = "4.0.1.Final"
 
 def deps = [:]
 
@@ -60,6 +61,7 @@ deps.leakcanary_debug = "com.squareup.leakcanary:leakcanary-android:$versions.le
 deps.leakcanary_release = "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakcanary"
 deps.permission = "com.yanzhenjie:permission:$versions.permission"
 deps.storage = "com.snatik:storage:$versions.storage"
+deps.prettytime = "org.ocpsoft.prettytime:prettytime:$versions.prettytime"
 
 ext.deps = deps
 
