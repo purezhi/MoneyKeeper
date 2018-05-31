@@ -42,6 +42,7 @@ public class App extends Application {
         mappings.put(Router.Url.URL_STATISTICS, new Target("mk://bakumon.me/statistics"));
         mappings.put(Router.Url.URL_TYPE_RECORDS, new Target("mk://bakumon.me/typeRecords"));
         mappings.put(Router.Url.URL_SETTING, new Target("mk://bakumon.me/setting"));
+        mappings.put(Router.Url.URL_OPEN_SOURCE, new Target("mk://bakumon.me/openSource"));
 
         Floo.configuration()
                 .setDebugEnabled(BuildConfig.DEBUG)

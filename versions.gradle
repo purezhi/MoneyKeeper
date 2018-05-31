@@ -35,7 +35,7 @@ deps.spresso_core = "com.android.support.test.espresso:espresso-core:$versions.e
 def support = [:]
 support.app_compat = "com.android.support:appcompat-v7:$versions.support"
 support.design = "com.android.support:design:$versions.support"
-support.cardview = "com.android.support:cardview-v7:$versions.support"
+support.customtabs = "com.android.support:customtabs:$versions.support"
 deps.support = support
 
 def lifecycle = [:]
@@ -60,7 +60,6 @@ deps.leakcanary_debug = "com.squareup.leakcanary:leakcanary-android:$versions.le
 deps.leakcanary_release = "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakcanary"
 deps.permission = "com.yanzhenjie:permission:$versions.permission"
 deps.storage = "com.snatik:storage:$versions.storage"
-deps.customtabs = "com.android.support:customtabs:$versions.support"
 
 ext.deps = deps
 

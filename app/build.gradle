@@ -82,7 +82,8 @@ dependencies {
     // 支持库
     implementation deps.support.app_compat
     implementation deps.support.design
-    implementation deps.support.cardview
+    // customtabs
+    implementation deps.support.customtabs
     // ViewModel and LiveData
     implementation deps.lifecycle.extensions
     annotationProcessor deps.lifecycle.compiler
@@ -108,6 +109,4 @@ dependencies {
     implementation deps.permission
     // 保存文件
     implementation deps.storage
-    // customtabs
-    implementation deps.customtabs
 }

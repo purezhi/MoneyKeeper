@@ -12,10 +12,10 @@
         android:foreground="?attr/selectableItemBackground"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingBottom="15dp"
+        android:paddingBottom="10dp"
         android:paddingEnd="20dp"
         android:paddingStart="20dp"
-        android:paddingTop="15dp"
+        android:paddingTop="10dp"
         tools:background="@color/colorPrimary">
 
         <LinearLayout
@@ -29,14 +29,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="17sp"
+                android:textSize="16sp"
+                android:layout_marginBottom="3dp"
                 tools:text="极速记账" />
 
             <TextView
                 android:id="@+id/tv_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:textColor="@color/colorTextWhite3"
                 android:textSize="14sp"
                 tools:text="打开应用直接记账" />

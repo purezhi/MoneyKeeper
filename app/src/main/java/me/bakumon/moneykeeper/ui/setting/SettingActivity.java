@@ -2,11 +2,9 @@ package me.bakumon.moneykeeper.ui.setting;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -24,6 +22,7 @@ import me.bakumon.moneykeeper.Router;
 import me.bakumon.moneykeeper.base.BaseActivity;
 import me.bakumon.moneykeeper.databinding.ActivitySettingBinding;
 import me.bakumon.moneykeeper.utill.AlipayZeroSdk;
+import me.bakumon.moneykeeper.utill.CustomTabsUtil;
 import me.bakumon.moneykeeper.utill.ToastUtils;
 import me.drakeet.floo.Floo;
 
@@ -108,12 +107,13 @@ public class SettingActivity extends BaseActivity {
                     alipay();
                     break;
                 case 11:
-                    openWeb("https://github.com/Bakumon/MoneyKeeper/blob/master/PrivacyPolicy.md");
+                    CustomTabsUtil.openWeb(this, "https://github.com/Bakumon/MoneyKeeper/blob/master/PrivacyPolicy.md");
                     break;
                 case 12:
+                    goOpenSource();
                     break;
                 case 13:
-                    openWeb("https://github.com/Bakumon/MoneyKeeper/blob/master/Help.md");
+                    CustomTabsUtil.openWeb(this, "https://github.com/Bakumon/MoneyKeeper/blob/master/Help.md");
                     break;
                 default:
                     break;
@@ -197,6 +197,11 @@ public class SettingActivity extends BaseActivity {
                 .start();
     }
 
+    private void goOpenSource() {
+        Floo.navigation(this, Router.Url.URL_OPEN_SOURCE)
+                .start();
+    }
+
     private void market() {
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -217,13 +222,5 @@ public class SettingActivity extends BaseActivity {
         } else {
             ToastUtils.show(R.string.toast_not_install_alipay);
         }
-    }
-
-    private void openWeb(String url) {
-        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-        // github 黑色把
-        builder.setToolbarColor(Color.parseColor("#ff24292d"));
-        CustomTabsIntent customTabsIntent = builder.build();
-        customTabsIntent.launchUrl(this, Uri.parse(url));
     }
 }

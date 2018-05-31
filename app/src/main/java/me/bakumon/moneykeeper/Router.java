@@ -20,6 +20,7 @@ public class Router {
         public static final String URL_STATISTICS = "statistics";
         public static final String URL_TYPE_RECORDS = "type_records";
         public static final String URL_SETTING = "setting";
+        public static final String URL_OPEN_SOURCE = "open_source";
     }
 
     /**
