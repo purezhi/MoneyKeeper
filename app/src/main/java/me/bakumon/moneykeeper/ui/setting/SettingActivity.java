@@ -130,14 +130,18 @@ public class SettingActivity extends BaseActivity {
     private void switchAutoBackup(int position) {
         boolean oldIsConfigOpen = mAdapter.getData().get(position).t.isConfigOpen;
         if (oldIsConfigOpen) {
-            setAutoBackup(position, false);
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.text_close_auto_backup)
+                    .setMessage(R.string.text_close_auto_backup_tip)
+                    .setNegativeButton(R.string.text_button_cancel, (dialog, which) -> mAdapter.notifyDataSetChanged())
+                    .setPositiveButton(R.string.text_affirm, (dialog, which) -> setAutoBackup(position, false))
+                    .create()
+                    .show();
         } else {
             AndPermission.with(this)
                     .runtime()
                     .permission(Permission.Group.STORAGE)
-                    .onGranted(permissions -> {
-                        setAutoBackup(position, true);
-                    })
+                    .onGranted(permissions -> setAutoBackup(position, true))
                     .onDenied(permissions -> {
                         if (AndPermission.hasAlwaysDeniedPermission(this, permissions)) {
                             // 用 position 当作区别标示
