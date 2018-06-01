@@ -10,6 +10,7 @@ import io.reactivex.BackpressureStrategy;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import me.bakumon.moneykeeper.App;
+import me.bakumon.moneykeeper.ConfigManager;
 import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.database.AppDatabase;
 import me.bakumon.moneykeeper.database.entity.DaySumMoneyBean;
@@ -19,6 +20,7 @@ import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.database.entity.SumMoneyBean;
 import me.bakumon.moneykeeper.database.entity.TypeSumMoneyBean;
 import me.bakumon.moneykeeper.ui.addtype.TypeImgBean;
+import me.bakumon.moneykeeper.utill.BackupUtil;
 import me.bakumon.moneykeeper.utill.DateUtils;
 
 /**
@@ -33,6 +35,18 @@ public class LocalAppDataSource implements AppDataSource {
         mAppDatabase = appDatabase;
     }
 
+    /**
+     * 自动备份
+     */
+    private void autoBackup() throws Exception {
+        if (ConfigManager.isAutoBackup()) {
+            boolean isSuccess = BackupUtil.autoBackup();
+            if (!isSuccess) {
+                throw new Exception(App.getINSTANCE().getString(R.string.text_tip_backup_fail));
+            }
+        }
+    }
+
     @Override
     public Flowable<List<RecordType>> getAllRecordType() {
         return mAppDatabase.recordTypeDao().getAllRecordTypes();
@@ -44,13 +58,17 @@ public class LocalAppDataSource implements AppDataSource {
             if (mAppDatabase.recordTypeDao().getRecordTypeCount() < 1) {
                 // 没有记账类型数据记录，插入默认的数据类型
                 mAppDatabase.recordTypeDao().insertRecordTypes(RecordTypeInitCreator.createRecordTypeData());
+                autoBackup();
             }
         });
     }
 
     @Override
     public Completable deleteRecord(Record record) {
-        return Completable.fromAction(() -> mAppDatabase.recordDao().deleteRecord(record));
+        return Completable.fromAction(() -> {
+            mAppDatabase.recordDao().deleteRecord(record);
+            autoBackup();
+        });
     }
 
     @Override
@@ -77,17 +95,26 @@ public class LocalAppDataSource implements AppDataSource {
 
     @Override
     public Completable insertRecord(Record record) {
-        return Completable.fromAction(() -> mAppDatabase.recordDao().insertRecord(record));
+        return Completable.fromAction(() -> {
+            mAppDatabase.recordDao().insertRecord(record);
+            autoBackup();
+        });
     }
 
     @Override
     public Completable updateRecord(Record record) {
-        return Completable.fromAction(() -> mAppDatabase.recordDao().updateRecords(record));
+        return Completable.fromAction(() -> {
+            mAppDatabase.recordDao().updateRecords(record);
+            autoBackup();
+        });
     }
 
     @Override
     public Completable updateRecordTypes(RecordType... recordTypes) {
-        return Completable.fromAction(() -> mAppDatabase.recordTypeDao().updateRecordTypes(recordTypes));
+        return Completable.fromAction(() -> {
+            mAppDatabase.recordTypeDao().updateRecordTypes(recordTypes);
+            autoBackup();
+        });
     }
 
     @Override
@@ -104,6 +131,7 @@ public class LocalAppDataSource implements AppDataSource {
                 }
                 RecordType[] typeArray = new RecordType[sortTypes.size()];
                 mAppDatabase.recordTypeDao().updateRecordTypes(typeArray);
+                autoBackup();
             }
         });
     }
@@ -117,6 +145,7 @@ public class LocalAppDataSource implements AppDataSource {
             } else {
                 mAppDatabase.recordTypeDao().deleteRecordType(recordType);
             }
+            autoBackup();
         });
     }
 
@@ -155,6 +184,7 @@ public class LocalAppDataSource implements AppDataSource {
                 RecordType insertType = new RecordType(name, imgName, type, System.currentTimeMillis());
                 mAppDatabase.recordTypeDao().insertRecordTypes(insertType);
             }
+            autoBackup();
         });
     }
 
@@ -200,6 +230,7 @@ public class LocalAppDataSource implements AppDataSource {
             } else if (!TextUtils.equals(oldImgName, recordType.imgName)) {
                 mAppDatabase.recordTypeDao().updateRecordTypes(recordType);
             }
+            autoBackup();
         });
     }
 

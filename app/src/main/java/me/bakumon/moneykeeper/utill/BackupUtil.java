@@ -58,10 +58,10 @@ public class BackupUtil {
         Storage storage = new Storage(App.getINSTANCE());
         if (storage.isFileExist(restoreFile)) {
             // 恢复之前，备份一下最新数据
-            String fileName = "MoneyKeeperBackup" + BACKUP_SUFFIX + SUFFIX;
-//            boolean isBackupSuccess = backupDB(fileName);
+            String fileName = "MoneyKeeperBackup" + DateUtils.getCurrentDateString() + BACKUP_SUFFIX + SUFFIX;
+            boolean isBackupSuccess = backupDB(fileName);
             boolean isRestoreSuccess = storage.copy(restoreFile, App.getINSTANCE().getDatabasePath(AppDatabase.DB_NAME).getPath());
-            return isRestoreSuccess;
+            return isBackupSuccess && isRestoreSuccess;
         }
         return false;
     }

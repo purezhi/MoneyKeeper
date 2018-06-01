@@ -17,16 +17,16 @@
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
         android:orientation="vertical"
-        android:paddingBottom="15dp"
+        android:paddingBottom="10dp"
         android:paddingEnd="5dp"
         android:paddingStart="5dp"
-        android:paddingTop="15dp">
+        android:paddingTop="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{backupBean.name}"
-            android:textSize="16sp"
+            android:textSize="15sp"
             tools:text="MoneyKeeper_backup.db" />
 
         <LinearLayout

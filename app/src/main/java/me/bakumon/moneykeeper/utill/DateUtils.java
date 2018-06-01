@@ -25,6 +25,8 @@ public class DateUtils {
     public static final DateFormat MONTH_DAY_FORMAT = new SimpleDateFormat("MM-dd");
     @SuppressLint("SimpleDateFormat")
     public static final DateFormat YEAR_MONTH_DAY_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    @SuppressLint("SimpleDateFormat")
+    public static final DateFormat FORMAT_FOR_FIEL_NAME = new SimpleDateFormat("_yy_MM_dd_HH_mm_ss");
 
     /**
      * 获取今天 Date 对象，精确到日
@@ -69,6 +71,10 @@ public class DateUtils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static String getCurrentDateString(){
+        return date2String(new Date(), FORMAT_FOR_FIEL_NAME);
     }
 
     /**
