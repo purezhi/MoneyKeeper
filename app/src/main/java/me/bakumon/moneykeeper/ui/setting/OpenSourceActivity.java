@@ -91,6 +91,9 @@ public class OpenSourceActivity extends BaseActivity {
         OpenSourceBean alipayZeroSDK = new OpenSourceBean("AlipayZeroSdk - fython",
                 "https://github.com/fython/AlipayZeroSdk",
                 "Apache Software License 2.0");
+        OpenSourceBean prettytime = new OpenSourceBean("prettytime - ocpsoft",
+                "https://github.com/ocpsoft/prettytime",
+                "Apache Software License 2.0");
 
         list.add(support);
         list.add(lifecycle);
@@ -108,6 +111,7 @@ public class OpenSourceActivity extends BaseActivity {
         list.add(pagerLayout);
         list.add(layoutManagerGroup);
         list.add(alipayZeroSDK);
+        list.add(prettytime);
 
         adapter.setNewData(list);
     }

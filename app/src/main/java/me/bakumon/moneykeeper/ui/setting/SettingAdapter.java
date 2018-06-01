@@ -29,6 +29,8 @@ public class SettingAdapter extends BaseSectionQuickAdapter<SettingSectionEntity
                 .setGone(R.id.tv_title, !TextUtils.isEmpty(item.t.title))
                 .setText(R.id.tv_content, item.t.content)
                 .setGone(R.id.tv_content, !TextUtils.isEmpty(item.t.content))
-                .setVisible(R.id.switch_item, item.t.isShowSwitch);
+                .setVisible(R.id.switch_item, item.t.isShowSwitch)
+                .setChecked(R.id.switch_item, item.t.isConfigOpen)
+                .addOnClickListener(R.id.switch_item);
     }
 }

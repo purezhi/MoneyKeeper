@@ -17,14 +17,30 @@ public class SettingSectionEntity extends SectionEntity<SettingSectionEntity.Ite
     }
 
     public static class Item {
-        public Item(String title, String content, boolean isShowSwitch) {
+        public Item(String content) {
+            this.title = null;
+            this.content = content;
+            this.isShowSwitch = false;
+            this.isConfigOpen = false;
+        }
+
+        public Item(String title, String content) {
             this.title = title;
             this.content = content;
-            this.isShowSwitch = isShowSwitch;
+            this.isShowSwitch = false;
+            this.isConfigOpen = false;
+        }
+
+        public Item(String title, String content, boolean isConfigOpen) {
+            this.title = title;
+            this.content = content;
+            this.isShowSwitch = true;
+            this.isConfigOpen = isConfigOpen;
         }
 
         public String title;
         public String content;
         public boolean isShowSwitch;
+        public boolean isConfigOpen;
     }
 }

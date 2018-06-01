@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="恢复备份"
+        android:text="@string/text_restore"
         android:textSize="19sp"
         android:textStyle="bold" />
 
@@ -18,8 +18,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="3dp"
         android:paddingTop="20dp"
-        android:visibility="gone"
-        android:text="备份文件取自/sdcard/backup_moneykeeper目录，该目录包含通过手动或自动备份的文件，选择某一个备份文件进行恢复，成功后会保留恢复之前的文件。"
+        android:text="@string/text_restore_tip"
         android:textColor="@color/colorTextWhite3"
         android:textSize="14sp" />
 
@@ -27,8 +26,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="3dp"
-        android:paddingTop="20dp"
-        android:text="以下是备份文件，点击恢复："
+        android:paddingTop="5dp"
+        android:text="@string/text_list_restore"
         android:textColor="@color/colorTextWhite3"
         android:textSize="14sp" />
 

@@ -17,6 +17,7 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import me.bakumon.moneykeeper.ConfigManager;
 import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.Router;
 import me.bakumon.moneykeeper.base.BaseActivity;
@@ -35,6 +36,7 @@ public class SettingActivity extends BaseActivity {
     private static final String TAG = SettingActivity.class.getSimpleName();
     private ActivitySettingBinding mBinding;
     private SettingViewModel mViewModel;
+    private SettingAdapter mAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -49,107 +51,155 @@ public class SettingActivity extends BaseActivity {
         initView();
     }
 
+    @Override
+    public void updateConfig(boolean isAutoBackup) {
+        super.updateConfig(isAutoBackup);
+        initView();
+    }
+
     private void initView() {
         mBinding.titleBar.ibtClose.setOnClickListener(v -> finish());
         mBinding.titleBar.setTitle(getString(R.string.text_title_setting));
 
         mBinding.rvSetting.setLayoutManager(new LinearLayoutManager(this));
-        SettingAdapter adapter = new SettingAdapter(null);
+        mAdapter = new SettingAdapter(null);
 
         List<SettingSectionEntity> list = new ArrayList<>();
 
-        list.add(new SettingSectionEntity("记账"));
-        list.add(new SettingSectionEntity(new SettingSectionEntity.Item("极速记账", "打开应用立即记账", true)));
-        list.add(new SettingSectionEntity(new SettingSectionEntity.Item("收支类型管理", null, false)));
+        list.add(new SettingSectionEntity(getString(R.string.text_setting_money)));
+        list.add(new SettingSectionEntity(new SettingSectionEntity.Item(getString(R.string.text_setting_type_manage), null)));
 
-        list.add(new SettingSectionEntity("备份"));
-        list.add(new SettingSectionEntity(new SettingSectionEntity.Item("立即备份", "备份文件将保存到/sdcard/backup_moneykeeper", false)));
-        list.add(new SettingSectionEntity(new SettingSectionEntity.Item("恢复备份", "备份文件将从/sdcard/backup_moneykeeper读取", false)));
-        list.add(new SettingSectionEntity(new SettingSectionEntity.Item("自动备份", "数据有改变自动备份（建议开启）", true)));
+        list.add(new SettingSectionEntity(getString(R.string.text_setting_backup)));
+        list.add(new SettingSectionEntity(new SettingSectionEntity.Item(getString(R.string.text_go_backup), getString(R.string.text_setting_go_backup_content))));
+        list.add(new SettingSectionEntity(new SettingSectionEntity.Item(getString(R.string.text_setting_restore), getString(R.string.text_setting_restore_content))));
+        list.add(new SettingSectionEntity(new SettingSectionEntity.Item(getString(R.string.text_setting_auto_backup), getString(R.string.text_setting_auto_backup_content), ConfigManager.isAutoBackup())));
 
-        list.add(new SettingSectionEntity("关于|帮助"));
-        list.add(new SettingSectionEntity(new SettingSectionEntity.Item("关于", "了解我们的设计理念", false)));
-        list.add(new SettingSectionEntity(new SettingSectionEntity.Item("评分", "给个好评呗\uD83D\uDE18", false)));
-        list.add(new SettingSectionEntity(new SettingSectionEntity.Item("捐赠作者", "", false)));
-        list.add(new SettingSectionEntity(new SettingSectionEntity.Item(null, "隐私政策", false)));
-        list.add(new SettingSectionEntity(new SettingSectionEntity.Item(null, "开源许可证", false)));
-        list.add(new SettingSectionEntity(new SettingSectionEntity.Item(null, "帮助", false)));
+        list.add(new SettingSectionEntity(getString(R.string.text_setting_about_and_help)));
+        list.add(new SettingSectionEntity(new SettingSectionEntity.Item(getString(R.string.text_about), getString(R.string.text_about_content))));
+        list.add(new SettingSectionEntity(new SettingSectionEntity.Item(getString(R.string.text_setting_score), getString(R.string.text_setting_good_score))));
+        list.add(new SettingSectionEntity(new SettingSectionEntity.Item(getString(R.string.text_setting_donate), "")));
+        list.add(new SettingSectionEntity(new SettingSectionEntity.Item(getString(R.string.text_privacy_policy))));
+        list.add(new SettingSectionEntity(new SettingSectionEntity.Item(getString(R.string.text_setting_lisence))));
+        list.add(new SettingSectionEntity(new SettingSectionEntity.Item(getString(R.string.text_setting_help))));
 
-        adapter.setNewData(list);
+        mAdapter.setNewData(list);
 
-        adapter.setOnItemClickListener((adapter1, view, position) -> {
+        mAdapter.setOnItemClickListener((adapter1, view, position) -> {
             switch (position) {
-                case 0:
-                    break;
                 case 1:
-                    break;
-                case 2:
                     goTypeManage();
                     break;
                 case 3:
-                    break;
-                case 4:
                     showBackupDialog();
                     break;
-                case 5:
+                case 4:
                     showRestoreDialog();
                     break;
-                case 6:
-                    break;
-                case 7:
-                    break;
                 case 8:
-                    break;
-                case 9:
                     market();
                     break;
-                case 10:
+                case 9:
                     alipay();
                     break;
-                case 11:
+                case 10:
                     CustomTabsUtil.openWeb(this, "https://github.com/Bakumon/MoneyKeeper/blob/master/PrivacyPolicy.md");
                     break;
-                case 12:
+                case 11:
                     goOpenSource();
                     break;
-                case 13:
+                case 12:
                     CustomTabsUtil.openWeb(this, "https://github.com/Bakumon/MoneyKeeper/blob/master/Help.md");
                     break;
                 default:
                     break;
             }
         });
-        mBinding.rvSetting.setAdapter(adapter);
+        // Switch
+        mAdapter.setOnItemChildClickListener((adapter12, view, position) -> {
+            switch (position) {
+                case 5:
+                    switchAutoBackup(position);
+                    break;
+                default:
+                    break;
+            }
+        });
+        mBinding.rvSetting.setAdapter(mAdapter);
+    }
+
+    private void switchAutoBackup(int position) {
+        boolean oldIsConfigOpen = mAdapter.getData().get(position).t.isConfigOpen;
+        if (oldIsConfigOpen) {
+            setAutoBackup(position, false);
+        } else {
+            AndPermission.with(this)
+                    .runtime()
+                    .permission(Permission.Group.STORAGE)
+                    .onGranted(permissions -> {
+                        setAutoBackup(position, true);
+                    })
+                    .onDenied(permissions -> {
+                        if (AndPermission.hasAlwaysDeniedPermission(this, permissions)) {
+                            // 用 position 当作区别标示
+                            goSetting(1, getString(R.string.text_storage_permission_tip));
+                        } else {
+                            mAdapter.getData().get(position).t.isConfigOpen = false;
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    })
+                    .start();
+        }
+    }
+
+    @Override
+    public void onGoSettingNegativeButtonClick(int requestCode) {
+        if (requestCode == 1) {
+            ConfigManager.setIsAutoBackup(false);
+            initView();
+        }
+    }
+
+    @Override
+    public void onComeBackFromSetting(int requestCode) {
+        if (requestCode == 1) {
+            boolean hasPermission = AndPermission.hasPermissions(this, Permission.Group.STORAGE);
+            ConfigManager.setIsAutoBackup(hasPermission);
+            initView();
+        }
+    }
+
+    private void setAutoBackup(int position, boolean isBackup) {
+        ConfigManager.setIsAutoBackup(isBackup);
+        mAdapter.getData().get(position).t.isConfigOpen = isBackup;
+        mAdapter.notifyDataSetChanged();
     }
 
     private void showBackupDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle("立即备份")
-                .setMessage("备份文件将保存到/sdcard/backup_moneykeeper/MoneyKeeperBackupUser.db")
-                .setNegativeButton(R.string.text_button_cancel, null)
-                .setPositiveButton(R.string.text_affirm, (dialog, which) -> {
-                    AndPermission.with(this)
-                            .runtime()
-                            .permission(Permission.Group.STORAGE)
-                            .onGranted(permissions -> {
-                                backupDB();
-                            })
-                            .onDenied(permissions -> {
-                                ToastUtils.show("备份数据需要开启读写权限");
-                            })
-                            .start();
+        AndPermission.with(this)
+                .runtime()
+                .permission(Permission.Group.STORAGE)
+                .onGranted(permissions -> new AlertDialog.Builder(this)
+                        .setTitle(R.string.text_backup)
+                        .setMessage(R.string.text_backup_save)
+                        .setNegativeButton(R.string.text_button_cancel, null)
+                        .setPositiveButton(R.string.text_affirm, (dialog, which) -> backupDB())
+                        .create()
+                        .show())
+                .onDenied(permissions -> {
+                    if (AndPermission.hasAlwaysDeniedPermission(this, permissions)) {
+                        goSetting(getString(R.string.text_storage_permission_tip));
+                    }
                 })
-                .create()
-                .show();
+                .start();
     }
 
     private void backupDB() {
         mDisposable.add(mViewModel.backupDB()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> ToastUtils.show("备份成功"),
+                .subscribe(() -> ToastUtils.show(R.string.toast_backup_success),
                         throwable -> {
-                            ToastUtils.show("备份失败");
+                            ToastUtils.show(R.string.toast_backup_fail);
                             Log.e(TAG, "备份失败", throwable);
                         }));
     }
@@ -158,22 +208,22 @@ public class SettingActivity extends BaseActivity {
         AndPermission.with(this)
                 .runtime()
                 .permission(Permission.Group.STORAGE)
-                .onGranted(permissions -> {
-                    mDisposable.add(mViewModel.getBackupFiles()
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(backupBeans -> {
-                                        BackupFliesDialog dialog = new BackupFliesDialog(this, backupBeans);
-                                        dialog.setOnItemClickListener(file -> restoreDB(file.getPath()));
-                                        dialog.show();
-                                    },
-                                    throwable -> {
-                                        ToastUtils.show(R.string.toast_backup_list_fail);
-                                        Log.e(TAG, "备份文件列表获取失败", throwable);
-                                    }));
-                })
+                .onGranted(permissions -> mDisposable.add(mViewModel.getBackupFiles()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(backupBeans -> {
+                                    BackupFliesDialog dialog = new BackupFliesDialog(this, backupBeans);
+                                    dialog.setOnItemClickListener(file -> restoreDB(file.getPath()));
+                                    dialog.show();
+                                },
+                                throwable -> {
+                                    ToastUtils.show(R.string.toast_backup_list_fail);
+                                    Log.e(TAG, "备份文件列表获取失败", throwable);
+                                })))
                 .onDenied(permissions -> {
-                    ToastUtils.show("备份数据需要开启读写权限");
+                    if (AndPermission.hasAlwaysDeniedPermission(this, permissions)) {
+                        goSetting(getString(R.string.text_storage_permission_tip));
+                    }
                 })
                 .start();
     }

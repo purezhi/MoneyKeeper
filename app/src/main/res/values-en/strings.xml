@@ -26,6 +26,9 @@
     <string name="toast_is_not_writable_external">Backup failed, external storage is unavailable</string>
     <string name="toast_restore_fail">Failed to restore the backup</string>
     <string name="toast_backup_list_fail">Failed to get backup file list</string>
+    <string name="toast_backup_success">Backup was successful</string>
+    <string name="toast_backup_fail">Backup failed</string>
+    <string name="toast_open_auto_backup">Automatic backup is turned off. You can go to settings to reopen</string>
 
     <string name="hint_enter_money">Enter the amount</string>
     <string name="hint_enter_remark">Enter a note</string>
@@ -84,4 +87,32 @@
     <string name="text_sort_time">By time</string>
     <string name="text_sort_money">By amount</string>
     <string name="text_title_open_source">License</string>
+    <string name="text_backup">Back up now</string>
+    <string name="text_backup_save">Backup file will be saved to/sdcard/backup_moneykeeper/MoneyKeeperBackupUser.db</string>
+    <string name="text_setting_money">Bookkeeping</string>
+    <string name="text_setting_type_manage">type management</string>
+    <string name="text_setting_backup">Backup</string>
+    <string name="text_go_backup">Back up now</string>
+    <string name="text_setting_restore">Restore</string>
+    <string name="text_setting_about_and_help">About|Help</string>
+    <string name="text_about">About</string>
+    <string name="text_setting_score">Score</string>
+    <string name="text_setting_donate">Donate</string>
+    <string name="text_privacy_policy">Privacy Policy</string>
+    <string name="text_setting_lisence">Open source license</string>
+    <string name="text_setting_help">Help</string>
+    <string name="text_setting_good_score">Give a good score,please</string>
+    <string name="text_about_content">Understand our design philosophy</string>
+    <string name="text_setting_auto_backup">Automatic backup</string>
+    <string name="text_setting_go_backup_content">Backup file will be saved to/sdcard/backup_moneykeeper</string>
+    <string name="text_setting_restore_content">Backup files will read from/sdcard/backup_moneykeeper</string>
+    <string name="text_setting_auto_backup_content">Data change automatic backup (recommended to open)</string>
+    <string name="text_restore">Restore</string>
+    <string name="text_list_restore">The following is the backup file, click restore:</string>
+    <string name="text_restore_tip">The backup file name with Auto word indicates automatic backup. With User indication, click the Backup Now button to manually back up, and before restoration, save a copy of the data before restoration.</string>
+    <string name="text_before_reverting">_BeforeReverting</string>
+    <string name="text_storage">Storage permissions</string>
+    <string name="text_storage_content">In order to back up your accounting data automatically, you need to open the storage permission.</string>
+    <string name="text_open_permissions">Permissions</string>
+    <string name="text_storage_permission_tip">Backup related operations require storage permissions to set open permissions</string>
 </resources>
