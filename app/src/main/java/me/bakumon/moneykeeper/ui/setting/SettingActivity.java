@@ -131,6 +131,7 @@ public class SettingActivity extends BaseActivity {
         boolean oldIsConfigOpen = mAdapter.getData().get(position).t.isConfigOpen;
         if (oldIsConfigOpen) {
             new AlertDialog.Builder(this)
+                    .setCancelable(false)
                     .setTitle(R.string.text_close_auto_backup)
                     .setMessage(R.string.text_close_auto_backup_tip)
                     .setNegativeButton(R.string.text_button_cancel, (dialog, which) -> mAdapter.notifyDataSetChanged())
