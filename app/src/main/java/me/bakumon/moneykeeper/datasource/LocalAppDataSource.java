@@ -42,7 +42,7 @@ public class LocalAppDataSource implements AppDataSource {
         if (ConfigManager.isAutoBackup()) {
             boolean isSuccess = BackupUtil.autoBackup();
             if (!isSuccess) {
-                throw new Exception(App.getINSTANCE().getString(R.string.text_tip_backup_fail));
+                throw new BackupFailException();
             }
         }
     }
@@ -110,14 +110,6 @@ public class LocalAppDataSource implements AppDataSource {
     }
 
     @Override
-    public Completable updateRecordTypes(RecordType... recordTypes) {
-        return Completable.fromAction(() -> {
-            mAppDatabase.recordTypeDao().updateRecordTypes(recordTypes);
-            autoBackup();
-        });
-    }
-
-    @Override
     public Completable sortRecordTypes(List<RecordType> recordTypes) {
         return Completable.fromAction(() -> {
             if (recordTypes != null && recordTypes.size() > 1) {
@@ -130,7 +122,7 @@ public class LocalAppDataSource implements AppDataSource {
                     }
                 }
                 RecordType[] typeArray = new RecordType[sortTypes.size()];
-                mAppDatabase.recordTypeDao().updateRecordTypes(typeArray);
+                mAppDatabase.recordTypeDao().updateRecordTypes(sortTypes.toArray(typeArray));
                 autoBackup();
             }
         });

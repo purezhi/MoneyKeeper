@@ -1,16 +1,15 @@
 package me.bakumon.moneykeeper.ui.setting;
 
+import android.Manifest;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
-
-import com.yanzhenjie.permission.AndPermission;
-import com.yanzhenjie.permission.Permission;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,13 +25,16 @@ import me.bakumon.moneykeeper.utill.AlipayZeroSdk;
 import me.bakumon.moneykeeper.utill.CustomTabsUtil;
 import me.bakumon.moneykeeper.utill.ToastUtils;
 import me.drakeet.floo.Floo;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
+import pub.devrel.easypermissions.PermissionRequest;
 
 /**
  * 设置
  *
  * @author Bakumon https://bakumon.me
  */
-public class SettingActivity extends BaseActivity {
+public class SettingActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks {
     private static final String TAG = SettingActivity.class.getSimpleName();
     private ActivitySettingBinding mBinding;
     private SettingViewModel mViewModel;
@@ -52,9 +54,9 @@ public class SettingActivity extends BaseActivity {
     }
 
     @Override
-    public void updateConfig(boolean isAutoBackup) {
-        super.updateConfig(isAutoBackup);
-        initView();
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
     private void initView() {
@@ -139,36 +141,55 @@ public class SettingActivity extends BaseActivity {
                     .create()
                     .show();
         } else {
-            AndPermission.with(this)
-                    .runtime()
-                    .permission(Permission.Group.STORAGE)
-                    .onGranted(permissions -> setAutoBackup(position, true))
-                    .onDenied(permissions -> {
-                        if (AndPermission.hasAlwaysDeniedPermission(this, permissions)) {
-                            // 用 position 当作区别标示
-                            goSetting(1, getString(R.string.text_storage_permission_tip));
-                        } else {
-                            mAdapter.getData().get(position).t.isConfigOpen = false;
-                            mAdapter.notifyDataSetChanged();
-                        }
-                    })
-                    .start();
+            if (EasyPermissions.hasPermissions(this, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                ConfigManager.setIsAutoBackup(true);
+                initView();
+                return;
+            }
+            EasyPermissions.requestPermissions(
+                    new PermissionRequest.Builder(this, 11, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                            .setRationale(R.string.text_storage_content)
+                            .setPositiveButtonText(R.string.text_affirm)
+                            .setNegativeButtonText(R.string.text_button_cancel)
+                            .build());
         }
     }
 
     @Override
-    public void onGoSettingNegativeButtonClick(int requestCode) {
-        if (requestCode == 1) {
-            ConfigManager.setIsAutoBackup(false);
-            initView();
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+        switch (requestCode) {
+            case 11:
+                ConfigManager.setIsAutoBackup(true);
+                initView();
+                break;
+            case 12:
+                backupDB();
+                break;
+            case 13:
+                restore();
+                break;
+            default:
+                break;
         }
     }
 
     @Override
-    public void onComeBackFromSetting(int requestCode) {
-        if (requestCode == 1) {
-            boolean hasPermission = AndPermission.hasPermissions(this, Permission.Group.STORAGE);
-            ConfigManager.setIsAutoBackup(hasPermission);
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog.Builder(this)
+                    .setRationale(R.string.text_storage_permission_tip)
+                    .setTitle(R.string.text_storage)
+                    .setPositiveButton(R.string.text_affirm)
+                    .setNegativeButton(R.string.text_button_cancel)
+                    .build()
+                    .show();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
             initView();
         }
     }
@@ -180,57 +201,63 @@ public class SettingActivity extends BaseActivity {
     }
 
     private void showBackupDialog() {
-        AndPermission.with(this)
-                .runtime()
-                .permission(Permission.Group.STORAGE)
-                .onGranted(permissions -> new AlertDialog.Builder(this)
-                        .setTitle(R.string.text_backup)
-                        .setMessage(R.string.text_backup_save)
-                        .setNegativeButton(R.string.text_button_cancel, null)
-                        .setPositiveButton(R.string.text_affirm, (dialog, which) -> backupDB())
-                        .create()
-                        .show())
-                .onDenied(permissions -> {
-                    if (AndPermission.hasAlwaysDeniedPermission(this, permissions)) {
-                        goSetting(getString(R.string.text_storage_permission_tip));
-                    }
-                })
-                .start();
+        if (EasyPermissions.hasPermissions(this, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            backupDB();
+            return;
+        }
+        EasyPermissions.requestPermissions(
+                new PermissionRequest.Builder(this, 12, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        .setRationale(R.string.text_storage_content)
+                        .setPositiveButtonText(R.string.text_affirm)
+                        .setNegativeButtonText(R.string.text_button_cancel)
+                        .build());
     }
 
     private void backupDB() {
-        mDisposable.add(mViewModel.backupDB()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> ToastUtils.show(R.string.toast_backup_success),
-                        throwable -> {
-                            ToastUtils.show(R.string.toast_backup_fail);
-                            Log.e(TAG, "备份失败", throwable);
-                        }));
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.text_backup)
+                .setMessage(R.string.text_backup_save)
+                .setNegativeButton(R.string.text_button_cancel, null)
+                .setPositiveButton(R.string.text_affirm, (dialog, which) -> {
+                    mDisposable.add(mViewModel.backupDB()
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(() -> ToastUtils.show(R.string.toast_backup_success),
+                                    throwable -> {
+                                        ToastUtils.show(R.string.toast_backup_fail);
+                                        Log.e(TAG, "备份失败", throwable);
+                                    }));
+                })
+                .create()
+                .show();
     }
 
     private void showRestoreDialog() {
-        AndPermission.with(this)
-                .runtime()
-                .permission(Permission.Group.STORAGE)
-                .onGranted(permissions -> mDisposable.add(mViewModel.getBackupFiles()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(backupBeans -> {
-                                    BackupFliesDialog dialog = new BackupFliesDialog(this, backupBeans);
-                                    dialog.setOnItemClickListener(file -> restoreDB(file.getPath()));
-                                    dialog.show();
-                                },
-                                throwable -> {
-                                    ToastUtils.show(R.string.toast_backup_list_fail);
-                                    Log.e(TAG, "备份文件列表获取失败", throwable);
-                                })))
-                .onDenied(permissions -> {
-                    if (AndPermission.hasAlwaysDeniedPermission(this, permissions)) {
-                        goSetting(getString(R.string.text_storage_permission_tip));
-                    }
-                })
-                .start();
+        if (EasyPermissions.hasPermissions(this, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            restore();
+            return;
+        }
+        EasyPermissions.requestPermissions(
+                new PermissionRequest.Builder(this, 13, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        .setRationale(R.string.text_storage_content)
+                        .setPositiveButtonText(R.string.text_affirm)
+                        .setNegativeButtonText(R.string.text_button_cancel)
+                        .build());
+    }
+
+    private void restore() {
+        mDisposable.add(mViewModel.getBackupFiles()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(backupBeans -> {
+                            BackupFliesDialog dialog = new BackupFliesDialog(this, backupBeans);
+                            dialog.setOnItemClickListener(file -> restoreDB(file.getPath()));
+                            dialog.show();
+                        },
+                        throwable -> {
+                            ToastUtils.show(R.string.toast_backup_list_fail);
+                            Log.e(TAG, "备份文件列表获取失败", throwable);
+                        }));
     }
 
     private void restoreDB(String restoreFile) {

@@ -7,19 +7,12 @@ import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.yanzhenjie.permission.AndPermission;
-import com.yanzhenjie.permission.Permission;
-
 import io.reactivex.disposables.CompositeDisposable;
-import me.bakumon.moneykeeper.ConfigManager;
-import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.utill.StatusBarUtil;
-import me.bakumon.moneykeeper.utill.ToastUtils;
 
 /**
  * 1.沉浸式状态栏
@@ -38,7 +31,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         dataBinding = DataBindingUtil.setContentView(this, getLayoutId());
         onInit(savedInstanceState);
-        checkPermissionForBackup();
     }
 
     /**
@@ -123,130 +115,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         config.setToDefaults();
         res.updateConfiguration(config, res.getDisplayMetrics());
         return res;
-    }
-
-    ///////////////////////////////////////
-    ///////// 自动备份打开时，检查是否有权限
-    ///////////////////////////////////////
-
-    /**
-     * 防止在 onResume 中请求权限
-     * 权限被拒绝，方法会走两次
-     */
-    private boolean isRunningPermission;
-
-    private void checkPermissionForBackup() {
-        if (isRunningPermission) {
-            return;
-        }
-        if (!ConfigManager.isAutoBackup()) {
-            return;
-        }
-        if (AndPermission.hasPermissions(this, Permission.Group.STORAGE)) {
-            return;
-        }
-        // 当自动备份打开，并且没有存储权限，提示用户需要申请权限
-        isRunningPermission = true;
-        new AlertDialog.Builder(this)
-                .setCancelable(false)
-                .setTitle(R.string.text_storage)
-                .setMessage(R.string.text_storage_content)
-                .setPositiveButton(R.string.text_affirm, (dialog, which) ->
-                        AndPermission.with(this)
-                                .runtime()
-                                .permission(Permission.Group.STORAGE)
-                                .onGranted(data -> {
-                                    updateConfig(true);
-                                    isRunningPermission = false;
-                                })
-                                .onDenied(data -> {
-                                    isRunningPermission = false;
-                                    if (AndPermission.hasAlwaysDeniedPermission(this, data)) {
-                                        goSettingForAutoBackup();
-                                    } else {
-                                        updateConfig(false);
-                                    }
-                                })
-                                .start())
-                .show();
-    }
-
-    public void updateConfig(boolean isAutoBackup) {
-        if (isAutoBackup) {
-            ConfigManager.setIsAutoBackup(true);
-        } else {
-            if (ConfigManager.setIsAutoBackup(false)) {
-                ToastUtils.show(R.string.toast_open_auto_backup);
-            }
-        }
-    }
-
-    private void goSettingForAutoBackup() {
-        // 这里使用一个Dialog展示没有这些权限应用程序无法继续运行，询问用户是否去设置中授权。
-        new AlertDialog.Builder(this)
-                .setCancelable(false)
-                .setTitle(R.string.text_open_permissions)
-                .setMessage(R.string.text_storage_permission_tip)
-                .setNegativeButton(R.string.text_button_cancel, (dialog, which) -> {
-                    updateConfig(false);
-                })
-                .setPositiveButton(R.string.text_affirm, (dialog, which) ->
-                        AndPermission.with(this)
-                                .runtime()
-                                .setting()
-                                .onComeback(() -> {
-                                    boolean hasStorage = AndPermission.hasPermissions(this, Permission.Group.STORAGE);
-                                    updateConfig(hasStorage);
-                                })
-                                .start())
-                .create()
-                .show();
-    }
-
-    ///////////////////////////////////////
-    ///////// 为子类提供打开设置的方法
-    ///////////////////////////////////////
-
-    public void goSetting(String tip) {
-        goSetting(-1, tip);
-    }
-
-    /**
-     * 提供子类调用
-     *
-     * @param requestCode 区分不同来源
-     */
-    public void goSetting(int requestCode, String tip) {
-        // 这里使用一个Dialog展示没有这些权限应用程序无法继续运行，询问用户是否去设置中授权。
-        new AlertDialog.Builder(this)
-                .setCancelable(false)
-                .setTitle(R.string.text_open_permissions)
-                .setMessage(tip)
-                .setNegativeButton(R.string.text_button_cancel, (dialog, which) -> onGoSettingNegativeButtonClick(requestCode))
-                .setPositiveButton(R.string.text_affirm, (dialog, which) ->
-                        AndPermission.with(this)
-                                .runtime()
-                                .setting()
-                                .onComeback(() -> onComeBackFromSetting(requestCode))
-                                .start())
-                .create()
-                .show();
-    }
-
-    /**
-     * 去设置界面，点击了取消
-     * 子类复写
-     */
-    public void onGoSettingNegativeButtonClick(int requestCode) {
-
-    }
-
-    /**
-     * 用户从设置回来
-     * 子类复写
-     */
-    public void onComeBackFromSetting(int requestCode) {
-
     }
 
     @Override

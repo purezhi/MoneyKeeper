@@ -28,6 +28,7 @@ import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.database.entity.SumMoneyBean;
 import me.bakumon.moneykeeper.databinding.FragmentBillBinding;
+import me.bakumon.moneykeeper.datasource.BackupFailException;
 import me.bakumon.moneykeeper.ui.home.HomeAdapter;
 import me.bakumon.moneykeeper.utill.BigDecimalUtil;
 import me.bakumon.moneykeeper.utill.DateUtils;
@@ -145,8 +146,13 @@ public class BillFragment extends BaseFragment {
                 .subscribe(() -> {
                         },
                         throwable -> {
-                            ToastUtils.show(R.string.toast_record_delete_fail);
-                            Log.e(TAG, "删除记账记录失败", throwable);
+                            if (throwable instanceof BackupFailException) {
+                                ToastUtils.show(throwable.getMessage());
+                                Log.e(TAG, "备份失败（删除记账记录失败的时候）", throwable);
+                            } else {
+                                ToastUtils.show(R.string.toast_record_delete_fail);
+                                Log.e(TAG, "删除记账记录失败", throwable);
+                            }
                         }));
     }
 

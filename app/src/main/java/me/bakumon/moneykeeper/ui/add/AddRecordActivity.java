@@ -21,6 +21,7 @@ import me.bakumon.moneykeeper.database.entity.Record;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.databinding.ActivityAddRecordBinding;
+import me.bakumon.moneykeeper.datasource.BackupFailException;
 import me.bakumon.moneykeeper.utill.BigDecimalUtil;
 import me.bakumon.moneykeeper.utill.DateUtils;
 import me.bakumon.moneykeeper.utill.SoftInputUtils;
@@ -141,9 +142,15 @@ public class AddRecordActivity extends BaseActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::finish,
                         throwable -> {
-                            Log.e(TAG, "新增记录失败", throwable);
-                            mBinding.keyboard.setAffirmEnable(true);
-                            ToastUtils.show(R.string.toast_add_record_fail);
+                            if (throwable instanceof BackupFailException) {
+                                ToastUtils.show(throwable.getMessage());
+                                Log.e(TAG, "备份失败（新增记录失败的时候）", throwable);
+                                finish();
+                            } else {
+                                Log.e(TAG, "新增记录失败", throwable);
+                                mBinding.keyboard.setAffirmEnable(true);
+                                ToastUtils.show(R.string.toast_add_record_fail);
+                            }
                         }
                 ));
     }
@@ -162,9 +169,15 @@ public class AddRecordActivity extends BaseActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::finish,
                         throwable -> {
-                            Log.e(TAG, "记录修改失败", throwable);
-                            mBinding.keyboard.setAffirmEnable(true);
-                            ToastUtils.show(R.string.toast_modify_record_fail);
+                            if (throwable instanceof BackupFailException) {
+                                ToastUtils.show(throwable.getMessage());
+                                Log.e(TAG, "备份失败（记录修改失败的时候）", throwable);
+                                finish();
+                            } else {
+                                Log.e(TAG, "记录修改失败", throwable);
+                                mBinding.keyboard.setAffirmEnable(true);
+                                ToastUtils.show(R.string.toast_modify_record_fail);
+                            }
                         }
                 ));
     }

@@ -71,7 +71,7 @@ public class BackupUtil {
         String dir = storage.getExternalStorageDirectory() + File.separator + BACKUP_DIR;
         List<BackupBean> backupBeans = new ArrayList<>();
         BackupBean bean;
-        List<File> files = storage.getFiles(dir);
+        List<File> files = storage.getFiles(dir, "[\\S]*\\.db");
         if (files == null) {
             return backupBeans;
         }

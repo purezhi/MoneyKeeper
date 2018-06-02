@@ -81,13 +81,6 @@ public interface AppDataSource {
     Completable deleteRecord(Record record);
 
     /**
-     * 修改记账类型
-     *
-     * @param recordTypes 记账类型对象
-     */
-    Completable updateRecordTypes(RecordType... recordTypes);
-
-    /**
      * 记账类型排序
      *
      * @param recordTypes 记账类型对象

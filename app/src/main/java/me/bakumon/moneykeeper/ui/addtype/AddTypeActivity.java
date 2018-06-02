@@ -18,6 +18,7 @@ import me.bakumon.moneykeeper.Router;
 import me.bakumon.moneykeeper.base.BaseActivity;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.databinding.ActivityAddTypeBinding;
+import me.bakumon.moneykeeper.datasource.BackupFailException;
 import me.bakumon.moneykeeper.utill.ToastUtils;
 import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
 
@@ -121,10 +122,16 @@ public class AddTypeActivity extends BaseActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::finish, throwable -> {
-                    mBinding.titleBar.tvRight.setEnabled(true);
-                    String failTip = TextUtils.isEmpty(throwable.getMessage()) ? getString(R.string.toast_type_save_fail) : throwable.getMessage();
-                    ToastUtils.show(failTip);
-                    Log.e(TAG, "类型保存失败", throwable);
+                    if (throwable instanceof BackupFailException) {
+                        ToastUtils.show(throwable.getMessage());
+                        Log.e(TAG, "备份失败（类型保存失败的时候）", throwable);
+                        finish();
+                    } else {
+                        mBinding.titleBar.tvRight.setEnabled(true);
+                        String failTip = TextUtils.isEmpty(throwable.getMessage()) ? getString(R.string.toast_type_save_fail) : throwable.getMessage();
+                        ToastUtils.show(failTip);
+                        Log.e(TAG, "类型保存失败", throwable);
+                    }
                 }));
     }
 }

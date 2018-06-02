@@ -17,6 +17,7 @@ import me.bakumon.moneykeeper.Router;
 import me.bakumon.moneykeeper.base.BaseActivity;
 import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.databinding.ActivityTypeSortBinding;
+import me.bakumon.moneykeeper.datasource.BackupFailException;
 import me.bakumon.moneykeeper.utill.ToastUtils;
 import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
 
@@ -77,9 +78,15 @@ public class TypeSortActivity extends BaseActivity {
         mDisposable.add(mViewModel.sortRecordTypes(mAdapter.getData()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::finish, throwable -> {
-                    mBinding.titleBar.tvRight.setEnabled(true);
-                    ToastUtils.show(R.string.toast_sort_fail);
-                    Log.e(TAG, "类型排序失败", throwable);
+                    if (throwable instanceof BackupFailException) {
+                        ToastUtils.show(throwable.getMessage());
+                        Log.e(TAG, "备份失败（类型排序失败的时候）", throwable);
+                        finish();
+                    } else {
+                        mBinding.titleBar.tvRight.setEnabled(true);
+                        ToastUtils.show(R.string.toast_sort_fail);
+                        Log.e(TAG, "类型排序失败", throwable);
+                    }
                 }));
     }
 

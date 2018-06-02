@@ -1,6 +1,5 @@
 package me.bakumon.moneykeeper.ui.typesort;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Completable;
@@ -24,21 +23,6 @@ public class TypeSortViewModel extends BaseViewModel {
     }
 
     public Completable sortRecordTypes(List<RecordType> recordTypes) {
-//        return mDataSource.sortRecordTypes(recordTypes);
-        if (recordTypes != null && recordTypes.size() > 1) {
-            List<RecordType> sortTypes = new ArrayList<>();
-            for (int i = 0; i < recordTypes.size(); i++) {
-                RecordType type = recordTypes.get(i);
-                if (type.ranking != i) {
-                    type.ranking = i;
-                    sortTypes.add(type);
-                }
-            }
-            RecordType[] typeArray = new RecordType[sortTypes.size()];
-            return mDataSource.updateRecordTypes(sortTypes.toArray(typeArray));
-        } else {
-            return Completable.fromAction(() -> {
-            });
-        }
+        return mDataSource.sortRecordTypes(recordTypes);
     }
 }

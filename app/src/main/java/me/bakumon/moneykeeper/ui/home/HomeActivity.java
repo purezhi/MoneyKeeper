@@ -1,7 +1,10 @@
 package me.bakumon.moneykeeper.ui.home;
 
+import android.Manifest;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +15,7 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import me.bakumon.moneykeeper.ConfigManager;
 import me.bakumon.moneykeeper.Injection;
 import me.bakumon.moneykeeper.R;
 import me.bakumon.moneykeeper.Router;
@@ -20,11 +24,15 @@ import me.bakumon.moneykeeper.database.entity.RecordType;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.database.entity.SumMoneyBean;
 import me.bakumon.moneykeeper.databinding.ActivityHomeBinding;
+import me.bakumon.moneykeeper.datasource.BackupFailException;
 import me.bakumon.moneykeeper.utill.BigDecimalUtil;
 import me.bakumon.moneykeeper.utill.ToastUtils;
 import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
 import me.drakeet.floo.Floo;
 import me.drakeet.floo.StackCallback;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
+import pub.devrel.easypermissions.PermissionRequest;
 
 /**
  * HomeActivity
@@ -32,7 +40,7 @@ import me.drakeet.floo.StackCallback;
  * @author bakumon https://bakumon.me
  * @date 2018/4/9
  */
-public class HomeActivity extends BaseActivity implements StackCallback {
+public class HomeActivity extends BaseActivity implements StackCallback, EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
     private static final int MAX_ITEM_TIP = 5;
@@ -54,6 +62,7 @@ public class HomeActivity extends BaseActivity implements StackCallback {
 
         initView();
         initData();
+        checkPermissionForBackup();
     }
 
     private void initView() {
@@ -107,8 +116,13 @@ public class HomeActivity extends BaseActivity implements StackCallback {
                 .subscribe(() -> {
                         },
                         throwable -> {
-                            ToastUtils.show(R.string.toast_record_delete_fail);
-                            Log.e(TAG, "删除记账记录失败", throwable);
+                            if (throwable instanceof BackupFailException) {
+                                ToastUtils.show(throwable.getMessage());
+                                Log.e(TAG, "备份失败（删除记账记录失败的时候）", throwable);
+                            } else {
+                                ToastUtils.show(R.string.toast_record_delete_fail);
+                                Log.e(TAG, "删除记账记录失败", throwable);
+                            }
                         }));
     }
 
@@ -125,8 +139,13 @@ public class HomeActivity extends BaseActivity implements StackCallback {
                 .subscribe(() -> {
                         },
                         throwable -> {
-                            ToastUtils.show(R.string.toast_init_types_fail);
-                            Log.e(TAG, "初始化类型数据失败", throwable);
+                            if (throwable instanceof BackupFailException) {
+                                ToastUtils.show(throwable.getMessage());
+                                Log.e(TAG, "备份失败（初始化类型数据失败的时候）", throwable);
+                            } else {
+                                ToastUtils.show(R.string.toast_init_types_fail);
+                                Log.e(TAG, "初始化类型数据失败", throwable);
+                            }
                         }));
     }
 
@@ -196,4 +215,88 @@ public class HomeActivity extends BaseActivity implements StackCallback {
     public void onReceivedResult(@Nullable Object result) {
         initData();
     }
+
+    ///////////////////////////////
+    //// 自动备份打开时，检查是否有权限
+    ///////////////////////////////
+
+    private static final int REQUEST_CODE_STORAGE = 11;
+    private boolean isUserFirst;
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    private void checkPermissionForBackup() {
+        if (!ConfigManager.isAutoBackup()) {
+            return;
+        }
+        if (EasyPermissions.hasPermissions(this, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            return;
+        }
+        // 当自动备份打开，并且没有存储权限，提示用户需要申请权限
+        EasyPermissions.requestPermissions(
+                new PermissionRequest.Builder(this, REQUEST_CODE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        .setRationale(R.string.text_storage_content)
+                        .setPositiveButtonText(R.string.text_affirm)
+                        .setNegativeButtonText(R.string.text_button_cancel)
+                        .build());
+    }
+
+    public void updateConfig(boolean isAutoBackup) {
+        if (isAutoBackup) {
+            ConfigManager.setIsAutoBackup(true);
+        } else {
+            if (ConfigManager.setIsAutoBackup(false)) {
+                ToastUtils.show(R.string.toast_open_auto_backup);
+            }
+        }
+    }
+
+    @Override
+    public void onRationaleAccepted(int requestCode) {
+        isUserFirst = true;
+    }
+
+    @Override
+    public void onRationaleDenied(int requestCode) {
+        isUserFirst = true;
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+        updateConfig(true);
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            if (!isUserFirst) {
+                new AppSettingsDialog.Builder(this)
+                        .setRationale(R.string.text_storage_permission_tip)
+                        .setTitle(R.string.text_storage)
+                        .setPositiveButton(R.string.text_affirm)
+                        .setNegativeButton(R.string.text_button_cancel)
+                        .build()
+                        .show();
+            }
+        } else {
+            updateConfig(false);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
+            if (EasyPermissions.hasPermissions(this, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                updateConfig(true);
+            } else {
+                updateConfig(false);
+            }
+        }
+    }
+
 }

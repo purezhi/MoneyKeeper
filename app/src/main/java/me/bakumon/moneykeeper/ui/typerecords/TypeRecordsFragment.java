@@ -15,6 +15,7 @@ import me.bakumon.moneykeeper.Router;
 import me.bakumon.moneykeeper.base.BaseFragment;
 import me.bakumon.moneykeeper.database.entity.RecordWithType;
 import me.bakumon.moneykeeper.databinding.FragmentTypeRecordsBinding;
+import me.bakumon.moneykeeper.datasource.BackupFailException;
 import me.bakumon.moneykeeper.ui.home.HomeAdapter;
 import me.bakumon.moneykeeper.utill.ToastUtils;
 import me.bakumon.moneykeeper.viewmodel.ViewModelFactory;
@@ -130,8 +131,13 @@ public class TypeRecordsFragment extends BaseFragment {
                 .subscribe(() -> {
                         },
                         throwable -> {
-                            ToastUtils.show(R.string.toast_record_delete_fail);
-                            Log.e(TAG, "删除记账记录失败", throwable);
+                            if (throwable instanceof BackupFailException) {
+                                ToastUtils.show(throwable.getMessage());
+                                Log.e(TAG, "备份失败（删除记账记录失败的时候）", throwable);
+                            } else {
+                                ToastUtils.show(R.string.toast_record_delete_fail);
+                                Log.e(TAG, "删除记账记录失败", throwable);
+                            }
                         }));
     }
 

@@ -73,8 +73,8 @@ public class OpenSourceActivity extends BaseActivity {
         OpenSourceBean layoutManage = new OpenSourceBean("StatusLayoutManager - Bakumon",
                 "https://github.com/Bakumon/StatusLayoutManager",
                 "MIT License");
-        OpenSourceBean permission = new OpenSourceBean("AndPermission - yanzhenjie",
-                "https://github.com/yanzhenjie/AndPermission",
+        OpenSourceBean permission = new OpenSourceBean("easypermissions - googlesamples",
+                "https://github.com/googlesamples/easypermissions",
                 "Apache Software License 2.0");
         OpenSourceBean storage = new OpenSourceBean("android-storage - sromku",
                 "https://github.com/sromku/android-storage",

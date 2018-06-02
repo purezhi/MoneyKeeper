@@ -117,5 +117,5 @@
     <string name="text_storage_permission_tip">Backup related operations require storage permissions to set open permissions</string>
     <string name="text_close_auto_backup">Turn off automatic backup</string>
     <string name="text_close_auto_backup_tip">After the automatic backup is turned off, you need to manually click 「Back up now」 to back up the data and you may lose some of the latest data.</string>
-    <string name="text_tip_backup_fail">Backup failed</string>
+    <string name="text_tip_backup_fail">Auto backup failed</string>
 </resources>
