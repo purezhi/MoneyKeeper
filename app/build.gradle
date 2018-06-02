@@ -111,4 +111,6 @@ dependencies {
     implementation deps.storage
     // 时间格式化
     implementation deps.prettytime
+    // 圆形 ImageView
+    implementation deps.circleimageview
 }

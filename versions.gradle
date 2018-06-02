@@ -24,6 +24,7 @@ versions.leakcanary = "1.5.4"
 versions.permission = "1.2.0"
 versions.storage = "2.1.0"
 versions.prettytime = "4.0.1.Final"
+versions.circleimageview = "2.2.0"
 
 def deps = [:]
 
@@ -62,6 +63,7 @@ deps.leakcanary_release = "com.squareup.leakcanary:leakcanary-android-no-op:$ver
 deps.permission = "pub.devrel:easypermissions:$versions.permission"
 deps.storage = "com.snatik:storage:$versions.storage"
 deps.prettytime = "org.ocpsoft.prettytime:prettytime:$versions.prettytime"
+deps.circleimageview = "de.hdodenhof:circleimageview:$versions.circleimageview"
 
 ext.deps = deps
 

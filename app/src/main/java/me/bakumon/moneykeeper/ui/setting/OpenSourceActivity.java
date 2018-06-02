@@ -94,6 +94,9 @@ public class OpenSourceActivity extends BaseActivity {
         OpenSourceBean prettytime = new OpenSourceBean("prettytime - ocpsoft",
                 "https://github.com/ocpsoft/prettytime",
                 "Apache Software License 2.0");
+        OpenSourceBean circleImageView = new OpenSourceBean("CircleImageView - hdodenhof",
+                "https://github.com/hdodenhof/CircleImageView",
+                "Apache Software License 2.0");
 
         list.add(support);
         list.add(lifecycle);
@@ -112,6 +115,7 @@ public class OpenSourceActivity extends BaseActivity {
         list.add(layoutManagerGroup);
         list.add(alipayZeroSDK);
         list.add(prettytime);
+        list.add(circleImageView);
 
         adapter.setNewData(list);
     }

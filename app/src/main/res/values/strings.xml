@@ -85,6 +85,7 @@
     <string name="text_sort_time">按时间</string>
     <string name="text_sort_money">按金额</string>
     <string name="text_title_open_source">开源许可证</string>
+    <string name="text_title_about">关于</string>
     <string name="toast_backup_success">备份成功</string>
     <string name="toast_backup_fail">备份失败</string>
     <string name="text_backup">立即备份</string>
@@ -118,4 +119,13 @@
     <string name="text_close_auto_backup">关闭自动备份</string>
     <string name="text_close_auto_backup_tip">关闭自动备份后，需要手动点击「立即备份」来备份数据，可能会丢失部分最新的数据。</string>
     <string name="text_tip_backup_fail">自动备份失败</string>
+    <string name="text_share">分享</string>
+    <string name="text_more">更多</string>
+    <string name="text_dev_designer">设计和开发</string>
+    <string name="text_designer">总体设计</string>
+    <string name="text_developer_designer">开发和部分设计</string>
+    <string name="text_icon_launcher">默默地求一波启动图设计</string>
+    <string name="text_share_to">分享到</string>
+    <string name="text_app_slogan">简单、纯粹的记账应用</string>
+    <string name="text_share_content">我发现了一个简单、纯粹的记账应用，点击链接下载 https://github.com/Bakumon/MoneyKeeper/releases/latest</string>
 </resources>
