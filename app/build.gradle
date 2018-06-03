@@ -105,6 +105,7 @@ andResGuard {
             "R.mipmap.type_salary",
             "R.mipmap.type_sim",
             "R.mipmap.type_study",
+            "R.mipmap.type_train",
     ]
     compressFilePattern = [
             "*.png",
