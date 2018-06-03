@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'AndResGuard'
 
 // 加载 keystore.properties 文件
 def keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -12,11 +13,11 @@ android {
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
         // release
-//        versionCode 1
-//        versionName "1.0.0"
+        versionCode 1
+        versionName "1.0.0"
         // debug
-        versionCode 4
-        versionName "1.0.3"
+//        versionCode 4
+//        versionName "1.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         // 指定room.schemaLocation生成的文件路径
         javaCompileOptions {
@@ -61,15 +62,72 @@ android {
             signingConfig signingConfigs.release
             resValue "string", "scheme", "mk"
             resValue "string", "app_name", "那样记账"
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources true
+            // 混淆
+            minifyEnabled true
+            proguardFile 'proguard-android.txt'
+            proguardFile 'proguard-rules.pro'
         }
         android.applicationVariants.all { variant ->
             variant.outputs.all {
-                outputFileName = "MoneyKeeper-${variant.baseName}-${variant.versionCode}-V${variant.versionName}.apk"
+                outputFileName = "MoneyKeeper-${variant.baseName}-${variant.versionCode}-${variant.versionName}.apk"
             }
         }
     }
+}
+
+andResGuard {
+    // mappingFile = file("./resource_mapping.txt")
+    mappingFile = null
+    use7zip = true
+    useSign = true
+    // it will keep the origin path of your resources when it's true
+    keepRoot = false
+
+    whiteList = [
+            // your icon
+            "R.mipmap.type_item_default",
+            "R.mipmap.type_item_setting",
+            "R.mipmap.type_3c",
+            "R.mipmap.type_calendar",
+            "R.mipmap.type_candy",
+            "R.mipmap.type_cigarette",
+            "R.mipmap.type_clothes",
+            "R.mipmap.type_eat",
+            "R.mipmap.type_fitness",
+            "R.mipmap.type_humanity",
+            "R.mipmap.type_pet",
+            "R.mipmap.type_pill",
+            "R.mipmap.type_pluralism",
+            "R.mipmap.type_salary",
+            "R.mipmap.type_sim",
+            "R.mipmap.type_study",
+    ]
+    compressFilePattern = [
+            "*.png",
+            "*.jpg",
+            "*.jpeg",
+            "*.gif",
+    ]
+    sevenzip {
+        artifact = 'com.tencent.mm:SevenZip:1.2.13'
+        //path = "/usr/local/bin/7za"
+    }
+
+    /**
+     * Optional: if finalApkBackupPath is null, AndResGuard will overwrite final apk
+     * to the path which assemble[Task] write to
+     **/
+    // finalApkBackupPath = "${project.rootDir}/final.apk"
+
+    /**
+     * Optional: Specifies the name of the message digest algorithm to user when digesting the entries of JAR file
+     * Only works in V1signing, default value is "SHA-1"
+     **/
+     digestalg = "SHA-256"
 }
 
 dependencies {
