@@ -55,6 +55,9 @@ public class TypeImgListCreator {
 
             bean = new TypeImgBean("type_pet");
             list.add(bean);
+
+            bean = new TypeImgBean("type_train");
+            list.add(bean);
         } else {
             bean = new TypeImgBean("type_salary");
             list.add(bean);
