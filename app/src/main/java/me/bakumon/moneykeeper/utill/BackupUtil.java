@@ -49,6 +49,26 @@ public class BackupUtil {
         return backupDB(fileName);
     }
 
+    public static boolean autoBackupForNecessary() {
+        String fileName = AUTO_BACKUP_PREFIX + SUFFIX;
+        Storage storage = new Storage(App.getINSTANCE());
+        boolean isWritable = Storage.isExternalWritable();
+        if (!isWritable) {
+            return false;
+        }
+        String path = storage.getExternalStorageDirectory() + File.separator + BACKUP_DIR;
+        if (!storage.isDirectoryExists(path)) {
+            storage.createDirectory(path);
+        }
+        String filePath = path + File.separator + fileName;
+        if (!storage.isFileExist(filePath)) {
+            // 创建空文件，在模拟器上测试，如果没有这个文件，复制的时候会报 FileNotFound
+            storage.createFile(filePath, "");
+            return storage.copy(App.getINSTANCE().getDatabasePath(AppDatabase.DB_NAME).getPath(), path + File.separator + fileName);
+        }
+        return true;
+    }
+
     public static boolean userBackup() {
         String fileName = USER_BACKUP_PREFIX + SUFFIX;
         return backupDB(fileName);

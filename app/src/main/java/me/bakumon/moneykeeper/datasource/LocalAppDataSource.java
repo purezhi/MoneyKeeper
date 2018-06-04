@@ -47,6 +47,18 @@ public class LocalAppDataSource implements AppDataSource {
         }
     }
 
+    /**
+     * 自动备份
+     */
+    private void autoBackupForNecessary() throws Exception {
+        if (ConfigManager.isAutoBackup()) {
+            boolean isSuccess = BackupUtil.autoBackupForNecessary();
+            if (!isSuccess) {
+                throw new BackupFailException();
+            }
+        }
+    }
+
     @Override
     public Flowable<List<RecordType>> getAllRecordType() {
         return mAppDatabase.recordTypeDao().getAllRecordTypes();
@@ -58,7 +70,7 @@ public class LocalAppDataSource implements AppDataSource {
             if (mAppDatabase.recordTypeDao().getRecordTypeCount() < 1) {
                 // 没有记账类型数据记录，插入默认的数据类型
                 mAppDatabase.recordTypeDao().insertRecordTypes(RecordTypeInitCreator.createRecordTypeData());
-                autoBackup();
+                autoBackupForNecessary();
             }
         });
     }
