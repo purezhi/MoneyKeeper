@@ -150,6 +150,8 @@
 #
 #############################################
 
+-keep class * extends android.support.v7.widget.LinearLayoutManager
+
 #-----------处理第三方依赖库---------
 
 # BRVAH
