@@ -12,7 +12,7 @@
 
 ## 下载使用
 
-第一个版本开发完成后，已经发布在了酷安上， 后续更新也会在酷安。https://www.coolapk.com/apk/188475
+第一个版本开发完成后，已经发布在了酷安上， 后续更新也会在酷安。https://www.coolapk.com/apk/188475
 
 预览：
 ![img.png](https://github.com/Bakumon/MoneyKeeper/raw/master/imgs/img.png)
