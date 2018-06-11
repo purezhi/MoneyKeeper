@@ -8,7 +8,7 @@
 
 于是，决定从 2018 年 3 月开始规划自己的支出，首先得先知道自己每个月花了多少钱吧，为了这个目的，疯狂的找记账软件，国内的，国外的，但是总是不那么满意，国内的普遍包含理财部分，并且占用资源很大，国外的虽然简洁但是用起来没有国内的顺手，最后选择了网易出品的《网易有钱记账》。
 
-记了一段时间的账，突然想自己能不能做一个只是纯粹、轻量的记账应用，于是在站酷上找到了一个[颜值很高的设计](https://www.zcool.com.cn/work/ZMjExOTI4OTY=.html)，征得作者同意后（非常感谢），经历了从开发到部分设计，直到第一个完整的版本出世。
+记了一段时间的账，突然想自己能不能做一个只是纯粹、轻量的记账应用，于是在站酷上找到了一个[颜值很高的设计](https://www.zcool.com.cn/work/ZMjExOTI4OTY=.html)，征得作者同意后（非常感谢），经历了从开发到部分设计，直到第一个完整的版本出世。
 
 ## 下载使用
 
@@ -21,7 +21,8 @@
 
 架构使用了 Google 官方的 [Architecture Components](https://developer.android.com/topic/libraries/architecture/)，包括 Lifecycle、LiveData 和 ViewModel，数据库使用 [Room](https://developer.android.com/topic/libraries/architecture/room)。
 
-![Architecture Components](https://ws2.sinaimg.cn/large/006tKfTcly1fs78mhnw17j30mb06edft.jpg)
+![Architecture Components](https://ws1.sinaimg.cn/large/006tKfTcly1fs7957cwd7j31di0gumxz.jpg)
+这里有一篇介绍 Architecture Components 的[文章](https://medium.com/google-developers/viewmodels-and-livedata-patterns-antipatterns-21efaef74a54)。
 
 Room 和 RxJava 配合起来使用真的很方便。
 
